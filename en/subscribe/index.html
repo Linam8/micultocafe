@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Subscription request · Culto Café</title>
+<meta name="description" content="Request your coffee shop's listing on Culto Café.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://cultocafe.madrid/en/subscribe/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800&display=swap">
+<link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header" id="header">
+  <div class="wrap header-inner">
+    <a class="logo" href="/en/" aria-label="Culto Café — home"><img src="../../assets/img/logo.png" alt="Culto Café"></a>
+    <div class="lang" role="group" aria-label="Language">
+      <a href="/suscribir/" hreflang="es">ES</a>
+      <span aria-hidden="true">·</span>
+      <a href="/en/subscribe/" aria-current="page" class="lang-on">EN</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="section gracias-hero">
+    <div class="wrap form-wrap">
+      <p class="eyebrow">Coffee shop sign-up</p>
+      <h1 class="balance">Request your listing on Culto Café</h1>
+      <p class="gracias-lead">Fill this in and we'll reach out to verify your listing and activate the plan. No payment details are asked here — billing is handled separately and securely once the sign-up is confirmed.</p>
+
+      <form class="form-card" id="altaForm" novalidate>
+        <div class="field">
+          <label for="fNombre">Coffee shop name *</label>
+          <input id="fNombre" name="nombre" type="text" required autocomplete="organization">
+        </div>
+        <div class="field">
+          <label for="fContacto">Contact person *</label>
+          <input id="fContacto" name="contacto" type="text" required autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="fEmail">Email *</label>
+          <input id="fEmail" name="email" type="email" required autocomplete="email">
+        </div>
+        <div class="field">
+          <label for="fTelefono">Phone</label>
+          <input id="fTelefono" name="telefono" type="tel" autocomplete="tel">
+        </div>
+        <div class="field">
+          <label for="fPlan">Plan</label>
+          <select id="fPlan" name="plan">
+            <option value="Free trial">Free trial — €0/30 days</option>
+            <option value="Presence">Presence — €15/month</option>
+            <option value="Featured" selected>Featured — €29/month</option>
+            <option value="Partner">Partner — €49/month</option>
+          </select>
+        </div>
+        <button class="btn plan-cta" type="submit">Send request</button>
+        <p class="form-nota">We'll email you the next steps after you submit. No commitment, no card on this form.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-base"><p>© 2026 Culto Café</p><p>Madrid · specialty coffee</p></div>
+</footer>
+
+<script>
+(function(){
+  var params = new URLSearchParams(location.search);
+  var plan = params.get("plan");
+  var sel = document.getElementById("fPlan");
+  if (plan) { for (var i=0;i<sel.options.length;i++){ if (sel.options[i].value===plan){ sel.selectedIndex=i; } } }
+
+  document.getElementById("altaForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    var f = e.target;
+    if (!f.checkValidity()) { f.reportValidity(); return; }
+    var q = new URLSearchParams({
+      plan: f.plan.value,
+      nombre: f.nombre.value
+    });
+    location.href = "../thank-you/index.html?" + q.toString();
+  });
+
+  var header = document.getElementById("header");
+  var on = function(){ header.classList.toggle("scrolled", window.scrollY > 8); };
+  on(); window.addEventListener("scroll", on, { passive:true });
+})();
+</script>
+</body>
+</html>

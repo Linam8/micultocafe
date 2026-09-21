@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gracias · Culto Café</title>
+<meta name="description" content="Tu suscripción como cafetería en Culto Café se ha registrado correctamente.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://cultocafe.madrid/gracias/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header" id="header">
+  <div class="wrap header-inner">
+    <a class="logo" href="/" aria-label="Culto Café — inicio"><img src="../assets/img/logo.png" alt="Culto Café"></a>
+    <div class="lang" role="group" aria-label="Idioma">
+      <a href="/gracias/" aria-current="page" class="lang-on">ES</a>
+      <span aria-hidden="true">·</span>
+      <a href="/en/thank-you/" hreflang="en">EN</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="section gracias-hero">
+    <div class="wrap gracias-card">
+      <span class="gracias-check" aria-hidden="true">✓</span>
+      <p class="eyebrow">Suscripción confirmada</p>
+      <h1 class="balance">¡Gracias! Tu cafetería ya está en camino de aparecer en Culto Café</h1>
+      <p class="gracias-lead" id="gPlanTxt">Hemos registrado tu suscripción correctamente.</p>
+
+      <div class="gracias-pasos">
+        <div><span>01</span>Revisa tu correo: te enviamos la confirmación y el enlace para completar tu ficha.</div>
+        <div><span>02</span>Nuestro equipo verifica los datos de tu cafetería en 24–48h.</div>
+        <div><span>03</span>Tu ficha se publica y Culto empieza a recomendarte por WhatsApp.</div>
+      </div>
+
+      <div class="hero-actions">
+        <a class="btn" href="/">Volver al inicio</a>
+        <a class="btn btn-ghost" href="/#culto">Escríbele a Culto</a>
+      </div>
+      <p class="gracias-nota">¿Algo no cuadra con el cobro? Escríbenos y lo resolvemos — sin permanencia, puedes cancelar cuando quieras.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <img src="../assets/img/logo-slogan.png" alt="Culto Café — Descubre dónde quieres estar" class="footer-logo">
+      <p>Una ciudad. Mil cafés. Tus planes.</p>
+      <div class="social">
+        <a href="https://www.instagram.com/cultocafe.madrid" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.tiktok.com/@culto.caf" target="_blank" rel="noopener">TikTok</a>
+        <a href="https://www.linkedin.com/company/146502917" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+  <div class="wrap footer-base"><p>© 2026 Culto Café</p><p>Madrid · café de especialidad</p></div>
+</footer>
+
+<script>
+(function(){
+  var qs = new URLSearchParams(location.search);
+  var p = qs.get("plan"), n = qs.get("nombre");
+  if (p) {
+    var txt = n
+      ? "Hemos registrado la solicitud de " + n + " para el plan “" + p + "”."
+      : "Hemos registrado tu suscripción al plan “" + p + "”.";
+    document.getElementById("gPlanTxt").textContent = txt;
+  }
+  var header = document.getElementById("header");
+  var on = function(){ header.classList.toggle("scrolled", window.scrollY > 8); };
+  on(); window.addEventListener("scroll", on, { passive:true });
+})();
+</script>
+</body>
+</html>

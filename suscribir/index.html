@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Solicitud de alta · Culto Café</title>
+<meta name="description" content="Solicita el alta de tu cafetería en Culto Café.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://cultocafe.madrid/suscribir/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header" id="header">
+  <div class="wrap header-inner">
+    <a class="logo" href="/" aria-label="Culto Café — inicio"><img src="../assets/img/logo.png" alt="Culto Café"></a>
+    <div class="lang" role="group" aria-label="Idioma">
+      <a href="/suscribir/" aria-current="page" class="lang-on">ES</a>
+      <span aria-hidden="true">·</span>
+      <a href="/en/subscribe/" hreflang="en">EN</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="section gracias-hero">
+    <div class="wrap form-wrap">
+      <p class="eyebrow">Alta de cafetería</p>
+      <h1 class="balance">Solicita tu alta en Culto Café</h1>
+      <p class="gracias-lead">Rellena estos datos y te contactamos para verificar tu ficha y activar el plan. No se pide ningún dato de pago aquí — el cobro se gestiona aparte, de forma segura, una vez confirmada el alta.</p>
+
+      <form class="form-card" id="altaForm" novalidate>
+        <div class="field">
+          <label for="fNombre">Nombre de la cafetería *</label>
+          <input id="fNombre" name="nombre" type="text" required autocomplete="organization">
+        </div>
+        <div class="field">
+          <label for="fContacto">Persona de contacto *</label>
+          <input id="fContacto" name="contacto" type="text" required autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="fEmail">Email *</label>
+          <input id="fEmail" name="email" type="email" required autocomplete="email">
+        </div>
+        <div class="field">
+          <label for="fTelefono">Teléfono</label>
+          <input id="fTelefono" name="telefono" type="tel" autocomplete="tel">
+        </div>
+        <div class="field">
+          <label for="fPlan">Plan</label>
+          <select id="fPlan" name="plan">
+            <option value="Prueba gratuita">Prueba gratuita — 0 €/30 días</option>
+            <option value="Presencia">Presencia — 15 €/mes</option>
+            <option value="Destacada" selected>Destacada — 29 €/mes</option>
+            <option value="Socia">Socia — 49 €/mes</option>
+          </select>
+        </div>
+        <button class="btn plan-cta" type="submit">Enviar solicitud</button>
+        <p class="form-nota">Al enviar, confirmamos por email los siguientes pasos. Sin permanencia, sin tarjeta en este formulario.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-base"><p>© 2026 Culto Café</p><p>Madrid · café de especialidad</p></div>
+</footer>
+
+<script>
+(function(){
+  var params = new URLSearchParams(location.search);
+  var plan = params.get("plan");
+  var sel = document.getElementById("fPlan");
+  if (plan) { for (var i=0;i<sel.options.length;i++){ if (sel.options[i].value===plan){ sel.selectedIndex=i; } } }
+
+  document.getElementById("altaForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    var f = e.target;
+    if (!f.checkValidity()) { f.reportValidity(); return; }
+    var q = new URLSearchParams({
+      plan: f.plan.value,
+      nombre: f.nombre.value
+    });
+    location.href = "../gracias/index.html?" + q.toString();
+  });
+
+  var header = document.getElementById("header");
+  var on = function(){ header.classList.toggle("scrolled", window.scrollY > 8); };
+  on(); window.addEventListener("scroll", on, { passive:true });
+})();
+</script>
+</body>
+</html>

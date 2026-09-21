@@ -126,9 +126,15 @@
 
   /* ---------- Mapa (Leaflet + OSM) ---------- */
   var map, markers = {}, userMarker = null;
+  function centroid() {
+    if (!CAFES.length) return [40.4255, -3.7045];
+    var lat = 0, lng = 0;
+    CAFES.forEach(function (c) { lat += c.lat; lng += c.lng; });
+    return [lat / CAFES.length, lng / CAFES.length];
+  }
   function initMap() {
     if (typeof L === "undefined") { document.getElementById("map").style.display = "none"; return; }
-    map = L.map("map", { scrollWheelZoom: false }).setView([40.4185, -3.703], 14);
+    map = L.map("map", { scrollWheelZoom: false }).setView(centroid(), 15);
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 19, attribution: "© OpenStreetMap"
     }).addTo(map);
@@ -293,6 +299,13 @@
   }
   var geoBtn = document.getElementById("geoBtn");
   if (geoBtn) geoBtn.addEventListener("click", askLocation);
+
+  // Oculta el filtro de barrio si todas las cafeterías están en la misma zona
+  var zonas = {}; CAFES.forEach(function (c) { zonas[c.bz] = true; });
+  if (Object.keys(zonas).length <= 1) {
+    var gb = document.getElementById("grupoBarrio");
+    if (gb) gb.hidden = true;
+  }
 
   initMap();
   render();
