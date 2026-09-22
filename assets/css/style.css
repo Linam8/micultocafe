@@ -240,6 +240,23 @@ a,button{-webkit-tap-highlight-color:transparent}
 .footer-base{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:40px;padding-top:20px;border-top:1px solid var(--linea);font-size:.8rem;color:var(--tinta-suave)}
 .footer-base p{margin:0}
 
+/* LEGAL (privacidad / aviso legal) */
+.legal{padding-top:clamp(48px,8vw,80px)}
+.legal-wrap{max-width:720px}
+.legal h1{font-size:clamp(1.9rem,4.4vw,2.6rem)}
+.legal-fecha{color:var(--tinta-suave);font-size:.88rem;margin:.4rem 0 2rem}
+.legal h2{font-size:1.2rem;margin:2.2rem 0 .8rem;letter-spacing:-.01em}
+.legal p,.legal li{color:var(--tinta-suave)}
+.legal ul{margin:0 0 1rem;padding-left:22px}
+.legal li{margin-bottom:.4rem}
+.legal-nota{font-size:.86rem;font-style:italic}
+.legal-tabla{width:100%;border-collapse:collapse;margin:0 0 1.2rem;font-size:.9rem}
+.legal-tabla th,.legal-tabla td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--linea);vertical-align:top}
+.legal-tabla th{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--tinta-suave);font-weight:700}
+.legal-tabla td:first-child{font-weight:700;color:var(--tinta);white-space:nowrap}
+.legal-wrap{overflow-x:auto}
+.legal-cierre{margin-top:2.6rem}
+
 /* GRACIAS / THANK YOU */
 .gracias-hero{padding-top:clamp(64px,10vw,110px)}
 .gracias-card{max-width:640px;text-align:center;display:flex;flex-direction:column;align-items:center;margin:0 auto}
