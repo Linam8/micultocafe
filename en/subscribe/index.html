@@ -58,7 +58,9 @@
             <option value="Partner">Partner — €49/month</option>
           </select>
         </div>
+        <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;width:0;">
         <button class="btn plan-cta" type="submit">Send request</button>
+        <p id="formError" role="alert" style="display:none;color:#b3261e;margin-top:12px;font-size:.95rem;"></p>
         <p class="form-nota">We'll email you the next steps after you submit. No commitment, no card on this form.</p>
       </form>
     </div>
@@ -76,6 +78,9 @@
   var sel = document.getElementById("fPlan");
   if (plan) { for (var i=0;i<sel.options.length;i++){ if (sel.options[i].value===plan){ sel.selectedIndex=i; } } }
 
+  var SUPABASE_URL = "https://wrybrdorgjpctzepierb.supabase.co";
+  var SUPABASE_KEY = "sb_publishable_cYdvNUZ_5pUkWsmxnmQyMA_4dxs1owY";
+
   document.getElementById("altaForm").addEventListener("submit", function(e){
     e.preventDefault();
     var f = e.target;
@@ -84,7 +89,41 @@
       plan: f.plan.value,
       nombre: f.nombre.value
     });
-    location.href = "../thank-you/index.html?" + q.toString();
+    var dest = "../thank-you/index.html?" + q.toString();
+    if (f.website.value) { location.href = dest; return; }
+
+    var btn = f.querySelector('button[type="submit"]');
+    var btnText = btn.textContent;
+    var errBox = document.getElementById("formError");
+    errBox.style.display = "none";
+    btn.disabled = true;
+    btn.textContent = "Sending...";
+
+    var tel = f.telefono.value.trim();
+    fetch(SUPABASE_URL + "/rest/v1/leads_cafeterias", {
+      method: "POST",
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": "Bearer " + SUPABASE_KEY,
+        "Content-Type": "application/json",
+        "Prefer": "return=minimal"
+      },
+      body: JSON.stringify({
+        nombre: f.nombre.value.trim(),
+        contacto: f.contacto.value.trim(),
+        email: f.email.value.trim(),
+        telefono: tel ? tel : null,
+        plan: f.plan.value
+      })
+    }).then(function(r){
+      if (r.ok) { location.href = dest; return; }
+      throw new Error("http " + r.status);
+    }).catch(function(){
+      errBox.textContent = "We couldn't send your request. Please try again or message us on WhatsApp.";
+      errBox.style.display = "block";
+      btn.disabled = false;
+      btn.textContent = btnText;
+    });
   });
 
   var header = document.getElementById("header");
