@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel del equipo · Culto Café</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+:root{
+  --azul:#3B82F6; --matcha:#A7C957; --lila:#BB7CF6; --tostado:#C8A879;
+  --crema:#F7F4ED; --papel:#FFFFFF; --crema-2:#F1ECE0; --carbon:#1A1A1A;
+  --tinta:#1A1A1A; --tinta-suave:#6B6459; --linea:#E5DDCB; --linea-fuerte:#D8CDB4;
+  --btn:#2563EB; --btn-tinta:#FFFFFF; --error:#B3261E; --focus:#1d4ed8;
+  --radio:14px; --radio-lg:22px;
+  --sombra:0 2px 6px rgba(26,20,10,.05), 0 24px 48px -28px rgba(26,20,10,.28);
+  --font:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --azul:#6AA0FF; --matcha:#B6D96A; --lila:#C79BF8; --tostado:#D8BC96;
+  --crema:#17150F; --papel:#211E17; --crema-2:#1D1A13; --carbon:#F4EFE3;
+  --tinta:#F4EFE3; --tinta-suave:#A79E8C; --linea:#332E22; --linea-fuerte:#403923;
+  --btn:#6AA0FF; --btn-tinta:#10131A; --error:#FF8A80; --focus:#9dc0ff;
+  --sombra:0 2px 6px rgba(0,0,0,.4),0 24px 48px -24px rgba(0,0,0,.7);
+  color-scheme:dark;
+}}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--crema);color:var(--tinta);font-family:var(--font);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+[hidden]{display:none!important}
+button,select,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:inherit}
+img{display:block;max-width:none}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:6px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+h1,h2,h3{margin:0;letter-spacing:-.02em;line-height:1.15}
+[tabindex="-1"]:focus{outline:none}
+
+/* ---------- personajes: base ---------- */
+.pj{width:auto;user-select:none;-webkit-user-drag:none;pointer-events:none}
+.flota{animation:flota 3.2s ease-in-out infinite}
+@keyframes flota{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+
+/* ---------- arranque / carga ---------- */
+.boot{min-height:100dvh;display:grid;place-content:center;justify-items:center;gap:10px;color:var(--tinta-suave);font-weight:600}
+.boot .pj{height:110px}
+.cargando{display:flex;flex-direction:column;align-items:center;gap:6px;padding:40px 0;color:var(--tinta-suave);font-weight:600}
+.cargando .pj{height:80px}
+
+/* ---------- login ---------- */
+.login{min-height:100dvh;display:grid;grid-template-columns:1fr 1fr}
+.login-izq{background:var(--crema);padding:clamp(28px,5vw,64px);display:flex;flex-direction:column;justify-content:center;gap:18px}
+.login-izq .logo-c{height:72px;width:auto;align-self:flex-start}
+.login-izq h1{font-size:clamp(2rem,4.4vw,3.2rem);font-weight:800;letter-spacing:-.03em;text-wrap:balance}
+.login-izq .frase{margin:0;font-size:1.1rem;color:var(--tinta-suave);max-width:34ch;line-height:1.5}
+.login-izq .pilar{margin:6px 0 0;font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--tinta-suave);display:flex;align-items:center;gap:10px}
+.login-izq .pilar::before{content:"";width:26px;height:2px;background:var(--tostado);border-radius:2px;flex:none}
+.login-der{background:var(--crema-2);padding:clamp(20px,4vw,48px);display:grid;place-items:center}
+.stage{position:relative;width:100%;max-width:420px;margin-top:96px}
+.peek{position:absolute;top:-92px;left:36px;z-index:0;animation:asoma .75s cubic-bezier(.2,.9,.3,1.2) both}
+.peek .pj{height:124px;transform-origin:50% 100%;animation:saluda 1.5s ease-in-out .9s 1}
+.peek.salto{animation:salto .5s ease-out}
+.peek .pj.ladea{animation:ladea .95s ease-in-out}
+@keyframes asoma{from{translate:0 80px}to{translate:0 0}}
+@keyframes saluda{0%,100%{rotate:0deg}20%{rotate:-9deg}45%{rotate:8deg}70%{rotate:-6deg}}
+@keyframes ladea{0%,100%{rotate:0deg}25%{rotate:-15deg}60%{rotate:15deg}85%{rotate:-6deg}}
+@keyframes salto{0%,100%{translate:0 0}45%{translate:0 -36px}}
+.login-card{position:relative;z-index:1;background:var(--papel);border:1px solid var(--linea);border-radius:var(--radio-lg);padding:clamp(22px,4vw,34px);box-shadow:var(--sombra)}
+.login-card h2{font-size:1.4rem;font-weight:800;margin-bottom:4px}
+.login-card .sub{margin:0 0 18px;color:var(--tinta-suave)}
+.campo{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.campo label{font-weight:700;font-size:.9rem}
+.campo input{width:100%;border:1.5px solid var(--linea-fuerte);background:var(--crema);border-radius:12px;padding:12px 14px;font-size:1rem}
+.campo input:focus{border-color:var(--btn)}
+.pass{position:relative}
+.pass input{padding-right:88px}
+.ojo{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:0;border-radius:8px;padding:6px 10px;font-weight:700;font-size:.85rem;color:var(--tinta-suave)}
+.ojo:hover{color:var(--tinta)}
+.err{margin:0 0 12px;color:var(--error);font-weight:600;font-size:.92rem}
+.btn-p{width:100%;border:0;border-radius:999px;background:var(--btn);color:var(--btn-tinta);font-weight:800;font-size:1rem;padding:14px 20px;transition:transform .15s,opacity .15s}
+.btn-p:hover{transform:translateY(-1px)}
+.btn-p:disabled{opacity:.7;cursor:progress;transform:none}
+.btn-s{border:1.5px solid var(--linea-fuerte);background:transparent;border-radius:999px;padding:9px 16px;font-weight:700}
+.btn-s:hover{border-color:var(--tinta)}
+.volver{display:block;text-align:center;margin-top:16px;font-size:.88rem;color:var(--tinta-suave);text-decoration:none}
+.volver:hover{color:var(--tinta);text-decoration:underline}
+.fade-in{animation:aparece .45s ease both}
+@keyframes aparece{from{opacity:0;translate:0 8px}to{opacity:1;translate:0 0}}
+.sale{opacity:0;transition:opacity .35s}
+
+/* ---------- aviso (sesión / permisos) ---------- */
+.aviso{min-height:100dvh;display:grid;place-content:center;justify-items:center;gap:14px;padding:24px;text-align:center}
+.aviso .fig{position:relative;height:150px;width:190px}
+.aviso .fig .pj{position:absolute;left:12px;bottom:0;height:130px;rotate:-8deg;animation:perdido 4s ease-in-out infinite}
+.aviso .fig svg{position:absolute;right:0;bottom:2px;width:104px;height:auto}
+@keyframes perdido{0%,100%{rotate:-8deg}50%{rotate:-2deg}}
+.aviso h1{font-size:clamp(1.6rem,4vw,2.1rem);font-weight:800;text-wrap:balance;max-width:20ch}
+.aviso p{margin:0;color:var(--tinta-suave);max-width:38ch}
+
+/* ---------- app ---------- */
+.app{display:grid;grid-template-columns:240px 1fr;min-height:100dvh}
+.side{background:var(--papel);border-right:1px solid var(--linea);padding:20px 14px;display:flex;flex-direction:column;gap:20px;position:sticky;top:0;height:100dvh}
+.logo-btn{background:none;border:0;padding:0 8px;text-align:left;border-radius:10px}
+.logo-btn img{height:58px;width:auto}
+.logo-dark{display:none!important}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .logo-light{display:none!important}:root:not([data-theme="light"]) .logo-dark{display:block!important}}
+.nav{display:flex;flex-direction:column;gap:4px}
+.nav button{display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:left;background:none;border:0;border-radius:10px;padding:10px 12px;font-weight:600;color:var(--tinta-suave)}
+.nav button:hover{background:var(--crema-2);color:var(--tinta)}
+.nav button[aria-current="page"]{background:color-mix(in srgb,var(--azul) 16%,var(--papel));color:var(--tinta)}
+.count{font-size:12px;font-weight:700;background:var(--crema-2);color:var(--tinta-suave);border-radius:999px;padding:1px 8px;font-variant-numeric:tabular-nums;min-width:22px;text-align:center}
+.nav button[aria-current="page"] .count{background:var(--btn);color:var(--btn-tinta)}
+.side-foot{margin-top:auto;display:flex;flex-direction:column;gap:10px}
+.user-mail{font-size:12px;color:var(--tinta-suave);overflow-wrap:anywhere;padding:0 4px}
+main{padding:26px clamp(16px,3vw,40px) 56px;max-width:1240px;width:100%;min-width:0}
+.top{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:22px;min-height:96px}
+.top h1{font-size:clamp(24px,3vw,32px);font-weight:800;letter-spacing:-.025em;text-wrap:balance}
+.sub{margin:4px 0 0;color:var(--tinta-suave)}
+.top-der{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;justify-content:flex-end}
+.demo-ctl{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.switch{display:inline-flex;align-items:center;gap:10px;font-weight:600;cursor:pointer}
+.switch input{appearance:none;-webkit-appearance:none;width:42px;height:24px;border-radius:999px;background:var(--linea-fuerte);position:relative;cursor:pointer;transition:background .2s;flex:none;margin:0}
+.switch input::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--papel);box-shadow:0 1px 3px rgba(0,0,0,.35);transition:transform .2s}
+.switch input:checked{background:var(--btn)}
+.switch input:checked::after{transform:translateX(18px)}
+.tag-ejemplo{font-size:12px;font-weight:700;background:color-mix(in srgb,var(--tostado) 28%,var(--papel));border:1px solid var(--linea-fuerte);border-radius:999px;padding:4px 12px;white-space:nowrap}
+.demo-nota{margin:0 0 16px;font-size:13px;color:var(--tinta-suave);border:1px dashed var(--linea-fuerte);border-radius:12px;padding:8px 12px}
+.scene-resumen{display:none;position:relative;height:104px;width:150px;flex:none}
+main[data-tab="resumen"] .scene-resumen{display:block}
+.scene-resumen .pj{position:absolute;right:26px;bottom:0;height:96px}
+.lupa{position:absolute;right:0;bottom:6px;width:46px;height:46px;transform-origin:20% 20%;animation:escanea 3.4s ease-in-out infinite}
+@keyframes escanea{0%,100%{transform:translate(0,0) rotate(0)}50%{transform:translate(-9px,-6px) rotate(-8deg)}}
+.is-loading .tab{display:none}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}
+.tile{background:var(--papel);border:1px solid var(--linea);border-radius:var(--radio);padding:16px 18px}
+.tile .n{font-size:32px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1.1}
+.tile .l{color:var(--tinta-suave);font-weight:600;margin-top:4px}
+.tile .h{font-size:12px;color:var(--tinta-suave);margin-top:2px}
+.tile.primary{background:var(--carbon);color:var(--crema);border-color:var(--carbon)}
+.tile.primary .l,.tile.primary .h{color:color-mix(in srgb,var(--crema) 74%,var(--carbon))}
+.cols{display:grid;grid-template-columns:1.15fr 1fr;gap:14px;margin-top:76px}
+.panel{background:var(--papel);border:1px solid var(--linea);border-radius:var(--radio);padding:18px 20px;position:relative}
+.panel h2{font-size:16px;font-weight:700;margin-bottom:4px}
+.panel p.note{margin:0 0 14px;color:var(--tinta-suave);font-size:13px}
+.neo-sit{position:absolute;right:26px;bottom:calc(100% - 5px);display:flex;align-items:flex-end;gap:8px;pointer-events:none}
+.neo-sit .pj{height:78px;animation:teclea .55s ease-in-out infinite}
+@keyframes teclea{0%,100%{translate:0 0}50%{translate:0 1.5px}}
+.puntos{display:flex;gap:4px;padding:0 0 10px}
+.puntos i{width:6px;height:6px;border-radius:50%;background:var(--lila);animation:punto 1.2s ease-in-out infinite}
+.puntos i:nth-child(2){animation-delay:.15s}.puntos i:nth-child(3){animation-delay:.3s}
+@keyframes punto{0%,60%,100%{opacity:.3;translate:0 0}30%{opacity:1;translate:0 -3px}}
+.bars{display:flex;flex-direction:column;gap:11px}
+.bar{display:grid;grid-template-columns:104px 1fr 30px;align-items:center;gap:10px}
+.bar .name{font-weight:600;overflow-wrap:anywhere}
+.bar .track{height:12px;background:var(--crema-2);border-radius:999px;overflow:hidden}
+.bar .fill{display:block;height:100%;background:var(--azul);border-radius:999px;transition:width .5s ease}
+.bar .v{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+.feed{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.feed li{display:grid;grid-template-columns:auto 1fr;gap:12px;padding:11px 0;border-top:1px solid var(--linea)}
+.feed li:first-child{border-top:0;padding-top:0}
+.dot{width:10px;height:10px;border-radius:50%;margin-top:6px}
+.feed .t{font-weight:600;overflow-wrap:anywhere}
+.feed .m{color:var(--tinta-suave);font-size:12.5px}
+.muted{color:var(--tinta-suave)}
+
+/* cafeterías */
+.hilo-head{position:relative;display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:98px;margin-bottom:16px}
+.hilo{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.hilo path{fill:none;stroke:var(--tostado);stroke-width:2;stroke-dasharray:6 8;stroke-linecap:round;animation:hilo 5s linear infinite}
+@keyframes hilo{to{stroke-dashoffset:-56}}
+.hilo-txt{position:relative;z-index:1;margin:0;background:var(--papel);border:1px solid var(--linea);border-radius:12px;padding:10px 14px;max-width:46ch}
+.moka-wrap{position:relative;z-index:1;height:96px;width:72px;flex:none}
+.moka-wrap .pj{position:absolute;left:0;bottom:0;height:92px}
+.moka-wrap.celebra .pj{animation:salto-m .6s ease-out}
+@keyframes salto-m{0%,100%{translate:0 0}40%{translate:0 -22px}}
+.conf{position:absolute;left:50%;top:38%;width:var(--s);height:var(--s);border-radius:50%;background:var(--matcha);pointer-events:none;animation:conf .95s ease-out forwards}
+.conf:nth-child(3n){background:color-mix(in srgb,var(--matcha) 60%,#fff)}
+.conf:nth-child(4n){background:color-mix(in srgb,var(--matcha) 70%,#5b7a1f)}
+@keyframes conf{from{transform:translate(0,0) scale(1);opacity:1}to{transform:translate(var(--dx),var(--dy)) scale(.4);opacity:0}}
+.board{display:grid;grid-template-columns:repeat(4,minmax(250px,1fr));gap:14px;overflow-x:auto;padding-bottom:8px}
+.colm{background:var(--crema-2);border-radius:var(--radio);padding:12px;display:flex;flex-direction:column;gap:10px;min-height:220px}
+.colm header{display:flex;align-items:center;justify-content:space-between;padding:2px 4px 4px;font-weight:700}
+.colm header .pill{display:inline-flex;align-items:center;gap:8px}
+.swatch{width:10px;height:10px;border-radius:3px}
+.colm header .c{font-size:12px;color:var(--tinta-suave);font-variant-numeric:tabular-nums}
+.card{background:var(--papel);border:1px solid var(--linea);border-radius:12px;padding:12px 13px;display:flex;flex-direction:column;gap:7px;min-width:0}
+.card .nm{font-weight:700;overflow-wrap:anywhere}
+.card .ct{color:var(--tinta-suave);font-size:13px;overflow-wrap:anywhere}
+.card .ct a{text-decoration:underline;text-decoration-color:var(--linea-fuerte);text-underline-offset:2px}
+.card .row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.plan{font-size:11.5px;font-weight:700;border-radius:999px;padding:2px 9px;background:color-mix(in srgb,var(--lila) 20%,var(--papel));border:1px solid color-mix(in srgb,var(--lila) 40%,var(--linea))}
+.card .fecha{font-size:12px;color:var(--tinta-suave)}
+.card select{border:1px solid var(--linea-fuerte);border-radius:8px;background:var(--papel);padding:6px 8px;font-size:13px;font-weight:600}
+.card textarea{width:100%;resize:vertical;min-height:52px;border:1px solid var(--linea);border-radius:8px;background:var(--crema);padding:7px 9px;font-size:13px}
+.nota-est{font-size:11.5px;color:var(--tinta-suave);min-height:1.2em}
+.colm .vacia{color:var(--tinta-suave);font-size:13px;padding:6px 4px}
+
+/* usuarios */
+.tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
+.search{flex:1 1 220px;max-width:340px;border:1px solid var(--linea-fuerte);background:var(--papel);border-radius:10px;padding:9px 12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--linea-fuerte);background:var(--papel);border-radius:999px;padding:6px 13px;font-weight:600;color:var(--tinta-suave)}
+.chip:hover{color:var(--tinta)}
+.chip[aria-pressed="true"]{background:var(--carbon);border-color:var(--carbon);color:var(--crema)}
+.tablewrap{overflow-x:auto;background:var(--papel);border:1px solid var(--linea);border-radius:var(--radio)}
+table{width:100%;border-collapse:collapse;min-width:720px}
+th{text-align:left;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--tinta-suave);font-weight:700;padding:12px 16px;border-bottom:1px solid var(--linea);background:var(--crema-2)}
+td{padding:13px 16px;border-top:1px solid var(--linea);vertical-align:top;overflow-wrap:anywhere}
+.fx{display:flex;flex-wrap:wrap;gap:6px}
+.f{font-size:12px;font-weight:600;border-radius:999px;padding:2px 9px;background:color-mix(in srgb,var(--azul) 14%,var(--papel));border:1px solid color-mix(in srgb,var(--azul) 32%,var(--linea))}
+.uid{font-weight:700;font-variant-numeric:tabular-nums}
+
+/* vacíos y errores */
+.vacio{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:34px 16px}
+.vacio .fig{position:relative;height:112px;width:150px}
+.vacio .fig .pj{position:absolute;left:8px;bottom:0;height:98px}
+.vacio .fig svg{position:absolute;right:0;bottom:0;width:78px;height:auto}
+.vacio .fig .pj.flota{animation-duration:4s}
+.vacio h3{font-size:1.05rem;font-weight:800}
+.vacio p{margin:0;color:var(--tinta-suave);max-width:40ch}
+.board-msg{background:var(--papel);border:1px solid var(--linea);border-radius:var(--radio)}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:22px;translate:-50% 0;z-index:50;background:var(--carbon);color:var(--crema);border-radius:12px;padding:11px 16px;font-weight:600;max-width:min(92vw,460px);box-shadow:var(--sombra)}
+
+/* guiño escondido */
+.trio{position:fixed;right:18px;bottom:0;z-index:40;display:flex;align-items:flex-end;gap:6px;pointer-events:none}
+.trio .pj{height:100px;transform-origin:50% 100%;animation:trio-sube 2.6s ease both,saluda 1s ease-in-out .5s 2}
+.trio .pj:nth-child(2){height:88px;animation-delay:.15s,.65s}
+.trio .pj:nth-child(3){height:92px;animation-delay:.3s,.8s}
+@keyframes trio-sube{0%{translate:0 115%}16%,80%{translate:0 0}100%{translate:0 115%}}
+
+/* ---------- responsive ---------- */
+@media (max-width:920px){
+  .login{grid-template-columns:1fr}
+  .login-izq{padding-bottom:8px}
+  .app{grid-template-columns:1fr}
+  .side{position:static;height:auto;flex-direction:row;flex-wrap:wrap;align-items:center;padding:12px 16px;border-right:0;border-bottom:1px solid var(--linea);gap:10px 16px}
+  .logo-btn img{height:44px}
+  .nav{flex-direction:row;flex-wrap:wrap;order:3;width:100%}
+  .side-foot{margin:0 0 0 auto;flex-direction:row;align-items:center}
+  .user-mail{display:none}
+  .cols{grid-template-columns:1fr}
+  .top-der{justify-content:flex-start}
+  .demo-ctl{align-items:flex-start}
+}
+@media (max-width:520px){
+  .bar{grid-template-columns:84px 1fr 26px}
+  .hilo-txt{font-size:13px}
+  .scene-resumen{width:120px}
+  .neo-sit{right:12px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+<noscript><p style="padding:24px">Este panel necesita JavaScript para funcionar.</p></noscript>
+
+<!-- ARRANQUE -->
+<div class="boot" id="boot" role="status">
+  <img class="pj flota" src="../assets/img/crm/culto.png" alt="" aria-hidden="true" width="182" height="280">
+  <span>Un momento…</span>
+</div>
+
+<!-- LOGIN -->
+<div class="login" id="login" hidden>
+  <section class="login-izq">
+    <img class="logo-c logo-light" src="../assets/img/crm/logo.png" alt="Culto Café" width="240" height="181">
+    <img class="logo-c logo-dark" src="../assets/img/crm/logo-blanco.png" alt="Culto Café" width="240" height="181">
+    <h1>Panel del equipo</h1>
+    <p class="frase">Aquí vemos qué buscan las personas y qué cafeterías quieren sumarse.</p>
+    <p class="pilar">Lugares reales. Personas reales. Planes reales.</p>
+  </section>
+  <section class="login-der">
+    <div class="stage">
+      <div class="peek" id="peek"><img class="pj" id="peekImg" src="../assets/img/crm/culto.png" alt="" aria-hidden="true" width="182" height="280"></div>
+      <form class="login-card" id="loginForm" novalidate>
+        <h2>Entra al panel</h2>
+        <p class="sub">Solo para el equipo de Culto.</p>
+        <div class="campo">
+          <label for="lEmail">Email</label>
+          <input id="lEmail" type="email" autocomplete="email" inputmode="email" required>
+        </div>
+        <div class="campo">
+          <label for="lPass">Contraseña</label>
+          <div class="pass">
+            <input id="lPass" type="password" autocomplete="current-password" required>
+            <button type="button" class="ojo" id="ojo" aria-pressed="false" aria-controls="lPass">Mostrar</button>
+          </div>
+        </div>
+        <p class="err" id="lErr" role="alert" hidden></p>
+        <button class="btn-p" id="lBtn" type="submit">Entrar</button>
+        <a class="volver" href="../">Volver a la web</a>
+      </form>
+    </div>
+  </section>
+</div>
+
+<!-- AVISO: sesión caducada / sin permisos -->
+<div class="aviso" id="aviso" hidden>
+  <div class="fig" aria-hidden="true">
+    <img class="pj" src="../assets/img/crm/culto.png" alt="" aria-hidden="true" width="182" height="280">
+    <svg viewBox="0 0 64 48" aria-hidden="true"><path d="M4 8 22 4 42 10 60 5V40L42 45 22 39 4 44Z" style="fill:var(--crema-2);stroke:var(--tostado);stroke-width:2.2;stroke-linejoin:round"/><path d="M22 4V39M42 10V45" style="stroke:var(--linea-fuerte);stroke-width:1.5;fill:none"/><path d="M10 34C20 20 28 34 38 22S50 20 54 14" style="stroke:var(--tostado);stroke-width:2;stroke-dasharray:3 4;fill:none;stroke-linecap:round"/><circle cx="50" cy="16" r="4" style="fill:var(--azul)"/></svg>
+  </div>
+  <h1 id="avisoTit" tabindex="-1">Tu sesión se cerró.</h1>
+  <p id="avisoTxt">Vuelve a entrar para seguir.</p>
+  <button class="btn-p" id="avisoBtn" type="button" style="width:auto;padding:13px 28px">Volver a entrar</button>
+</div>
+
+<!-- CRM -->
+<div class="app" id="app" hidden>
+  <aside class="side">
+    <button class="logo-btn" id="logoBtn" type="button" aria-label="Culto Café">
+      <img class="logo-light" src="../assets/img/crm/logo.png" alt="" width="240" height="181">
+      <img class="logo-dark" src="../assets/img/crm/logo-blanco.png" alt="" width="240" height="181">
+    </button>
+    <nav class="nav" aria-label="Secciones">
+      <button type="button" data-tab="resumen" aria-current="page">Resumen</button>
+      <button type="button" data-tab="cafeterias">Cafeterías <span class="count" id="cntCaf">–</span></button>
+      <button type="button" data-tab="usuarios">Usuarios del chat <span class="count" id="cntUsr">–</span></button>
+    </nav>
+    <div class="side-foot">
+      <span class="user-mail" id="userEmail"></span>
+      <button class="btn-s" id="btnSalir" type="button">Cerrar sesión</button>
+    </div>
+  </aside>
+
+  <main id="main" data-tab="resumen">
+    <div class="top">
+      <div>
+        <h1 id="titulo" tabindex="-1">Resumen</h1>
+        <p class="sub" id="subtitulo"></p>
+      </div>
+      <div class="top-der">
+        <div class="demo-ctl">
+          <span class="tag-ejemplo" id="tagEjemplo" hidden>Datos de ejemplo</span>
+          <label class="switch"><input type="checkbox" role="switch" id="demoSwitch"><span>Ver datos de ejemplo</span></label>
+        </div>
+        <div class="scene-resumen" aria-hidden="true">
+          <img class="pj flota" src="../assets/img/crm/culto.png" alt="" aria-hidden="true" width="182" height="280">
+          <svg class="lupa" viewBox="0 0 48 48" aria-hidden="true"><circle cx="20" cy="20" r="14" style="fill:rgba(255,255,255,.4);stroke:var(--azul);stroke-width:4"/><path d="M13 16a8 8 0 0 1 6-5" style="stroke:#fff;stroke-width:2.5;fill:none;stroke-linecap:round"/><path d="M30.5 30.5 43 43" style="stroke:var(--tostado);stroke-width:6;stroke-linecap:round"/></svg>
+        </div>
+      </div>
+    </div>
+    <p class="demo-nota" id="demoNota" hidden>Aún no hay datos reales, o tu cuenta no está autorizada para ver el CRM.</p>
+
+    <div class="cargando" id="cargando" role="status" hidden>
+      <img class="pj flota" src="../assets/img/crm/culto.png" alt="" aria-hidden="true" width="182" height="280">
+      <span>Trayendo los datos…</span>
+    </div>
+
+    <section class="tab" id="tab-resumen">
+      <div class="tiles" id="tiles"></div>
+      <div class="cols">
+        <div class="panel">
+          <div class="neo-sit" aria-hidden="true">
+            <span class="puntos"><i></i><i></i><i></i></span>
+            <img class="pj" src="../assets/img/crm/neo.png" alt="" aria-hidden="true" width="140" height="280">
+          </div>
+          <h2>Qué piden los usuarios</h2>
+          <p class="note">Filtros más usados en las conversaciones con Culto.</p>
+          <div class="bars" id="bars"></div>
+        </div>
+        <div class="panel">
+          <h2>Últimos movimientos</h2>
+          <p class="note">Solicitudes de cafeterías y conversaciones recientes.</p>
+          <ul class="feed" id="feed"></ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="tab" id="tab-cafeterias" hidden>
+      <div class="hilo-head">
+        <svg class="hilo" viewBox="0 0 600 100" preserveAspectRatio="none" aria-hidden="true"><path vector-effect="non-scaling-stroke" d="M0 62C70 28 130 88 210 54S360 22 440 56 550 70 600 52"/></svg>
+        <p class="hilo-txt"><b>Moka, la que conecta.</b> Cada solicitud es un hilo: tira de él y súmala.</p>
+        <div class="moka-wrap" id="mokaWrap" aria-hidden="true"><img class="pj" src="../assets/img/crm/moka.png" alt="" aria-hidden="true" width="145" height="280"></div>
+      </div>
+      <div id="board"></div>
+    </section>
+
+    <section class="tab" id="tab-usuarios" hidden>
+      <div class="tools">
+        <input class="search" id="q" type="search" placeholder="Buscar en lo que escribieron…" aria-label="Buscar conversaciones">
+        <div class="chips" id="chips"></div>
+      </div>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Fecha</th><th>Usuario</th><th>Qué buscaba</th><th>Filtros</th><th>Café recomendado</th></tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- guiño escondido -->
+<div class="trio" id="trio" aria-hidden="true" hidden>
+  <img class="pj" src="../assets/img/crm/culto.png" alt="" aria-hidden="true" width="182" height="280">
+  <img class="pj" src="../assets/img/crm/neo.png" alt="" aria-hidden="true" width="140" height="280">
+  <img class="pj" src="../assets/img/crm/moka.png" alt="" aria-hidden="true" width="145" height="280">
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js" integrity="sha384-0w2KAL2YHP6wKOkUDzkCDGgVvfmHnj02DHeQ6XcHOgTfFsGyonKOpShMH1x6nk9o" crossorigin="anonymous"></script>
+<script>
+(function(){
+  "use strict";
+  var SUPABASE_URL = "https://wrybrdorgjpctzepierb.supabase.co";
+  var SUPABASE_KEY = "sb_publishable_cYdvNUZ_5pUkWsmxnmQyMA_4dxs1owY";
+  var LS_DEMO = "culto_crm_demo";
+  var REDUCE = !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
+  var IMG = "../assets/img/crm/";
+
+  var ESTADOS = [
+    {k:"nuevo",t:"Nuevo",c:"var(--azul)"},
+    {k:"contactada",t:"Contactada",c:"var(--tostado)"},
+    {k:"verificada",t:"Verificada",c:"var(--lila)"},
+    {k:"activa",t:"Activa",c:"var(--matcha)"}
+  ];
+  var PRECIO = {"Prueba gratuita":0,"Presencia":15,"Destacada":29,"Socia":49,"Free trial":0,"Presence":15,"Featured":29,"Partner":49};
+
+  var DEMO_LEADS = [
+    {id:1,nombre:"Tostadero La Mora",contacto:"Marta R.",email:"marta@lamora.example",telefono:"600 000 001",plan:"Presencia",fecha:"22 sep",estado:"nuevo",origen:"web",notas:""},
+    {id:2,nombre:"Café del Pez Volador",contacto:"Iván S.",email:"ivan@pezvolador.example",telefono:"600 000 002",plan:"Destacada",fecha:"22 sep",estado:"nuevo",origen:"web",notas:""},
+    {id:3,nombre:"Sala Ámbar Coffee",contacto:"Lucía P.",email:"lucia@salaambar.example",telefono:"",plan:"Prueba gratuita",fecha:"21 sep",estado:"nuevo",origen:"web",notas:""},
+    {id:4,nombre:"Grano & Tinta",contacto:"Óscar M.",email:"oscar@granotinta.example",telefono:"600 000 004",plan:"Destacada",fecha:"19 sep",estado:"contactada",origen:"web",notas:"Le llamamos el lunes."},
+    {id:5,nombre:"Bruma Espresso Bar",contacto:"Nerea T.",email:"nerea@bruma.example",telefono:"600 000 005",plan:"Presencia",fecha:"18 sep",estado:"contactada",origen:"web",notas:""},
+    {id:6,nombre:"Pausa Slow Coffee",contacto:"Diego L.",email:"diego@pausa.example",telefono:"600 000 006",plan:"Socia",fecha:"15 sep",estado:"verificada",origen:"web",notas:""},
+    {id:7,nombre:"Alba Café Lab",contacto:"Sofía G.",email:"sofia@albalab.example",telefono:"600 000 007",plan:"Destacada",fecha:"12 sep",estado:"activa",origen:"web",notas:""},
+    {id:8,nombre:"Mesa Doce Café",contacto:"Pablo V.",email:"pablo@mesadoce.example",telefono:"600 000 008",plan:"Presencia",fecha:"10 sep",estado:"activa",origen:"web",notas:""}
+  ];
+  var DEMO_CHATS = [
+    {fecha:"23 sep · 10:42",u:"A41",busca:"Un sitio tranquilo con wifi para trabajar",f:["Wifi","Tranquilo","Portátil"],cafe:"HanSo Café",barrio:"Malasaña"},
+    {fecha:"23 sep · 09:15",u:"B07",busca:"Café con mi perro y terraza",f:["Mascotas","Terraza"],cafe:"Federal Café",barrio:"Malasaña"},
+    {fecha:"22 sep · 19:03",u:"C19",busca:"Dónde estudiar con enchufes",f:["Enchufes","Portátil"],cafe:"La Bicicleta Café",barrio:"Malasaña"},
+    {fecha:"22 sep · 12:30",u:"D33",busca:"Plan de brunch con amigas",f:["Brunch","Grupo"],cafe:"EatMyTrip Malasaña",barrio:"Malasaña"},
+    {fecha:"22 sep · 08:51",u:"E02",busca:"Café de especialidad para llevar",f:["Especialidad"],cafe:"Nōburu Specialty Coffee",barrio:"Malasaña"},
+    {fecha:"21 sep · 17:20",u:"F58",busca:"Un sitio silencioso para leer",f:["Tranquilo"],cafe:"Pan y Pepinillos Café",barrio:"Malasaña"},
+    {fecha:"21 sep · 11:08",u:"G14",busca:"Terraza al sol, voy con mi perra",f:["Terraza","Mascotas"],cafe:"ŌKOFI CAFE",barrio:"Malasaña"},
+    {fecha:"21 sep · 10:12",u:"H26",busca:"Reunión de trabajo con buen wifi",f:["Wifi","Portátil"],cafe:"Misión Café",barrio:"Malasaña"},
+    {fecha:"20 sep · 16:44",u:"J90",busca:"Matcha y algo dulce",f:["Matcha","Dulce"],cafe:"Sweet Studio",barrio:"Malasaña"},
+    {fecha:"20 sep · 09:37",u:"K71",busca:"Wifi y portátil entre semana",f:["Wifi","Portátil"],cafe:"Urbano Specialty Coffee",barrio:"Malasaña"},
+    {fecha:"19 sep · 18:02",u:"L05",busca:"Terraza tranquila para merendar",f:["Terraza","Tranquilo"],cafe:"Noviciado CoffeeShop",barrio:"Malasaña"},
+    {fecha:"19 sep · 13:26",u:"M38",busca:"Café dog-friendly cerca de Conde Duque",f:["Mascotas"],cafe:"SAMBU'S COFFEE",barrio:"Malasaña"}
+  ];
+  var DEMO_FEED = [
+    {c:"var(--azul)",t:"Nueva solicitud: Tostadero La Mora",m:"Plan Presencia · 22 sep"},
+    {c:"var(--azul)",t:"Nueva solicitud: Café del Pez Volador",m:"Plan Destacada · 22 sep"},
+    {c:"var(--matcha)",t:"Alba Café Lab pasó a Activa",m:"Plan Destacada · 12 sep"},
+    {c:"var(--tostado)",t:"Usuario #A41 pidió un sitio tranquilo con wifi",m:"Se recomendó HanSo Café · hoy"},
+    {c:"var(--tostado)",t:"Usuario #B07 pidió terraza y perro",m:"Se recomendó Federal Café · hoy"}
+  ];
+
+  var S = {
+    sb:null, user:null, inApp:false, logging:false, manualOut:false,
+    demo:false, demoChosen:false, demoLeads:DEMO_LEADS.map(function(l){return Object.assign({},l)}),
+    leads:[], chats:[], err:{leads:"",chats:""}, realVacio:false, loading:false,
+    tab:"resumen", filtro:"Todos", q:""
+  };
+
+  function $(id){return document.getElementById(id)}
+  function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+  function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
+  function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+  function estadoDe(k){return ESTADOS.filter(function(e){return e.k===k})[0]}
+  function L(){return S.demo?S.demoLeads:S.leads}
+  function C(){return S.demo?DEMO_CHATS:S.chats}
+  function anon(u){var s=String(u==null?"":u),h=5381;for(var i=0;i<s.length;i++){h=((h<<5)+h+s.charCodeAt(i))>>>0}return h.toString(36).toUpperCase().slice(-4).padStart(4,"0")}
+  function trunc(s,n){s=String(s||"");return s.length>n?s.slice(0,n-1)+"…":s}
+
+  var fDiaF = new Intl.DateTimeFormat("es-ES",{day:"numeric",month:"short",timeZone:"Europe/Madrid"});
+  var fHoraF = new Intl.DateTimeFormat("es-ES",{hour:"2-digit",minute:"2-digit",hour12:false,timeZone:"Europe/Madrid"});
+  function fDia(iso){var d=new Date(iso);return isNaN(d)?"":fDiaF.format(d).replace(".","")}
+  function fDiaHora(iso){var d=new Date(iso);return isNaN(d)?"":fDia(iso)+" · "+fHoraF.format(d)}
+
+  function normLead(r){
+    return {id:r.id,nombre:r.nombre||"",contacto:r.contacto||"",email:r.email||"",telefono:r.telefono||"",plan:r.plan||"",
+      estado:estadoDe(r.estado)?r.estado:"nuevo",origen:r.origen||"",notas:r.notas||"",ts:r.created_at,fecha:fDia(r.created_at)};
+  }
+  function normChat(r){
+    var f=r.filtros;
+    if(typeof f==="string"){f=f.replace(/^\{|\}$/g,"").split(",").map(function(x){return x.replace(/^"|"$/g,"").trim()})}
+    if(!Array.isArray(f))f=[];
+    return {ts:r.created_at,fecha:fDiaHora(r.created_at),u:anon(r.usuario_id),busca:r.mensaje||"",
+      f:f.filter(Boolean),cafe:r.cafe_recomendado||"",barrio:r.barrio||"",canal:r.canal||""};
+  }
+
+  /* ---------- vistas ---------- */
+  function vista(n){
+    ["boot","login","app","aviso"].forEach(function(v){$(v).hidden=(v!==n)});
+    var foco = n==="login"?$("lEmail"):n==="aviso"?$("avisoTit"):n==="app"?$("titulo"):null;
+    if(foco)setTimeout(function(){try{foco.focus({preventScroll:true})}catch(e){}},30);
+  }
+  function toast(msg){
+    var t=$("toast");t.textContent=msg;t.hidden=false;
+    clearTimeout(toast._t);toast._t=setTimeout(function(){t.hidden=true},4500);
+  }
+
+  /* ---------- login ---------- */
+  function loginError(msg){var e=$("lErr");e.textContent=msg;e.hidden=false}
+  function ladea(){
+    var i=$("peekImg");i.classList.remove("ladea");void i.offsetWidth;i.classList.add("ladea");
+    i.addEventListener("animationend",function h(){i.classList.remove("ladea");i.removeEventListener("animationend",h)});
+  }
+  function salto(){
+    var p=$("peek");p.classList.remove("salto");void p.offsetWidth;p.classList.add("salto");
+  }
+  $("ojo").addEventListener("click",function(){
+    var i=$("lPass"),ver=i.type==="password";
+    i.type=ver?"text":"password";this.textContent=ver?"Ocultar":"Mostrar";this.setAttribute("aria-pressed",String(ver));
+  });
+  $("loginForm").addEventListener("submit",function(e){
+    e.preventDefault();
+    if(!S.sb)return;
+    var email=$("lEmail").value.trim(),pass=$("lPass").value,btn=$("lBtn");
+    $("lErr").hidden=true;
+    if(!email||!pass){loginError("Escribe tu email y tu contraseña.");ladea();return}
+    S.logging=true;btn.disabled=true;btn.textContent="Entrando…";
+    S.sb.auth.signInWithPassword({email:email,password:pass}).then(function(r){
+      if(r.error||!r.data||!r.data.session){throw (r.error||new Error("sin sesión"))}
+      salto();
+      var go=function(){entrar(r.data.session,true)};
+      if(REDUCE)go();else{$("login").classList.add("sale");setTimeout(go,650)}
+    }).catch(function(err){
+      S.logging=false;btn.disabled=false;btn.textContent="Entrar";
+      var m=String(err&&err.message||"");
+      var red=/fetch|network|failed to/i.test(m)||(err&&err.status>=500);
+      loginError(red?"No hemos podido conectar. Revisa tu conexión y prueba otra vez.":"Ese email o esa contraseña no cuadran. Prueba otra vez.");
+      ladea();
+    });
+  });
+
+  /* ---------- aviso ---------- */
+  function aviso(tipo){
+    S.inApp=false;S.loading=false;S.leads=[];S.chats=[];S.user=null;
+    if(tipo==="permiso"){
+      $("avisoTit").textContent="Tu cuenta no está autorizada para ver el CRM.";
+      $("avisoTxt").textContent="Entra con otro email o escribe al equipo.";
+    }else{
+      $("avisoTit").textContent="Tu sesión se cerró.";
+      $("avisoTxt").textContent="Vuelve a entrar para seguir.";
+    }
+    $("avisoBtn").dataset.tipo=tipo;
+    vista("aviso");
+  }
+  $("avisoBtn").addEventListener("click",function(){
+    var volver=function(){
+      S.logging=false;$("login").classList.remove("sale");$("lPass").value="";
+      $("lBtn").disabled=false;$("lBtn").textContent="Entrar";$("lErr").hidden=true;vista("login");
+    };
+    if(this.dataset.tipo==="permiso"&&S.sb){S.manualOut=true;S.sb.auth.signOut().then(function(){S.manualOut=false;volver()},function(){S.manualOut=false;volver()})}
+    else volver();
+  });
+
+  /* ---------- entrar / salir ---------- */
+  function entrar(session,animar){
+    if(S.inApp)return;
+    S.user=session.user;S.inApp=true;S.logging=false;
+    $("userEmail").textContent=session.user&&session.user.email||"";
+    var v=lsGet(LS_DEMO);if(v==="1"||v==="0"){S.demoChosen=true;S.demo=(v==="1")}
+    $("login").classList.remove("sale");
+    vista("app");
+    if(animar&&!REDUCE){$("app").classList.add("fade-in")}
+    mostrarTab("resumen");
+    cargar();
+  }
+  $("btnSalir").addEventListener("click",function(){
+    S.manualOut=true;
+    var fin=function(){
+      S.manualOut=false;S.inApp=false;S.user=null;S.leads=[];S.chats=[];
+      $("app").classList.remove("fade-in");$("lPass").value="";$("lBtn").disabled=false;$("lBtn").textContent="Entrar";$("lErr").hidden=true;
+      vista("login");
+    };
+    S.sb.auth.signOut().then(fin,fin);
+  });
+
+  /* ---------- datos ---------- */
+  function esSesion(e){return !!e&&(e.status===401||/jwt|token.*expired|not authenticated|invalid.*token/i.test(e.message||""))}
+  function esPermiso(e){return !!e&&(e.status===403||e.code==="42501"||/permission denied|row-level security|not authorized|forbidden/i.test(e.message||""))}
+
+  function cargar(){
+    S.loading=true;render();
+    var q1=S.sb.from("leads_cafeterias").select("*").order("created_at",{ascending:false});
+    var q2=S.sb.from("conversaciones_chat").select("*").order("created_at",{ascending:false}).limit(1000);
+    return Promise.all([q1,q2]).then(null,function(e){
+      var er={error:{message:String(e&&e.message||e)}};return [er,er];
+    }).then(function(r){
+      var a=r[0],b=r[1],bad=[a.error,b.error].filter(Boolean);
+      if(bad.some(esSesion))return aviso("sesion");
+      if(bad.some(esPermiso))return aviso("permiso");
+      S.err.leads=a.error?"x":"";S.err.chats=b.error?"x":"";
+      S.leads=(a.data||[]).map(normLead);
+      S.chats=(b.data||[]).map(normChat);
+      S.realVacio=!S.err.leads&&!S.err.chats&&!S.leads.length&&!S.chats.length;
+      if(!S.demoChosen)S.demo=S.realVacio;
+      S.loading=false;render();
+    });
+  }
+
+  function cambiarEstado(id,nuevo){
+    var l=L().filter(function(x){return String(x.id)===String(id)})[0];
+    if(!l||l.estado===nuevo)return;
+    var prev=l.estado;l.estado=nuevo;
+    board();tiles();feed();
+    if(S.demo){if(nuevo==="activa")celebrar();return}
+    S.sb.from("leads_cafeterias").update({estado:nuevo}).eq("id",l.id).select("id").then(function(r){
+      if(r.error||!r.data||!r.data.length){
+        if(esSesion(r.error))return aviso("sesion");
+        l.estado=prev;board();tiles();feed();
+        toast("No se pudo guardar el cambio, así que lo hemos deshecho. Inténtalo de nuevo.");
+      }else if(nuevo==="activa")celebrar();
+    },function(){
+      l.estado=prev;board();tiles();feed();
+      toast("No se pudo guardar el cambio, así que lo hemos deshecho. Inténtalo de nuevo.");
+    });
+  }
+  function guardarNota(id,texto,ta){
+    var l=L().filter(function(x){return String(x.id)===String(id)})[0];if(!l)return;
+    var st=ta.parentNode.querySelector(".nota-est");
+    if(texto===l.notas)return;
+    var prev=l.notas;
+    if(S.demo){l.notas=texto;st.textContent="Guardado (ejemplo, solo en memoria)";return}
+    st.textContent="Guardando…";
+    S.sb.from("leads_cafeterias").update({notas:texto}).eq("id",l.id).select("id").then(function(r){
+      if(r.error||!r.data||!r.data.length){
+        if(esSesion(r.error))return aviso("sesion");
+        ta.value=prev;st.textContent="No se pudo guardar la nota.";
+      }else{l.notas=texto;st.textContent="Nota guardada"}
+    },function(){ta.value=prev;st.textContent="No se pudo guardar la nota."});
+  }
+
+  /* ---------- personajes: piezas ---------- */
+  var SVG_MAPA='<svg viewBox="0 0 64 48" aria-hidden="true"><path d="M4 8 22 4 42 10 60 5V40L42 45 22 39 4 44Z" style="fill:var(--crema-2);stroke:var(--tostado);stroke-width:2.2;stroke-linejoin:round"/><path d="M22 4V39M42 10V45" style="stroke:var(--linea-fuerte);stroke-width:1.5;fill:none"/><path d="M10 34C20 20 28 34 38 22S50 20 54 14" style="stroke:var(--tostado);stroke-width:2;stroke-dasharray:3 4;fill:none;stroke-linecap:round"/><circle cx="50" cy="16" r="4" style="fill:var(--azul)"/></svg>';
+  var SVG_BANDEJA='<svg viewBox="0 0 80 34" aria-hidden="true"><path d="M4 8H76L68 30H12Z" style="fill:var(--crema-2);stroke:var(--tostado);stroke-width:2.4;stroke-linejoin:round"/><path d="M14 14H66L62 24H18Z" style="fill:none;stroke:var(--linea-fuerte);stroke-width:1.6;stroke-linejoin:round"/></svg>';
+  var SVG_PANTALLA='<svg viewBox="0 0 80 62" aria-hidden="true"><rect x="4" y="3" width="72" height="46" rx="7" style="fill:var(--papel);stroke:var(--lila);stroke-width:3"/><path d="M34 49h12l4 9H30Z" style="fill:var(--lila)"/><rect x="18" y="17" width="2.5" height="16" rx="1" style="fill:var(--lila)"><animate attributeName="opacity" values="1;0;1" dur="1.2s" repeatCount="indefinite"/></rect></svg>';
+  function vacio(pj,svg,titulo,texto){
+    return '<div class="vacio"><div class="fig"><img class="pj flota" src="'+IMG+pj+'.png" alt="" aria-hidden="true" width="'+(pj==="culto"?182:pj==="neo"?140:145)+'" height="280">'+svg+'</div><h3>'+esc(titulo)+'</h3><p>'+esc(texto)+'</p></div>';
+  }
+  function errorBox(que){
+    return '<div class="vacio"><h3>No hemos podido cargar '+esc(que)+'.</h3><p>Puede ser un fallo puntual de conexión.</p><button class="btn-s" type="button" data-act="reload">Reintentar</button></div>';
+  }
+  function celebrar(){
+    var w=$("mokaWrap");if(!w)return;
+    w.classList.remove("celebra");void w.offsetWidth;w.classList.add("celebra");
+    if(REDUCE)return;
+    var N=26;
+    for(var i=0;i<N;i++){
+      var p=document.createElement("span");p.className="conf";
+      var a=Math.PI*2*i/N+Math.random()*.4,d=38+Math.random()*62;
+      p.style.setProperty("--dx",(Math.cos(a)*d).toFixed(1)+"px");
+      p.style.setProperty("--dy",(Math.sin(a)*d-18).toFixed(1)+"px");
+      p.style.setProperty("--s",(5+Math.random()*5).toFixed(1)+"px");
+      p.style.animationDelay=(Math.random()*.12).toFixed(2)+"s";
+      w.appendChild(p);
+      (function(x){setTimeout(function(){if(x.parentNode)x.parentNode.removeChild(x)},1200)})(p);
+    }
+  }
+  $("logoBtn").addEventListener("click",function(){
+    var t=$("trio");if(!t.hidden)return;
+    t.hidden=false;
+    setTimeout(function(){t.hidden=true},REDUCE?1800:2900);
+  });
+
+  /* ---------- render ---------- */
+  function saludo(){
+    var h=parseInt(new Intl.DateTimeFormat("es-ES",{hour:"numeric",hour12:false,timeZone:"Europe/Madrid"}).format(new Date()),10);
+    var s=(h>=6&&h<13)?"Buenos días":(h>=13&&h<21)?"Buenas tardes":"Buenas noches";
+    return s+", equipo";
+  }
+  var TITULOS = {
+    resumen:[null,"Lo que pasa en Culto Café esta semana."],
+    cafeterias:["Cafeterías","Solicitudes de alta, ordenadas por etapa. Cambia el estado con el desplegable."],
+    usuarios:["Usuarios del chat","Lo que preguntan las personas a Culto. Identificadores anónimos."]
+  };
+
+  function tiles(){
+    var ls=L(),cs=C();
+    var nuevos=ls.filter(function(l){return l.estado==="nuevo"}).length;
+    var seg=ls.filter(function(l){return l.estado==="contactada"||l.estado==="verificada"}).length;
+    var act=ls.filter(function(l){return l.estado==="activa"});
+    var mrr=act.reduce(function(s,l){return s+(PRECIO[l.plan]||0)},0);
+    $("tiles").innerHTML=
+      '<div class="tile primary"><div class="n">'+mrr+' €</div><div class="l">Ingreso mensual</div><div class="h">'+act.length+' cafeterías activas</div></div>'+
+      '<div class="tile"><div class="n">'+nuevos+'</div><div class="l">Solicitudes nuevas</div><div class="h">Sin contactar todavía</div></div>'+
+      '<div class="tile"><div class="n">'+seg+'</div><div class="l">En seguimiento</div><div class="h">Contactadas o verificando</div></div>'+
+      '<div class="tile"><div class="n">'+cs.length+'</div><div class="l">Conversaciones</div><div class="h">Con Culto, en total</div></div>';
+  }
+  function bars(){
+    var cs=C(),c={};
+    cs.forEach(function(x){x.f.forEach(function(f){c[f]=(c[f]||0)+1})});
+    var arr=Object.keys(c).map(function(k){return [k,c[k]]}).sort(function(a,b){return b[1]-a[1]}).slice(0,6);
+    if(!arr.length){$("bars").innerHTML='<p class="muted" style="margin:0">Aún no hay filtros que contar.</p>';return}
+    var max=arr[0][1];
+    $("bars").innerHTML=arr.map(function(a){
+      return '<div class="bar"><span class="name">'+esc(a[0])+'</span><span class="track"><span class="fill" style="width:'+Math.round(a[1]/max*100)+'%"></span></span><span class="v">'+a[1]+'</span></div>';
+    }).join("");
+  }
+  function feed(){
+    var items;
+    if(S.demo){items=DEMO_FEED}
+    else{
+      items=[];
+      S.leads.forEach(function(l){items.push({ts:l.ts,c:"var(--azul)",t:"Nueva solicitud: "+l.nombre,m:"Plan "+l.plan+" · "+l.fecha})});
+      S.chats.forEach(function(x){items.push({ts:x.ts,c:"var(--tostado)",t:"Usuario #"+x.u+" pidió: "+trunc(x.busca,70),m:(x.cafe?"Se recomendó "+x.cafe+" · ":"")+x.fecha})});
+      items.sort(function(a,b){return String(b.ts).localeCompare(String(a.ts))});
+      items=items.slice(0,6);
+    }
+    $("feed").innerHTML=items.length?items.map(function(i){
+      return '<li><span class="dot" style="background:'+i.c+'"></span><div><div class="t">'+esc(i.t)+'</div><div class="m">'+esc(i.m)+'</div></div></li>';
+    }).join(""):'<li><span></span><div class="muted">Todavía no hay movimientos.</div></li>';
+  }
+  function board(){
+    var el=$("board"),ls=L();
+    if(!S.demo&&S.err.leads){el.className="board-msg";el.innerHTML=errorBox("las solicitudes");return}
+    if(!ls.length){el.className="board-msg";el.innerHTML=vacio("moka",SVG_BANDEJA,"Todavía no hay cafeterías.","Cuando una cafetería rellene el formulario de alta, aparecerá aquí.");return}
+    el.className="board";
+    el.innerHTML=ESTADOS.map(function(e){
+      var cards=ls.filter(function(l){return l.estado===e.k});
+      return '<div class="colm"><header><span class="pill"><span class="swatch" style="background:'+e.c+'"></span>'+e.t+'</span><span class="c">'+cards.length+'</span></header>'+
+        cards.map(function(l){
+          var tel=String(l.telefono||"").replace(/[^\d+]/g,"");
+          return '<article class="card"><div class="nm">'+esc(l.nombre)+'</div><div class="ct">'+esc(l.contacto)+'</div>'+
+            '<div class="ct">'+(l.email?'<a href="mailto:'+esc(l.email)+'">'+esc(l.email)+'</a>':'<span>Sin email</span>')+
+            (l.telefono?' · <a href="tel:'+esc(tel)+'">'+esc(l.telefono)+'</a>':'')+'</div>'+
+            '<div class="row"><span class="plan">'+esc(l.plan)+'</span><span class="fecha">'+esc(l.fecha)+'</span></div>'+
+            (l.origen?'<div class="fecha">Origen: '+esc(l.origen)+'</div>':'')+
+            '<select data-id="'+esc(l.id)+'" aria-label="Estado de '+esc(l.nombre)+'">'+
+              ESTADOS.map(function(s){return '<option value="'+s.k+'"'+(s.k===l.estado?" selected":"")+'>'+s.t+'</option>'}).join("")+
+            '</select>'+
+            '<textarea data-nota="'+esc(l.id)+'" rows="2" placeholder="Notas del equipo…" aria-label="Notas de '+esc(l.nombre)+'">'+esc(l.notas)+'</textarea>'+
+            '<span class="nota-est" aria-live="polite"></span></article>';
+        }).join("")+
+        (cards.length?"":'<div class="vacia">Nada por aquí.</div>')+
+      '</div>';
+    }).join("");
+  }
+  function chips(){
+    var set={};C().forEach(function(x){x.f.forEach(function(f){set[f]=1})});
+    var all=["Todos"].concat(Object.keys(set).sort());
+    if(all.indexOf(S.filtro)<0)S.filtro="Todos";
+    $("chips").innerHTML=all.length>1?all.map(function(f){
+      return '<button class="chip" type="button" data-f="'+esc(f)+'" aria-pressed="'+(f===S.filtro)+'">'+esc(f)+'</button>';
+    }).join(""):"";
+  }
+  function tabla(){
+    var cs=C(),tb=$("tbody");
+    if(!S.demo&&S.err.chats){tb.innerHTML='<tr><td colspan="5">'+errorBox("las conversaciones")+'</td></tr>';return}
+    if(!cs.length){tb.innerHTML='<tr><td colspan="5">'+vacio("neo",SVG_PANTALLA,"Aún no hay conversaciones.","Cuando alguien hable con Culto por WhatsApp, lo verás aquí.")+'</td></tr>';return}
+    var rows=cs.filter(function(x){
+      var okF=S.filtro==="Todos"||x.f.indexOf(S.filtro)>-1;
+      var okQ=!S.q||(x.busca+" "+x.cafe).toLowerCase().indexOf(S.q)>-1;
+      return okF&&okQ;
+    });
+    tb.innerHTML=rows.length?rows.map(function(x){
+      return '<tr><td class="muted" style="white-space:nowrap">'+esc(x.fecha)+'</td><td class="uid">#'+esc(x.u)+'</td><td>'+esc(x.busca)+'</td>'+
+        '<td><div class="fx">'+x.f.map(function(f){return '<span class="f">'+esc(f)+'</span>'}).join("")+'</div></td>'+
+        '<td><b>'+esc(x.cafe||"—")+'</b>'+(x.barrio?'<div class="muted">'+esc(x.barrio)+'</div>':"")+'</td></tr>';
+    }).join(""):'<tr><td colspan="5">'+vacio("culto",SVG_MAPA,"No encontramos nada con eso.","Prueba con otra palabra o quita algún filtro.")+'</td></tr>';
+  }
+  function render(){
+    $("main").classList.toggle("is-loading",S.loading);
+    $("cargando").hidden=!S.loading;
+    $("demoSwitch").checked=S.demo;
+    $("tagEjemplo").hidden=!S.demo;
+    $("demoNota").hidden=!S.realVacio;
+    $("cntCaf").textContent=S.loading?"–":L().length;
+    $("cntUsr").textContent=S.loading?"–":C().length;
+    if(S.loading)return;
+    tiles();bars();feed();board();chips();tabla();
+  }
+
+  function mostrarTab(tab){
+    S.tab=tab;
+    ["resumen","cafeterias","usuarios"].forEach(function(t){$("tab-"+t).hidden=(t!==tab)});
+    document.querySelectorAll(".nav button").forEach(function(b){
+      if(b.dataset.tab===tab)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current");
+    });
+    $("main").dataset.tab=tab;
+    $("titulo").textContent=tab==="resumen"?saludo():TITULOS[tab][0];
+    $("subtitulo").textContent=TITULOS[tab][1];
+  }
+
+  /* ---------- eventos ---------- */
+  document.querySelector(".nav").addEventListener("click",function(e){
+    var b=e.target.closest("button[data-tab]");if(b)mostrarTab(b.dataset.tab);
+  });
+  $("board").addEventListener("change",function(e){
+    var s=e.target.closest("select[data-id]");if(s)return cambiarEstado(s.dataset.id,s.value);
+    var t=e.target.closest("textarea[data-nota]");if(t)guardarNota(t.dataset.nota,t.value.trim(),t);
+  });
+  $("app").addEventListener("click",function(e){
+    if(e.target.closest("[data-act=reload]"))cargar();
+  });
+  $("chips").addEventListener("click",function(e){
+    var c=e.target.closest(".chip");if(!c)return;
+    S.filtro=c.dataset.f;chips();tabla();
+  });
+  $("q").addEventListener("input",function(e){S.q=e.target.value.trim().toLowerCase();tabla()});
+  $("demoSwitch").addEventListener("change",function(e){
+    S.demo=e.target.checked;S.demoChosen=true;lsSet(LS_DEMO,S.demo?"1":"0");
+    S.filtro="Todos";render();
+  });
+
+  /* ---------- arranque ---------- */
+  if(!window.supabase||!window.supabase.createClient){
+    vista("login");
+    loginError("No hemos podido cargar el acceso. Recarga la página.");
+    $("lBtn").disabled=true;
+    return;
+  }
+  S.sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true}});
+  S.sb.auth.onAuthStateChange(function(ev,session){
+    setTimeout(function(){
+      if(ev==="SIGNED_OUT"){
+        if(S.manualOut)return;
+        if(S.inApp)aviso("sesion");
+      }else if(ev==="SIGNED_IN"&&session&&!S.inApp&&!S.logging){
+        entrar(session,false);
+      }
+    },0);
+  });
+  S.sb.auth.getSession().then(function(r){
+    var s=r&&r.data&&r.data.session;
+    if(s)entrar(s,false);else vista("login");
+  }).catch(function(){vista("login")});
+})();
+</script>
+</body>
+</html>
