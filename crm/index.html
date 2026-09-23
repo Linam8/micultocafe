@@ -43,7 +43,7 @@ h1,h2,h3{margin:0;letter-spacing:-.02em;line-height:1.15}
 /* ---------- personajes: base ---------- */
 .pj{width:auto;user-select:none;-webkit-user-drag:none;pointer-events:none}
 .flota{animation:flota 3.2s ease-in-out infinite}
-@keyframes flota{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+@keyframes flota{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-11px) rotate(2.5deg)}}
 
 /* ---------- arranque / carga ---------- */
 .boot{min-height:100dvh;display:grid;place-content:center;justify-items:center;gap:10px;color:var(--tinta-suave);font-weight:600}
@@ -175,7 +175,7 @@ main[data-tab="resumen"] .scene-resumen{display:block}
 .hilo-txt{position:relative;z-index:1;margin:0;background:var(--papel);border:1px solid var(--linea);border-radius:12px;padding:10px 14px;max-width:46ch}
 .moka-wrap{position:relative;z-index:1;height:96px;width:72px;flex:none}
 .moka-wrap .pj{position:absolute;left:0;bottom:0;height:92px}
-.moka-wrap.celebra .pj{animation:salto-m .6s ease-out}
+.moka-wrap.celebra .moka-in{animation:salto-m .6s ease-out}
 @keyframes salto-m{0%,100%{translate:0 0}40%{translate:0 -22px}}
 .conf{position:absolute;left:50%;top:38%;width:var(--s);height:var(--s);border-radius:50%;background:var(--matcha);pointer-events:none;animation:conf .95s ease-out forwards}
 .conf:nth-child(3n){background:color-mix(in srgb,var(--matcha) 60%,#fff)}
@@ -234,6 +234,80 @@ td{padding:13px 16px;border-top:1px solid var(--linea);vertical-align:top;overfl
 .trio .pj:nth-child(3){height:92px;animation-delay:.3s,.8s}
 @keyframes trio-sube{0%{translate:0 115%}16%,80%{translate:0 0}100%{translate:0 115%}}
 
+
+/* ---------- más vida y menos rigidez ---------- */
+.pj.vivo,.scene-resumen .pj{transform-origin:50% 100%;animation:vivo 5.2s ease-in-out infinite}
+@keyframes vivo{
+  0%,58%,100%{transform:translateY(0) scale(1,1) rotate(0)}
+  14%{transform:translateY(-3px) scale(.99,1.025) rotate(-2deg)}
+  32%{transform:translateY(-1px) scale(1.01,.99) rotate(2deg)}
+  62%{transform:translateY(0) scale(1.07,.9) rotate(0)}
+  70%{transform:translateY(-18px) scale(.94,1.08) rotate(-3deg)}
+  78%{transform:translateY(0) scale(1.06,.93) rotate(0)}
+  84%{transform:translateY(-4px) scale(.99,1.02)}
+  90%{transform:translateY(0) scale(1,1)}
+}
+.scene-resumen{width:236px;height:112px}
+.scene-resumen .pj{right:30px;animation-duration:4.6s}
+.burbuja{position:absolute;left:0;top:2px;width:118px;height:46px;display:grid;place-items:center;text-align:center;padding:4px 10px;font-size:12px;font-weight:700;line-height:1.25;background:var(--papel);border:1px solid var(--linea);border-radius:16px 16px 16px 4px;box-shadow:var(--sombra)}
+.burbuja span{grid-area:1/1;opacity:0;animation:frase 8s ease-in-out infinite}
+.burbuja span+span{animation-delay:4s}
+@keyframes frase{0%{opacity:0;translate:0 5px}8%,42%{opacity:1;translate:0 0}50%,100%{opacity:0;translate:0 -4px}}
+.chispa{position:absolute;width:9px;height:9px;background:var(--matcha);clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);animation:chispa 2.6s ease-in-out infinite}
+.chispa.c1{right:8px;top:12px}
+.chispa.c2{right:132px;top:64px;background:var(--lila);animation-delay:.9s}
+.chispa.c3{right:96px;top:6px;background:var(--azul);width:7px;height:7px;animation-delay:1.7s}
+@keyframes chispa{0%,100%{transform:scale(.2) rotate(0);opacity:0}45%{transform:scale(1) rotate(45deg);opacity:1}}
+.lupa{animation-duration:2.8s}
+.neo-sit .pj{animation:teclea .42s ease-in-out infinite}
+@keyframes teclea{0%,100%{translate:0 0;rotate:0deg}50%{translate:0 2.5px;rotate:1.2deg}}
+.bit{position:absolute;bottom:26px;width:5px;height:5px;border-radius:50%;background:var(--lila);opacity:0;animation:bit 2.4s ease-out infinite}
+.bit.b1{right:52px}.bit.b2{right:34px;animation-delay:.8s;background:var(--azul)}.bit.b3{right:18px;animation-delay:1.6s}
+@keyframes bit{0%{translate:0 0;opacity:0}15%{opacity:1}100%{translate:-6px -34px;opacity:0}}
+
+.peek .pj{animation:saluda 1.5s ease-in-out .9s 1,curiosea 6s ease-in-out 3.2s infinite}
+@keyframes curiosea{0%,55%,100%{translate:0 0;rotate:0deg}65%{translate:0 -12px;rotate:-6deg}75%{translate:0 -5px;rotate:6deg}85%{translate:0 -10px;rotate:-3deg}}
+.login-izq{background:radial-gradient(420px 260px at 8% 4%,color-mix(in srgb,var(--azul) 14%,transparent),transparent 70%),radial-gradient(380px 300px at 92% 96%,color-mix(in srgb,var(--matcha) 16%,transparent),transparent 70%),var(--crema)}
+
+.app{background:
+  radial-gradient(520px 260px at 92% -4%,color-mix(in srgb,var(--azul) 13%,transparent),transparent 70%),
+  radial-gradient(460px 300px at 16% 108%,color-mix(in srgb,var(--matcha) 15%,transparent),transparent 70%),
+  radial-gradient(360px 240px at 100% 62%,color-mix(in srgb,var(--lila) 10%,transparent),transparent 70%);
+  background-attachment:fixed}
+.nav button{border-radius:12px;transition:background .15s,color .15s,transform .15s}
+.nav button:hover{transform:translateX(3px)}
+.nav button[aria-current="page"]{background:color-mix(in srgb,var(--azul) 20%,var(--papel));box-shadow:inset 3px 0 0 var(--azul)}
+.tile{position:relative;overflow:hidden;border-radius:18px;transition:transform .18s,box-shadow .18s}
+.tile:hover{transform:translateY(-3px);box-shadow:var(--sombra)}
+.tile::after{content:"";position:absolute;right:-20px;top:-20px;width:82px;height:82px;border-radius:50%;background:var(--acc,var(--azul));opacity:.2}
+.tile:nth-child(1){--acc:var(--matcha)}.tile:nth-child(2){--acc:var(--azul)}.tile:nth-child(3){--acc:var(--tostado)}.tile:nth-child(4){--acc:var(--lila)}
+.tile.primary{background:linear-gradient(135deg,var(--carbon),color-mix(in srgb,var(--carbon) 76%,var(--azul)))}
+.tile.primary::after{opacity:.4}
+.panel{border-radius:18px}
+.card{transition:transform .18s,box-shadow .18s}
+.card:hover{transform:translateY(-3px) rotate(-.4deg);box-shadow:var(--sombra)}
+.colm{background:color-mix(in srgb,var(--col,var(--tostado)) 10%,var(--crema-2));border-top:4px solid var(--col,var(--tostado));border-radius:18px}
+.hilo-head{background:linear-gradient(90deg,color-mix(in srgb,var(--matcha) 18%,transparent),transparent 75%);border-radius:20px;padding:8px 12px;min-height:112px}
+.hilo-txt{rotate:-.7deg;box-shadow:var(--sombra);max-width:min(46ch,54%)}
+.hilo path{stroke-width:2.5}
+.moka-wrap{position:absolute;z-index:2;bottom:8px;left:0;top:auto;height:92px;width:72px;animation:camina 16s ease-in-out infinite alternate}
+.moka-in{display:block;position:absolute;inset:0}
+.moka-wrap .pj{left:0;bottom:0;height:92px;transform-origin:50% 100%;animation:vivo 4.2s ease-in-out infinite,gira 32s steps(1) infinite}
+@keyframes camina{from{left:calc(58% + 8px)}to{left:calc(100% - 92px)}}
+@keyframes gira{0%{scale:1 1}50%{scale:-1 1}}
+.entra>*{animation:sube .55s cubic-bezier(.2,.8,.3,1) both}
+.entra>*:nth-child(2){animation-delay:.08s}.entra>*:nth-child(3){animation-delay:.16s}
+@keyframes sube{from{opacity:0;translate:0 14px}to{opacity:1;translate:0 0}}
+.btn-s{transition:transform .15s,border-color .15s}.btn-s:hover{transform:translateY(-1px)}
+@media (max-width:700px){
+  .hilo-head{min-height:160px;align-items:flex-start;padding-top:10px}
+  .hilo-txt{max-width:100%}
+  .moka-wrap{bottom:2px;height:76px;width:60px}
+  .moka-wrap .pj{height:76px}
+  @keyframes camina{from{left:calc(100% - 200px)}to{left:calc(100% - 74px)}}
+  .scene-resumen{width:140px}.burbuja{display:none}
+}
+
 /* ---------- responsive ---------- */
 @media (max-width:920px){
   .login{grid-template-columns:1fr}
@@ -256,6 +330,7 @@ td{padding:13px 16px;border-top:1px solid var(--linea);vertical-align:top;overfl
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .burbuja,.chispa,.bit{display:none}
 }
 </style>
 </head>
@@ -343,7 +418,9 @@ td{padding:13px 16px;border-top:1px solid var(--linea);vertical-align:top;overfl
           <label class="switch"><input type="checkbox" role="switch" id="demoSwitch"><span>Ver datos de ejemplo</span></label>
         </div>
         <div class="scene-resumen" aria-hidden="true">
-          <img class="pj flota" src="../assets/img/crm/culto.png" alt="" aria-hidden="true" width="182" height="280">
+          <span class="burbuja"><span>¿Qué buscará hoy la gente?</span><span>Mira esas cifras…</span></span>
+          <i class="chispa c1"></i><i class="chispa c2"></i><i class="chispa c3"></i>
+          <img class="pj" src="../assets/img/crm/culto.png" alt="" aria-hidden="true" width="182" height="280">
           <svg class="lupa" viewBox="0 0 48 48" aria-hidden="true"><circle cx="20" cy="20" r="14" style="fill:rgba(255,255,255,.4);stroke:var(--azul);stroke-width:4"/><path d="M13 16a8 8 0 0 1 6-5" style="stroke:#fff;stroke-width:2.5;fill:none;stroke-linecap:round"/><path d="M30.5 30.5 43 43" style="stroke:var(--tostado);stroke-width:6;stroke-linecap:round"/></svg>
         </div>
       </div>
@@ -361,6 +438,7 @@ td{padding:13px 16px;border-top:1px solid var(--linea);vertical-align:top;overfl
         <div class="panel">
           <div class="neo-sit" aria-hidden="true">
             <span class="puntos"><i></i><i></i><i></i></span>
+            <i class="bit b1"></i><i class="bit b2"></i><i class="bit b3"></i>
             <img class="pj" src="../assets/img/crm/neo.png" alt="" aria-hidden="true" width="140" height="280">
           </div>
           <h2>Qué piden los usuarios</h2>
@@ -379,7 +457,7 @@ td{padding:13px 16px;border-top:1px solid var(--linea);vertical-align:top;overfl
       <div class="hilo-head">
         <svg class="hilo" viewBox="0 0 600 100" preserveAspectRatio="none" aria-hidden="true"><path vector-effect="non-scaling-stroke" d="M0 62C70 28 130 88 210 54S360 22 440 56 550 70 600 52"/></svg>
         <p class="hilo-txt"><b>Moka, la que conecta.</b> Cada solicitud es un hilo: tira de él y súmala.</p>
-        <div class="moka-wrap" id="mokaWrap" aria-hidden="true"><img class="pj" src="../assets/img/crm/moka.png" alt="" aria-hidden="true" width="145" height="280"></div>
+        <div class="moka-wrap" id="mokaWrap" aria-hidden="true"><span class="moka-in"><img class="pj" src="../assets/img/crm/moka.png" alt="" aria-hidden="true" width="145" height="280"></span></div>
       </div>
       <div id="board"></div>
     </section>
@@ -641,7 +719,7 @@ td{padding:13px 16px;border-top:1px solid var(--linea);vertical-align:top;overfl
   var SVG_BANDEJA='<svg viewBox="0 0 80 34" aria-hidden="true"><path d="M4 8H76L68 30H12Z" style="fill:var(--crema-2);stroke:var(--tostado);stroke-width:2.4;stroke-linejoin:round"/><path d="M14 14H66L62 24H18Z" style="fill:none;stroke:var(--linea-fuerte);stroke-width:1.6;stroke-linejoin:round"/></svg>';
   var SVG_PANTALLA='<svg viewBox="0 0 80 62" aria-hidden="true"><rect x="4" y="3" width="72" height="46" rx="7" style="fill:var(--papel);stroke:var(--lila);stroke-width:3"/><path d="M34 49h12l4 9H30Z" style="fill:var(--lila)"/><rect x="18" y="17" width="2.5" height="16" rx="1" style="fill:var(--lila)"><animate attributeName="opacity" values="1;0;1" dur="1.2s" repeatCount="indefinite"/></rect></svg>';
   function vacio(pj,svg,titulo,texto){
-    return '<div class="vacio"><div class="fig"><img class="pj flota" src="'+IMG+pj+'.png" alt="" aria-hidden="true" width="'+(pj==="culto"?182:pj==="neo"?140:145)+'" height="280">'+svg+'</div><h3>'+esc(titulo)+'</h3><p>'+esc(texto)+'</p></div>';
+    return '<div class="vacio"><div class="fig"><img class="pj vivo" src="'+IMG+pj+'.png" alt="" aria-hidden="true" width="'+(pj==="culto"?182:pj==="neo"?140:145)+'" height="280">'+svg+'</div><h3>'+esc(titulo)+'</h3><p>'+esc(texto)+'</p></div>';
   }
   function errorBox(que){
     return '<div class="vacio"><h3>No hemos podido cargar '+esc(que)+'.</h3><p>Puede ser un fallo puntual de conexión.</p><button class="btn-s" type="button" data-act="reload">Reintentar</button></div>';
@@ -649,6 +727,7 @@ td{padding:13px 16px;border-top:1px solid var(--linea);vertical-align:top;overfl
   function celebrar(){
     var w=$("mokaWrap");if(!w)return;
     w.classList.remove("celebra");void w.offsetWidth;w.classList.add("celebra");
+    setTimeout(function(){w.classList.remove("celebra")},700);
     if(REDUCE)return;
     var N=26;
     for(var i=0;i<N;i++){
@@ -723,7 +802,7 @@ td{padding:13px 16px;border-top:1px solid var(--linea);vertical-align:top;overfl
     el.className="board";
     el.innerHTML=ESTADOS.map(function(e){
       var cards=ls.filter(function(l){return l.estado===e.k});
-      return '<div class="colm"><header><span class="pill"><span class="swatch" style="background:'+e.c+'"></span>'+e.t+'</span><span class="c">'+cards.length+'</span></header>'+
+      return '<div class="colm" style="--col:'+e.c+'"><header><span class="pill"><span class="swatch" style="background:'+e.c+'"></span>'+e.t+'</span><span class="c">'+cards.length+'</span></header>'+
         cards.map(function(l){
           var tel=String(l.telefono||"").replace(/[^\d+]/g,"");
           return '<article class="card"><div class="nm">'+esc(l.nombre)+'</div><div class="ct">'+esc(l.contacto)+'</div>'+
@@ -783,6 +862,7 @@ td{padding:13px 16px;border-top:1px solid var(--linea);vertical-align:top;overfl
       if(b.dataset.tab===tab)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current");
     });
     $("main").dataset.tab=tab;
+    var sec=$("tab-"+tab);sec.classList.remove("entra");void sec.offsetWidth;sec.classList.add("entra");
     $("titulo").textContent=tab==="resumen"?saludo():TITULOS[tab][0];
     $("subtitulo").textContent=TITULOS[tab][1];
   }
