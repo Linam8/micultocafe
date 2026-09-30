@@ -30,6 +30,7 @@
 *{box-sizing:border-box}
 html,body{height:100%}
 body{margin:0;background:var(--crema);color:var(--tinta);font-family:var(--font);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body{background-image:radial-gradient(520px 300px at 92% -6%,color-mix(in srgb,var(--azul) 12%,transparent),transparent 70%),radial-gradient(460px 320px at 6% 106%,color-mix(in srgb,var(--matcha) 14%,transparent),transparent 70%),radial-gradient(360px 240px at 100% 60%,color-mix(in srgb,var(--lila) 10%,transparent),transparent 70%);background-attachment:fixed}
 [hidden]{display:none!important}
 button,select,input,textarea{font:inherit;color:inherit}
 button{cursor:pointer}
@@ -40,8 +41,9 @@ img{display:block;max-width:none}
 .boot img{height:100px}
 
 .login{min-height:100dvh;display:grid;place-items:center;padding:24px}
-.login-card{width:100%;max-width:380px;background:var(--papel);border:1px solid var(--linea);border-radius:var(--radio-lg);padding:30px;box-shadow:var(--sombra);text-align:center}
-.login-card img{height:64px;margin:0 auto 14px}
+.login-card{width:100%;max-width:380px;background:var(--papel);border:1px solid var(--linea);border-radius:var(--radio-lg);padding:34px 30px;box-shadow:var(--sombra);text-align:center;position:relative}
+.login-card img{height:64px;width:auto;margin:0 auto 14px;animation:vivo 4.6s ease-in-out infinite;transform-origin:50% 100%}
+@keyframes vivo{0%,58%,100%{transform:translateY(0) rotate(0)}62%{transform:translateY(0) scale(1.06,.92)}70%{transform:translateY(-14px) rotate(-3deg) scale(.95,1.06)}78%{transform:translateY(0) rotate(0) scale(1.05,.94)}90%{transform:translateY(0)}}
 .login-card h1{margin:0 0 4px;font-size:1.3rem;font-weight:800}
 .login-card .sub{margin:0 0 20px;color:var(--tinta-suave);font-size:.9rem}
 .campo{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;text-align:left}
@@ -54,19 +56,25 @@ img{display:block;max-width:none}
 .volver{display:block;margin-top:14px;font-size:.85rem;color:var(--tinta-suave);text-decoration:none}
 .volver:hover{text-decoration:underline}
 
-.app{max-width:920px;margin:0 auto;padding:26px 20px 60px}
-.top{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:22px}
+.app{max-width:960px;margin:0 auto;padding:28px 20px 60px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:22px;background:var(--papel);border:1px solid var(--linea);border-radius:20px;padding:14px 20px;box-shadow:var(--sombra)}
 .top-izq{display:flex;align-items:center;gap:12px}
-.top-izq img{height:40px}
-.top h1{margin:0;font-size:1.4rem;font-weight:800}
+.top-izq img{height:44px;width:auto}
+.top h1{margin:0;font-size:1.3rem;font-weight:800;letter-spacing:-.01em}
 .top .sub{margin:2px 0 0;font-size:.85rem;color:var(--tinta-suave)}
 .top-der{display:flex;gap:10px;flex-wrap:wrap}
-.btn-s{border:1.5px solid var(--linea-fuerte);background:var(--papel);border-radius:999px;padding:9px 16px;font-weight:700;font-size:.88rem}
-.btn-s:hover{border-color:var(--tinta)}
-.btn-azul{border:0;background:var(--btn);color:var(--btn-tinta);border-radius:999px;padding:9px 18px;font-weight:800;font-size:.88rem}
+.btn-s{border:1.5px solid var(--linea-fuerte);background:var(--papel);border-radius:999px;padding:9px 16px;font-weight:700;font-size:.88rem;transition:transform .15s,border-color .15s}
+.btn-s:hover{border-color:var(--tinta);transform:translateY(-1px)}
+.btn-azul{border:0;background:var(--btn);color:var(--btn-tinta);border-radius:999px;padding:10px 20px;font-weight:800;font-size:.88rem;transition:transform .15s,box-shadow .15s;box-shadow:0 6px 16px -8px color-mix(in srgb,var(--btn) 70%,transparent)}
+.btn-azul:hover{transform:translateY(-1px)}
+
+.lista-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px;padding:0 4px}
+.lista-top h2{margin:0;font-size:1.05rem;font-weight:800;color:var(--tinta-suave)}
 
 .lista{display:flex;flex-direction:column;gap:12px}
-.fila{background:var(--papel);border:1px solid var(--linea);border-radius:var(--radio);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.fila{background:var(--papel);border:1px solid var(--linea);border-radius:16px;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;box-shadow:var(--sombra);transition:transform .15s;border-left:4px solid var(--linea-fuerte)}
+.fila:hover{transform:translateY(-2px)}
+.fila.es-pub{border-left-color:var(--matcha)}
 .fila .info{min-width:0;flex:1 1 220px}
 .fila h3{margin:0 0 2px;font-size:1rem;font-weight:700;overflow-wrap:anywhere}
 .fila .meta{font-size:.8rem;color:var(--tinta-suave);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
@@ -74,10 +82,11 @@ img{display:block;max-width:none}
 .estado.pub{background:color-mix(in srgb,var(--matcha) 30%,var(--papel));border:1px solid color-mix(in srgb,var(--matcha) 50%,var(--linea))}
 .estado.bor{background:color-mix(in srgb,var(--tostado) 26%,var(--papel));border:1px solid var(--linea-fuerte)}
 .fila .acciones{display:flex;gap:8px;flex-wrap:wrap}
-.vacio{text-align:center;padding:50px 16px;color:var(--tinta-suave)}
-.vacio img{height:90px;margin:0 auto 12px}
+.vacio{text-align:center;padding:56px 16px;color:var(--tinta-suave);background:var(--papel);border:1px solid var(--linea);border-radius:20px;box-shadow:var(--sombra)}
+.vacio img{height:96px;width:auto;margin:0 auto 14px;animation:vivo 4.2s ease-in-out infinite;transform-origin:50% 100%}
+.vacio h3{font-size:1.1rem;margin-bottom:4px}
 
-.editor{background:var(--papel);border:1px solid var(--linea);border-radius:var(--radio-lg);padding:22px clamp(16px,4vw,28px)}
+.editor{background:var(--papel);border:1px solid var(--linea);border-radius:20px;padding:24px clamp(16px,4vw,30px);box-shadow:var(--sombra)}
 .editor h2{margin:0 0 18px;font-size:1.2rem;font-weight:800}
 .grid2{display:grid;grid-template-columns:2fr 1fr;gap:14px}
 .campo textarea{resize:vertical}
@@ -138,8 +147,8 @@ img{display:block;max-width:none}
   </div>
 
   <section id="vistaLista">
-    <div class="top" style="margin-bottom:14px">
-      <span></span>
+    <div class="lista-top">
+      <h2>Tus artículos</h2>
       <button class="btn-azul" id="btnNuevo" type="button">+ Nuevo artículo</button>
     </div>
     <div class="lista" id="lista"></div>
@@ -249,7 +258,7 @@ img{display:block;max-width:none}
       return;
     }
     el.innerHTML=S.articulos.map(function(a){
-      return '<div class="fila"><div class="info"><h3>'+esc(a.titulo)+'</h3>'+
+      return '<div class="fila'+(a.publicado?" es-pub":"")+'"><div class="info"><h3>'+esc(a.titulo)+'</h3>'+
         '<div class="meta"><span class="estado '+(a.publicado?"pub":"bor")+'">'+(a.publicado?"Publicado":"Borrador")+'</span>'+
         '<span>/blog/post/?slug='+esc(a.slug)+'</span><span>'+fecha(a.created_at)+'</span></div></div>'+
         '<div class="acciones"><button class="btn-s" data-editar="'+esc(a.id)+'" type="button">Editar</button></div></div>';
