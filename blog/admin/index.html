@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artículos · Panel del equipo · Culto Café</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+:root{
+  --azul:#3B82F6; --matcha:#A7C957; --lila:#BB7CF6; --tostado:#C8A879;
+  --crema:#F7F4ED; --papel:#FFFFFF; --crema-2:#F1ECE0; --carbon:#1A1A1A;
+  --tinta:#1A1A1A; --tinta-suave:#6B6459; --linea:#E5DDCB; --linea-fuerte:#D8CDB4;
+  --btn:#2563EB; --btn-tinta:#FFFFFF; --error:#B3261E; --focus:#1d4ed8;
+  --radio:14px; --radio-lg:22px;
+  --sombra:0 2px 6px rgba(26,20,10,.05), 0 24px 48px -28px rgba(26,20,10,.28);
+  --font:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --azul:#6AA0FF; --matcha:#B6D96A; --lila:#C79BF8; --tostado:#D8BC96;
+  --crema:#17150F; --papel:#211E17; --crema-2:#1D1A13; --carbon:#F4EFE3;
+  --tinta:#F4EFE3; --tinta-suave:#A79E8C; --linea:#332E22; --linea-fuerte:#403923;
+  --btn:#6AA0FF; --btn-tinta:#10131A; --error:#FF8A80; --focus:#9dc0ff;
+  --sombra:0 2px 6px rgba(0,0,0,.4),0 24px 48px -24px rgba(0,0,0,.7);
+  color-scheme:dark;
+}}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--crema);color:var(--tinta);font-family:var(--font);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+[hidden]{display:none!important}
+button,select,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:6px}
+img{display:block;max-width:none}
+
+.boot{min-height:100dvh;display:grid;place-content:center;gap:10px;justify-items:center;color:var(--tinta-suave);font-weight:600}
+.boot img{height:100px}
+
+.login{min-height:100dvh;display:grid;place-items:center;padding:24px}
+.login-card{width:100%;max-width:380px;background:var(--papel);border:1px solid var(--linea);border-radius:var(--radio-lg);padding:30px;box-shadow:var(--sombra);text-align:center}
+.login-card img{height:64px;margin:0 auto 14px}
+.login-card h1{margin:0 0 4px;font-size:1.3rem;font-weight:800}
+.login-card .sub{margin:0 0 20px;color:var(--tinta-suave);font-size:.9rem}
+.campo{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;text-align:left}
+.campo label{font-weight:700;font-size:.86rem}
+.campo input,.campo textarea{width:100%;border:1.5px solid var(--linea-fuerte);background:var(--crema);border-radius:10px;padding:11px 13px;font-size:1rem}
+.campo input:focus,.campo textarea:focus{border-color:var(--btn)}
+.err{margin:0 0 12px;color:var(--error);font-weight:600;font-size:.88rem}
+.btn-p{width:100%;border:0;border-radius:999px;background:var(--btn);color:var(--btn-tinta);font-weight:800;font-size:1rem;padding:13px 20px}
+.btn-p:disabled{opacity:.7;cursor:progress}
+.volver{display:block;margin-top:14px;font-size:.85rem;color:var(--tinta-suave);text-decoration:none}
+.volver:hover{text-decoration:underline}
+
+.app{max-width:920px;margin:0 auto;padding:26px 20px 60px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:22px}
+.top-izq{display:flex;align-items:center;gap:12px}
+.top-izq img{height:40px}
+.top h1{margin:0;font-size:1.4rem;font-weight:800}
+.top .sub{margin:2px 0 0;font-size:.85rem;color:var(--tinta-suave)}
+.top-der{display:flex;gap:10px;flex-wrap:wrap}
+.btn-s{border:1.5px solid var(--linea-fuerte);background:var(--papel);border-radius:999px;padding:9px 16px;font-weight:700;font-size:.88rem}
+.btn-s:hover{border-color:var(--tinta)}
+.btn-azul{border:0;background:var(--btn);color:var(--btn-tinta);border-radius:999px;padding:9px 18px;font-weight:800;font-size:.88rem}
+
+.lista{display:flex;flex-direction:column;gap:12px}
+.fila{background:var(--papel);border:1px solid var(--linea);border-radius:var(--radio);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.fila .info{min-width:0;flex:1 1 220px}
+.fila h3{margin:0 0 2px;font-size:1rem;font-weight:700;overflow-wrap:anywhere}
+.fila .meta{font-size:.8rem;color:var(--tinta-suave);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.estado{font-size:11px;font-weight:700;border-radius:999px;padding:2px 10px}
+.estado.pub{background:color-mix(in srgb,var(--matcha) 30%,var(--papel));border:1px solid color-mix(in srgb,var(--matcha) 50%,var(--linea))}
+.estado.bor{background:color-mix(in srgb,var(--tostado) 26%,var(--papel));border:1px solid var(--linea-fuerte)}
+.fila .acciones{display:flex;gap:8px;flex-wrap:wrap}
+.vacio{text-align:center;padding:50px 16px;color:var(--tinta-suave)}
+.vacio img{height:90px;margin:0 auto 12px}
+
+.editor{background:var(--papel);border:1px solid var(--linea);border-radius:var(--radio-lg);padding:22px clamp(16px,4vw,28px)}
+.editor h2{margin:0 0 18px;font-size:1.2rem;font-weight:800}
+.grid2{display:grid;grid-template-columns:2fr 1fr;gap:14px}
+.campo textarea{resize:vertical}
+.ayuda{font-size:.78rem;color:var(--tinta-suave);margin-top:4px}
+.switch-row{display:flex;align-items:center;gap:10px;margin:6px 0 18px}
+.switch{position:relative;width:42px;height:24px;flex:none}
+.switch input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
+.switch .pista{position:absolute;inset:0;background:var(--linea-fuerte);border-radius:999px;transition:background .2s}
+.switch .bola{position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.35);transition:transform .2s}
+.switch input:checked+.pista{background:var(--btn)}
+.switch input:checked+.pista+.bola{transform:translateX(18px)}
+.acciones-editor{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+.msg-ok{color:#3f7d20;font-weight:700;font-size:.9rem}
+.msg-err{color:var(--error);font-weight:700;font-size:.9rem}
+@media (max-width:640px){.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="boot" id="boot" role="status">
+  <img src="../../assets/img/crm/culto.png" alt="" aria-hidden="true" width="182" height="280">
+  <span>Un momento…</span>
+</div>
+
+<div class="login" id="login" hidden>
+  <form class="login-card" id="loginForm" novalidate>
+    <img src="../../assets/img/crm/culto.png" alt="" aria-hidden="true" width="182" height="280">
+    <h1>Artículos del blog</h1>
+    <p class="sub">Solo para el equipo de Culto.</p>
+    <div class="campo">
+      <label for="lEmail">Email</label>
+      <input id="lEmail" type="email" autocomplete="email" required>
+    </div>
+    <div class="campo">
+      <label for="lPass">Contraseña</label>
+      <input id="lPass" type="password" autocomplete="current-password" required>
+    </div>
+    <p class="err" id="lErr" role="alert" hidden></p>
+    <button class="btn-p" id="lBtn" type="submit">Entrar</button>
+    <a class="volver" href="../../crm/">Ir al CRM</a>
+  </form>
+</div>
+
+<div class="app" id="app" hidden>
+  <div class="top">
+    <div class="top-izq">
+      <img src="../../assets/img/crm/logo.png" alt="Culto Café" width="240" height="181">
+      <div>
+        <h1>Artículos del blog</h1>
+        <p class="sub" id="userEmail"></p>
+      </div>
+    </div>
+    <div class="top-der">
+      <a class="btn-s" href="../../crm/">Ir al CRM</a>
+      <a class="btn-s" href="../" target="_blank" rel="noopener">Ver blog</a>
+      <button class="btn-s" id="btnSalir" type="button">Cerrar sesión</button>
+    </div>
+  </div>
+
+  <section id="vistaLista">
+    <div class="top" style="margin-bottom:14px">
+      <span></span>
+      <button class="btn-azul" id="btnNuevo" type="button">+ Nuevo artículo</button>
+    </div>
+    <div class="lista" id="lista"></div>
+  </section>
+
+  <section id="vistaEditor" hidden>
+    <div class="editor">
+      <h2 id="editorTit">Nuevo artículo</h2>
+      <form id="form" novalidate>
+        <div class="campo">
+          <label for="fTitulo">Título</label>
+          <input id="fTitulo" type="text" required maxlength="200">
+        </div>
+        <div class="grid2">
+          <div class="campo">
+            <label for="fSlug">URL (slug)</label>
+            <input id="fSlug" type="text" required pattern="[a-z0-9]+(-[a-z0-9]+)*">
+            <p class="ayuda">Solo minúsculas, números y guiones. Ej: <code>cinco-cafes-para-trabajar</code></p>
+          </div>
+          <div class="campo">
+            <label for="fImagen">Imagen (URL, opcional)</label>
+            <input id="fImagen" type="url" placeholder="https://…">
+          </div>
+        </div>
+        <div class="campo">
+          <label for="fResumen">Resumen (aparece en el listado)</label>
+          <textarea id="fResumen" rows="2" maxlength="300"></textarea>
+        </div>
+        <div class="campo">
+          <label for="fContenido">Contenido</label>
+          <textarea id="fContenido" rows="14" required></textarea>
+          <p class="ayuda">Deja una línea en blanco entre párrafos. Una línea que empiece con <code>## </code> se convierte en subtítulo, y con <code>- </code> en un punto de lista.</p>
+        </div>
+        <div class="switch-row">
+          <span class="switch"><input type="checkbox" id="fPublicado"><span class="pista"></span><span class="bola"></span></span>
+          <label for="fPublicado" style="font-weight:700">Publicado (visible en la web)</label>
+        </div>
+        <p class="msg-ok" id="msgOk" hidden></p>
+        <p class="msg-err" id="msgErr" role="alert" hidden></p>
+        <div class="acciones-editor">
+          <button class="btn-azul" id="btnGuardar" type="submit">Guardar</button>
+          <button class="btn-s" id="btnBorrar" type="button" style="display:none">Borrar artículo</button>
+          <button class="btn-s" id="btnCancelar" type="button">Volver al listado</button>
+        </div>
+      </form>
+    </div>
+  </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js" integrity="sha384-0w2KAL2YHP6wKOkUDzkCDGgVvfmHnj02DHeQ6XcHOgTfFsGyonKOpShMH1x6nk9o" crossorigin="anonymous"></script>
+<script>
+(function(){
+  "use strict";
+  var SUPABASE_URL = "https://wrybrdorgjpctzepierb.supabase.co";
+  var SUPABASE_KEY = "sb_publishable_cYdvNUZ_5pUkWsmxnmQyMA_4dxs1owY";
+  var $=function(id){return document.getElementById(id)};
+  var sb=null, S={inApp:false, articulos:[], editandoId:null, manualOut:false, logging:false};
+
+  function vista(n){["boot","login","app"].forEach(function(v){$(v).hidden=(v!==n)})}
+  function slugify(s){
+    return String(s||"").toLowerCase()
+      .normalize("NFD").replace(/[̀-ͯ]/g,"")
+      .replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,120);
+  }
+  function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+  var fFecha=new Intl.DateTimeFormat("es-ES",{day:"numeric",month:"short",year:"numeric",timeZone:"Europe/Madrid"});
+  function fecha(iso){var d=new Date(iso);return isNaN(d)?"":fFecha.format(d)}
+
+  function esSesion(e){return !!e&&(e.status===401||/jwt|token.*expired|not authenticated/i.test(e.message||""))}
+
+  $("loginForm").addEventListener("submit",function(e){
+    e.preventDefault();
+    var email=$("lEmail").value.trim(),pass=$("lPass").value,btn=$("lBtn");
+    $("lErr").hidden=true;
+    if(!email||!pass)return;
+    S.logging=true;btn.disabled=true;btn.textContent="Entrando…";
+    sb.auth.signInWithPassword({email:email,password:pass}).then(function(r){
+      if(r.error||!r.data||!r.data.session)throw (r.error||new Error("sin sesión"));
+      entrar(r.data.session);
+    }).catch(function(){
+      S.logging=false;btn.disabled=false;btn.textContent="Entrar";
+      $("lErr").textContent="Ese email o esa contraseña no cuadran. Prueba otra vez.";$("lErr").hidden=false;
+    });
+  });
+  $("btnSalir").addEventListener("click",function(){
+    S.manualOut=true;
+    var fin=function(){S.manualOut=false;S.inApp=false;$("lPass").value="";$("lBtn").disabled=false;$("lBtn").textContent="Entrar";vista("login")};
+    sb.auth.signOut().then(fin,fin);
+  });
+  function entrar(session){
+    if(S.inApp)return;
+    S.inApp=true;S.logging=false;
+    $("userEmail").textContent=session.user&&session.user.email||"";
+    vista("app");mostrarLista();cargar();
+  }
+
+  function cargar(){
+    sb.from("articulos_blog").select("*").order("created_at",{ascending:false}).then(function(r){
+      if(esSesion(r.error)){S.inApp=false;vista("login");return}
+      S.articulos=r.data||[];render();
+    });
+  }
+  function render(){
+    var el=$("lista");
+    if(!S.articulos.length){
+      el.innerHTML='<div class="vacio"><img src="../../assets/img/crm/moka.png" alt="" width="145" height="280"><h3>Todavía no hay artículos.</h3><p>Crea el primero con "Nuevo artículo".</p></div>';
+      return;
+    }
+    el.innerHTML=S.articulos.map(function(a){
+      return '<div class="fila"><div class="info"><h3>'+esc(a.titulo)+'</h3>'+
+        '<div class="meta"><span class="estado '+(a.publicado?"pub":"bor")+'">'+(a.publicado?"Publicado":"Borrador")+'</span>'+
+        '<span>/blog/post/?slug='+esc(a.slug)+'</span><span>'+fecha(a.created_at)+'</span></div></div>'+
+        '<div class="acciones"><button class="btn-s" data-editar="'+esc(a.id)+'" type="button">Editar</button></div></div>';
+    }).join("");
+  }
+  $("lista").addEventListener("click",function(e){
+    var b=e.target.closest("[data-editar]");if(!b)return;
+    abrirEditor(S.articulos.filter(function(a){return String(a.id)===b.dataset.editar})[0]);
+  });
+  $("btnNuevo").addEventListener("click",function(){abrirEditor(null)});
+  $("btnCancelar").addEventListener("click",mostrarLista);
+
+  function mostrarLista(){
+    $("vistaLista").hidden=false;$("vistaEditor").hidden=true;
+    $("msgOk").hidden=true;$("msgErr").hidden=true;
+  }
+  var slugTocado=false;
+  function abrirEditor(a){
+    S.editandoId=a?a.id:null;
+    slugTocado=!!a;
+    $("editorTit").textContent=a?"Editar artículo":"Nuevo artículo";
+    $("fTitulo").value=a?a.titulo:"";
+    $("fSlug").value=a?a.slug:"";
+    $("fImagen").value=a?(a.imagen_url||""):"";
+    $("fResumen").value=a?(a.resumen||""):"";
+    $("fContenido").value=a?a.contenido:"";
+    $("fPublicado").checked=a?!!a.publicado:false;
+    $("btnBorrar").style.display=a?"inline-block":"none";
+    $("msgOk").hidden=true;$("msgErr").hidden=true;
+    $("vistaLista").hidden=true;$("vistaEditor").hidden=false;
+    $("fTitulo").focus();
+  }
+  $("fTitulo").addEventListener("input",function(){
+    if(!slugTocado)$("fSlug").value=slugify(this.value);
+  });
+  $("fSlug").addEventListener("input",function(){slugTocado=true});
+
+  $("form").addEventListener("submit",function(e){
+    e.preventDefault();
+    if(!this.checkValidity()){this.reportValidity();return}
+    var payload={
+      titulo:$("fTitulo").value.trim(),
+      slug:slugify($("fSlug").value),
+      imagen_url:$("fImagen").value.trim()||null,
+      resumen:$("fResumen").value.trim()||null,
+      contenido:$("fContenido").value.trim(),
+      publicado:$("fPublicado").checked,
+      autor_email:(sb.auth.getSession?undefined:undefined)
+    };
+    delete payload.autor_email;
+    if(payload.publicado)payload.fecha_publicacion=new Date().toISOString();
+    var btn=$("btnGuardar");btn.disabled=true;btn.textContent="Guardando…";
+    $("msgOk").hidden=true;$("msgErr").hidden=true;
+    var q = S.editandoId
+      ? sb.from("articulos_blog").update(payload).eq("id",S.editandoId).select()
+      : sb.from("articulos_blog").insert(payload).select();
+    q.then(function(r){
+      btn.disabled=false;btn.textContent="Guardar";
+      if(r.error||!r.data||!r.data.length){
+        var dup=/duplicate|unique/i.test((r.error&&r.error.message)||"");
+        $("msgErr").textContent=dup?"Ya existe un artículo con esa URL (slug). Cambia el título o el slug.":"No se pudo guardar. Inténtalo de nuevo.";
+        $("msgErr").hidden=false;return;
+      }
+      S.editandoId=r.data[0].id;
+      $("btnBorrar").style.display="inline-block";
+      $("msgOk").textContent="Guardado.";$("msgOk").hidden=false;
+      cargar();
+    });
+  });
+  $("btnBorrar").addEventListener("click",function(){
+    if(!S.editandoId)return;
+    if(!confirm("¿Borrar este artículo? No se puede deshacer."))return;
+    sb.from("articulos_blog").delete().eq("id",S.editandoId).then(function(r){
+      if(r.error){$("msgErr").textContent="No se pudo borrar.";$("msgErr").hidden=false;return}
+      cargar();mostrarLista();
+    });
+  });
+
+  if(!window.supabase||!window.supabase.createClient){vista("login");return}
+  sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true}});
+  sb.auth.onAuthStateChange(function(ev,session){
+    setTimeout(function(){
+      if(ev==="SIGNED_OUT"){if(!S.manualOut&&S.inApp){S.inApp=false;vista("login")}}
+      else if(ev==="SIGNED_IN"&&session&&!S.inApp&&!S.logging){entrar(session)}
+    },0);
+  });
+  sb.auth.getSession().then(function(r){
+    var s=r&&r.data&&r.data.session;
+    if(s)entrar(s);else vista("login");
+  }).catch(function(){vista("login")});
+})();
+</script>
+</body>
+</html>

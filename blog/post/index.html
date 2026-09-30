@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title id="pageTitle">Artículo · Blog · Culto Café</title>
+<meta name="description" id="pageDesc" content="Guías y novedades sobre café de especialidad en Madrid.">
+<link rel="canonical" id="pageCanon" href="https://micultocafe.netlify.app/blog/post/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800&display=swap">
+<link rel="stylesheet" href="../../assets/css/style.css">
+<style>
+.post-wrap{max-width:740px}
+.post-fecha{font-size:.85rem;color:var(--tinta-suave);font-weight:700;letter-spacing:.02em;text-transform:uppercase;margin-bottom:10px}
+.post-img{width:100%;border-radius:var(--radio-lg);margin:22px 0;display:block}
+.post-cuerpo h2{margin-top:2em;font-size:1.4rem}
+.post-cuerpo p{margin:0 0 1.1em;color:var(--tinta)}
+.post-cuerpo ul{margin:0 0 1.1em;padding-left:1.3em}
+.post-cuerpo li{margin-bottom:.4em}
+.post-volver{display:inline-block;margin-top:30px}
+</style>
+</head>
+<body>
+
+<header class="site-header" id="header">
+  <div class="wrap header-inner">
+    <a class="logo" href="/" aria-label="Culto Café — inicio"><img src="../../assets/img/logo.png" alt="Culto Café"></a>
+    <div class="lang" role="group" aria-label="Idioma">
+      <a href="../">Blog</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="section">
+    <div class="wrap post-wrap" id="cuerpo">
+      <p>Cargando artículo…</p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-base"><p>© 2026 Culto Café</p><p>Madrid · café de especialidad</p></div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js" integrity="sha384-0w2KAL2YHP6wKOkUDzkCDGgVvfmHnj02DHeQ6XcHOgTfFsGyonKOpShMH1x6nk9o" crossorigin="anonymous"></script>
+<script>
+(function(){
+  "use strict";
+  var SUPABASE_URL="https://wrybrdorgjpctzepierb.supabase.co";
+  var SUPABASE_KEY="sb_publishable_cYdvNUZ_5pUkWsmxnmQyMA_4dxs1owY";
+  function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+  var fFecha=new Intl.DateTimeFormat("es-ES",{day:"numeric",month:"long",year:"numeric",timeZone:"Europe/Madrid"});
+  function fecha(iso){var d=new Date(iso);return isNaN(d)?"":fFecha.format(d)}
+
+  function formatear(txt){
+    var bloques=String(txt||"").replace(/\r\n/g,"\n").split(/\n{2,}/);
+    return bloques.map(function(b){
+      b=b.trim();if(!b)return"";
+      var lineas=b.split("\n").map(function(l){return l.trim()}).filter(Boolean);
+      if(lineas.length&&lineas.every(function(l){return l.indexOf("- ")===0})){
+        return "<ul>"+lineas.map(function(l){return "<li>"+esc(l.slice(2))+"</li>"}).join("")+"</ul>";
+      }
+      if(lineas.length===1&&lineas[0].indexOf("## ")===0){
+        return "<h2>"+esc(lineas[0].slice(3))+"</h2>";
+      }
+      return "<p>"+lineas.map(esc).join("<br>")+"</p>";
+    }).join("");
+  }
+
+  var slug=(new URLSearchParams(location.search)).get("slug");
+  var cuerpo=document.getElementById("cuerpo");
+  if(!slug||!window.supabase){cuerpo.innerHTML="<p>No hemos encontrado este artículo.</p><a class=\"btn btn-ghost post-volver\" href=\"../\">← Volver al blog</a>";}
+  else{
+    var sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+    sb.from("articulos_blog").select("*").eq("slug",slug).eq("publicado",true).maybeSingle().then(function(r){
+      if(r.error||!r.data){
+        cuerpo.innerHTML="<p>No hemos encontrado este artículo.</p><a class=\"btn btn-ghost post-volver\" href=\"../\">← Volver al blog</a>";
+        return;
+      }
+      var a=r.data;
+      var titulo=esc(a.titulo), desc=esc(a.resumen||a.titulo);
+      document.title=a.titulo+" · Blog · Culto Café";
+      document.getElementById("pageTitle").textContent=a.titulo+" · Blog · Culto Café";
+      document.getElementById("pageDesc").setAttribute("content", a.resumen||a.titulo);
+      document.getElementById("pageCanon").setAttribute("href","https://micultocafe.netlify.app/blog/post/?slug="+encodeURIComponent(a.slug));
+
+      cuerpo.innerHTML =
+        '<p class="eyebrow">Blog</p>'+
+        '<h1 class="balance">'+titulo+'</h1>'+
+        '<p class="post-fecha">'+fecha(a.fecha_publicacion||a.created_at)+'</p>'+
+        (a.imagen_url?'<img class="post-img" src="'+esc(a.imagen_url)+'" alt="">':'')+
+        '<div class="post-cuerpo">'+formatear(a.contenido)+'</div>'+
+        '<a class="btn btn-ghost post-volver" href="../">← Volver al blog</a>';
+
+      var ld={
+        "@context":"https://schema.org","@type":"Article",
+        "headline":a.titulo,
+        "description":a.resumen||undefined,
+        "datePublished":a.fecha_publicacion||a.created_at,
+        "dateModified":a.updated_at||a.created_at,
+        "image":a.imagen_url||undefined,
+        "author":{"@type":"Organization","name":"Culto Café"},
+        "publisher":{"@type":"Organization","name":"Culto Café","logo":{"@type":"ImageObject","url":"https://micultocafe.netlify.app/assets/img/logo.png"}},
+        "mainEntityOfPage":"https://micultocafe.netlify.app/blog/post/?slug="+encodeURIComponent(a.slug)
+      };
+      var s=document.createElement("script");s.type="application/ld+json";s.textContent=JSON.stringify(ld);
+      document.head.appendChild(s);
+    });
+  }
+
+  var header=document.getElementById("header");
+  var on=function(){header.classList.toggle("scrolled",window.scrollY>8)};
+  on();window.addEventListener("scroll",on,{passive:true});
+})();
+</script>
+</body>
+</html>
