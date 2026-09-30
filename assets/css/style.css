@@ -305,3 +305,12 @@ a,button{-webkit-tap-highlight-color:transparent}
   .b2b-inner .btn{width:100%;justify-content:center}
   .fg-label{min-width:100%}
 }
+
+/* FAQ */
+.faq{display:flex;flex-direction:column;gap:10px;max-width:760px}
+.faq-item{background:var(--papel);border:1px solid var(--linea);border-radius:var(--radio);padding:4px 20px}
+.faq-item summary{list-style:none;cursor:pointer;padding:16px 30px 16px 0;font-weight:700;position:relative;display:flex;align-items:center}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{content:"+";position:absolute;right:0;top:50%;translate:0 -50%;font-size:1.4rem;font-weight:400;color:var(--tinta-suave);transition:rotate .2s}
+.faq-item[open] summary::after{rotate:45deg}
+.faq-item p{color:var(--tinta-suave);padding:0 0 16px;margin:0}
