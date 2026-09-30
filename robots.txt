@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://cultocafe.madrid/sitemap.xml
+Sitemap: https://micultocafe.netlify.app/sitemap.xml
