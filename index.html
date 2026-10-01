@@ -21,7 +21,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Culto Café · Cafeterías de especialidad en Madrid — Malasaña</title>
 <meta name="description" content="Cafeterías de especialidad en Malasaña, Madrid, con información verificada, mapa y Culto: un recomendador en WhatsApp que te dice dónde tomar tu próximo café.">
-<meta name="keywords" content="cafeterías de especialidad Madrid, café de especialidad Madrid, cafeterías Malasaña, cafeterías para trabajar Madrid, dónde tomar café Madrid, mejores cafeterías Malasaña, café de especialidad Malasaña">
 <link rel="canonical" href="https://micultocafe.netlify.app/">
 <link rel="alternate" hreflang="es" href="https://micultocafe.netlify.app/">
 <link rel="alternate" hreflang="en" href="https://micultocafe.netlify.app/en/">
@@ -60,6 +59,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <a href="#nosotras">Quiénes somos</a>
       <a href="/blog/">Blog</a>
       <a href="#faq">Preguntas frecuentes</a>
+      <a href="#contacto">Contacto</a>
     </nav>
     <div class="lang" role="group" aria-label="Idioma">
       <a href="/" aria-current="page" class="lang-on">ES</a>
@@ -96,7 +96,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <p>Culto descubre las cafeterías, Neo se concentra y Moka conecta. Míralos por Madrid.</p>
     </div>
     <div class="reel">
-      <video id="historia" controls autoplay muted loop playsinline preload="metadata"
+      <video id="historia" controls loop playsinline preload="metadata"
              poster="assets/video/poster.jpg" aria-label="Culto, Neo y Moka por Madrid">
         <source src="assets/video/culto-historia.mp4" type="video/mp4">
       </video>
@@ -293,7 +293,81 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </section>
 
+  <section class="section" id="contacto">
+    <div class="wrap form-wrap">
+      <p class="eyebrow">Contacto</p>
+      <h2 class="balance">Escríbenos</h2>
+      <p>¿Tienes una duda, una idea o algo que contarnos? Déjanos tu mensaje y te respondemos por email.</p>
+
+      <form class="form-card" id="contactoForm" novalidate>
+        <div class="field">
+          <label for="cNombre">Nombre *</label>
+          <input id="cNombre" name="nombre" type="text" required autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="cEmail">Email *</label>
+          <input id="cEmail" name="email" type="email" required autocomplete="email">
+        </div>
+        <div class="field">
+          <label for="cMensaje">Mensaje *</label>
+          <textarea id="cMensaje" name="mensaje" rows="5" required maxlength="3000"></textarea>
+        </div>
+        <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;width:0;">
+        <button class="btn plan-cta" type="submit">Enviar mensaje</button>
+        <p id="contactoOk" class="form-nota" role="status" style="display:none;color:#3f7d20;font-weight:600"></p>
+        <p id="contactoErr" role="alert" style="display:none;color:#b3261e;margin-top:12px;font-size:.95rem"></p>
+      </form>
+    </div>
+  </section>
+
 </main>
+<script>
+(function(){
+  var SUPABASE_URL = "https://wrybrdorgjpctzepierb.supabase.co";
+  var SUPABASE_KEY = "sb_publishable_cYdvNUZ_5pUkWsmxnmQyMA_4dxs1owY";
+  var f = document.getElementById("contactoForm");
+  f.addEventListener("submit", function(e){
+    e.preventDefault();
+    if (!f.checkValidity()) { f.reportValidity(); return; }
+    if (f.website.value) { return; }
+
+    var btn = f.querySelector('button[type="submit"]');
+    var btnText = btn.textContent;
+    var ok = document.getElementById("contactoOk");
+    var err = document.getElementById("contactoErr");
+    ok.style.display = "none"; err.style.display = "none";
+    btn.disabled = true; btn.textContent = "Enviando...";
+
+    fetch(SUPABASE_URL + "/rest/v1/contactos_web", {
+      method: "POST",
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": "Bearer " + SUPABASE_KEY,
+        "Content-Type": "application/json",
+        "Prefer": "return=minimal"
+      },
+      body: JSON.stringify({
+        nombre: f.nombre.value.trim(),
+        email: f.email.value.trim(),
+        mensaje: f.mensaje.value.trim()
+      })
+    }).then(function(r){
+      if (r.ok) {
+        f.reset();
+        ok.textContent = "Gracias, hemos recibido tu mensaje. Te responderemos por email.";
+        ok.style.display = "block";
+        btn.disabled = false; btn.textContent = btnText;
+        return;
+      }
+      throw new Error("http " + r.status);
+    }).catch(function(){
+      err.textContent = "No hemos podido enviar tu mensaje. Inténtalo de nuevo o escríbenos por WhatsApp.";
+      err.style.display = "block";
+      btn.disabled = false; btn.textContent = btnText;
+    });
+  });
+})();
+</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"es","mainEntity":[{"@type":"Question","name":"¿Qué es Culto Café?","acceptedAnswer":{"@type":"Answer","text":"Culto Café es un directorio de cafeterías de especialidad en Madrid (empezamos por Malasaña) con un recomendador conversacional en WhatsApp. Es gratis para quien busca café; las cafeterías pagan desde 15 €/mes por aparecer verificadas."}},{"@type":"Question","name":"¿Cuánto cuesta aparecer en Culto Café si tengo una cafetería?","acceptedAnswer":{"@type":"Answer","text":"Hay 4 planes: Prueba gratuita (0 €/30 días), Presencia (15 €/mes), Destacada (29 €/mes) y Socia (49 €/mes). Todos incluyen ficha verificada en la web y el mapa; los planes superiores añaden prioridad en las recomendaciones de Culto y visibilidad extra."}},{"@type":"Question","name":"¿Necesito tarjeta para la prueba gratuita?","acceptedAnswer":{"@type":"Answer","text":"No. La prueba gratuita de 30 días no pide ningún dato de pago, solo el alta de tu cafetería."}},{"@type":"Question","name":"¿Cómo funciona el recomendador de Culto en WhatsApp?","acceptedAnswer":{"@type":"Answer","text":"Le escribes a Culto por WhatsApp contando qué buscas —por ejemplo, un sitio tranquilo con wifi o una terraza pet-friendly— y responde con cafeterías verificadas que encajan, sin improvisar como un buscador genérico."}},{"@type":"Question","name":"¿Puedo cancelar mi plan cuando quiera?","acceptedAnswer":{"@type":"Answer","text":"Sí. Ningún plan de pago tiene permanencia: puedes cancelar cuando quieras."}},{"@type":"Question","name":"¿En qué ciudades está disponible Culto Café?","acceptedAnswer":{"@type":"Answer","text":"Actualmente operamos únicamente en Malasaña (Madrid). Evaluaremos una ampliación futura a otros barrios y ciudades conforme el proyecto crezca."}}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Plan Prueba gratuita — Culto Café","description":"Ficha completa activa, visible en la web y el mapa, gratis durante 30 días sin tarjeta.","inLanguage":"es","brand":{"@type":"Brand","name":"Culto Café"},"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR","url":"https://micultocafe.netlify.app/suscribir/index.html?plan=Prueba%20gratuita","availability":"https://schema.org/InStock","category":"Coffee shop directory listing"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Plan Presencia — Culto Café","description":"Ficha completa y verificada en el mapa, el buscador y las recomendaciones de Culto.","inLanguage":"es","brand":{"@type":"Brand","name":"Culto Café"},"offers":{"@type":"Offer","price":"15","priceCurrency":"EUR","url":"https://micultocafe.netlify.app/suscribir/index.html?plan=Presencia","availability":"https://schema.org/InStock","category":"Coffee shop directory listing"}}</script>
@@ -313,7 +387,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </div>
     <nav class="footer-nav" aria-label="Pie">
-      <a href="#cafeterias">Cafeterías</a><a href="#como">Cómo funciona</a><a href="#culto">Culto</a><a href="#nosotras">Quiénes somos</a><a href="/blog/">Blog</a><a href="#faq">Preguntas frecuentes</a>
+      <a href="#cafeterias">Cafeterías</a><a href="#como">Cómo funciona</a><a href="#culto">Culto</a><a href="#nosotras">Quiénes somos</a><a href="/blog/">Blog</a><a href="#faq">Preguntas frecuentes</a><a href="#contacto">Contacto</a>
     </nav>
     <nav class="footer-nav" aria-label="Legal">
       <a href="aviso-legal/index.html">Aviso legal</a><a href="privacidad/index.html">Política de privacidad</a><a href="privacidad/index.html#cookies-section">Cookies</a>

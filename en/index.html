@@ -21,7 +21,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Culto Café · Specialty Coffee Shops in Madrid — Malasaña</title>
 <meta name="description" content="Specialty coffee shops in Malasaña, Madrid, with verified info, a map and Culto: a WhatsApp guide that tells you where to have your next coffee.">
-<meta name="keywords" content="specialty coffee Madrid, best coffee shops Madrid, coffee shops Malasaña, cafes to work from Madrid, where to have coffee Madrid, third wave coffee Malasaña, specialty coffee Malasaña">
 <link rel="canonical" href="https://micultocafe.netlify.app/en/">
 <link rel="alternate" hreflang="es" href="https://micultocafe.netlify.app/">
 <link rel="alternate" hreflang="en" href="https://micultocafe.netlify.app/en/">
@@ -60,6 +59,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <a href="#nosotras">About</a>
       <a href="/blog/">Blog</a>
       <a href="#faq">FAQ</a>
+      <a href="#contacto">Contact</a>
     </nav>
     <div class="lang" role="group" aria-label="Language">
       <a href="/" hreflang="es">ES</a>
@@ -96,7 +96,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <p>Culto finds the coffee shops, Neo focuses and Moka connects. Watch them around Madrid.</p>
     </div>
     <div class="reel">
-      <video id="historia" controls autoplay muted loop playsinline preload="metadata"
+      <video id="historia" controls loop playsinline preload="metadata"
              poster="../assets/video/poster.jpg" aria-label="Culto, Neo and Moka around Madrid">
         <source src="../assets/video/culto-historia.mp4" type="video/mp4">
       </video>
@@ -293,7 +293,82 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </section>
 
+  <section class="section" id="contacto">
+    <div class="wrap form-wrap">
+      <p class="eyebrow">Contact</p>
+      <h2 class="balance">Get in touch</h2>
+      <p>Got a question, an idea or something to tell us? Leave us a message and we'll reply by email.</p>
+
+      <form class="form-card" id="contactoForm" novalidate>
+        <div class="field">
+          <label for="cNombre">Name *</label>
+          <input id="cNombre" name="nombre" type="text" required autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="cEmail">Email *</label>
+          <input id="cEmail" name="email" type="email" required autocomplete="email">
+        </div>
+        <div class="field">
+          <label for="cMensaje">Message *</label>
+          <textarea id="cMensaje" name="mensaje" rows="5" required maxlength="3000"></textarea>
+        </div>
+        <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;width:0;">
+        <button class="btn plan-cta" type="submit">Send message</button>
+        <p id="contactoOk" class="form-nota" role="status" style="display:none;color:#3f7d20;font-weight:600"></p>
+        <p id="contactoErr" role="alert" style="display:none;color:#b3261e;margin-top:12px;font-size:.95rem"></p>
+      </form>
+    </div>
+  </section>
+
 </main>
+<script>
+(function(){
+  var SUPABASE_URL = "https://wrybrdorgjpctzepierb.supabase.co";
+  var SUPABASE_KEY = "sb_publishable_cYdvNUZ_5pUkWsmxnmQyMA_4dxs1owY";
+  var f = document.getElementById("contactoForm");
+  f.addEventListener("submit", function(e){
+    e.preventDefault();
+    if (!f.checkValidity()) { f.reportValidity(); return; }
+    if (f.website.value) { return; }
+
+    var btn = f.querySelector('button[type="submit"]');
+    var btnText = btn.textContent;
+    var ok = document.getElementById("contactoOk");
+    var err = document.getElementById("contactoErr");
+    ok.style.display = "none"; err.style.display = "none";
+    btn.disabled = true; btn.textContent = "Sending...";
+
+    fetch(SUPABASE_URL + "/rest/v1/contactos_web", {
+      method: "POST",
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": "Bearer " + SUPABASE_KEY,
+        "Content-Type": "application/json",
+        "Prefer": "return=minimal"
+      },
+      body: JSON.stringify({
+        nombre: f.nombre.value.trim(),
+        email: f.email.value.trim(),
+        mensaje: f.mensaje.value.trim(),
+        origen: "web-en"
+      })
+    }).then(function(r){
+      if (r.ok) {
+        f.reset();
+        ok.textContent = "Thanks, we've received your message. We'll reply by email.";
+        ok.style.display = "block";
+        btn.disabled = false; btn.textContent = btnText;
+        return;
+      }
+      throw new Error("http " + r.status);
+    }).catch(function(){
+      err.textContent = "We couldn't send your message. Please try again or message us on WhatsApp.";
+      err.style.display = "block";
+      btn.disabled = false; btn.textContent = btnText;
+    });
+  });
+})();
+</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"en","mainEntity":[{"@type":"Question","name":"What is Culto Café?","acceptedAnswer":{"@type":"Answer","text":"Culto Café is a directory of specialty coffee shops in Madrid (starting in Malasaña) with a conversational recommender on WhatsApp. It's free for people looking for coffee; coffee shops pay from €15/month to appear verified."}},{"@type":"Question","name":"How much does it cost for my coffee shop to appear on Culto Café?","acceptedAnswer":{"@type":"Answer","text":"There are 4 plans: Free trial (€0/30 days), Presence (€15/month), Featured (€29/month) and Partner (€49/month). All include a verified listing on the site and the map; higher plans add priority in Culto's recommendations and extra visibility."}},{"@type":"Question","name":"Do I need a card for the free trial?","acceptedAnswer":{"@type":"Answer","text":"No. The 30-day free trial doesn't ask for any payment details, just your coffee shop's sign-up."}},{"@type":"Question","name":"How does Culto's WhatsApp recommender work?","acceptedAnswer":{"@type":"Answer","text":"You message Culto on WhatsApp describing what you're after — a quiet spot with wifi, a pet-friendly terrace — and it replies with verified coffee shops that match, instead of improvising like a generic search engine."}},{"@type":"Question","name":"Can I cancel my plan whenever I want?","acceptedAnswer":{"@type":"Answer","text":"Yes. No paid plan has a minimum commitment: you can cancel any time."}},{"@type":"Question","name":"Which cities is Culto Café available in?","acceptedAnswer":{"@type":"Answer","text":"We currently operate exclusively in Malasaña (Madrid). We will evaluate a future expansion to other neighborhoods and cities as the project grows."}}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Free trial plan — Culto Café","description":"Full, active listing, visible on the site and the map, free for 30 days with no card required.","inLanguage":"en","brand":{"@type":"Brand","name":"Culto Café"},"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR","url":"https://micultocafe.netlify.app/en/subscribe/index.html?plan=Free%20trial","availability":"https://schema.org/InStock","category":"Coffee shop directory listing"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Presence plan — Culto Café","description":"Full, verified listing on the map, the search and Culto's recommendations.","inLanguage":"en","brand":{"@type":"Brand","name":"Culto Café"},"offers":{"@type":"Offer","price":"15","priceCurrency":"EUR","url":"https://micultocafe.netlify.app/en/subscribe/index.html?plan=Presence","availability":"https://schema.org/InStock","category":"Coffee shop directory listing"}}</script>
@@ -313,7 +388,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </div>
     <nav class="footer-nav" aria-label="Footer">
-      <a href="#cafeterias">Coffee shops</a><a href="#como">How it works</a><a href="#culto">Culto</a><a href="#nosotras">About</a><a href="/blog/">Blog</a><a href="#faq">FAQ</a>
+      <a href="#cafeterias">Coffee shops</a><a href="#como">How it works</a><a href="#culto">Culto</a><a href="#nosotras">About</a><a href="/blog/">Blog</a><a href="#faq">FAQ</a><a href="#contacto">Contact</a>
     </nav>
     <nav class="footer-nav" aria-label="Legal">
       <a href="legal-notice/index.html">Legal notice</a><a href="privacy/index.html">Privacy policy</a><a href="privacy/index.html#cookies-section">Cookies</a>
