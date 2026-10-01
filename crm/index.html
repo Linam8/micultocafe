@@ -62,6 +62,8 @@ h1,h2,h3{margin:0;letter-spacing:-.02em;line-height:1.15}
 .login-der{background:var(--crema-2);padding:clamp(20px,4vw,48px);display:grid;place-items:center}
 .stage{position:relative;width:100%;max-width:420px;margin-top:96px}
 .peek{position:absolute;top:-92px;left:36px;z-index:0;animation:asoma .75s cubic-bezier(.2,.9,.3,1.2) both}
+.peek .sombra{position:absolute;left:50%;bottom:4px;width:60px;height:12px;translate:-50% 0;animation:sombra-peek 1.5s ease-in-out .9s 1}
+@keyframes sombra-peek{0%,100%{opacity:.4;scale:1 1}20%{opacity:.18;scale:.7 1}45%{opacity:.5;scale:1.15 1}70%{opacity:.28;scale:.85 1}}
 .peek .pj{height:124px;transform-origin:50% 100%;animation:saluda 1.5s ease-in-out .9s 1}
 .peek.salto{animation:salto .5s ease-out}
 .peek .pj.ladea{animation:ladea .95s ease-in-out}
@@ -220,7 +222,7 @@ td{padding:13px 16px;border-top:1px solid var(--linea);vertical-align:top;overfl
 .vacio .fig{position:relative;height:112px;width:150px}
 .vacio .fig .pj{position:absolute;left:8px;bottom:0;height:98px}
 .vacio .fig svg{position:absolute;right:0;bottom:0;width:78px;height:auto}
-.vacio .fig .pj.flota{animation-duration:4s}
+.vacio .fig .sombra{position:absolute;left:28px;bottom:-2px;width:50px;height:12px}
 .vacio h3{font-size:1.05rem;font-weight:800}
 .vacio p{margin:0;color:var(--tinta-suave);max-width:40ch}
 .board-msg{background:var(--papel);border:1px solid var(--linea);border-radius:var(--radio)}
@@ -237,19 +239,27 @@ td{padding:13px 16px;border-top:1px solid var(--linea);vertical-align:top;overfl
 
 
 /* ---------- más vida y menos rigidez ---------- */
-.pj.vivo,.scene-resumen .pj{transform-origin:50% 100%;animation:vivo 5.2s ease-in-out infinite}
+.char-stage{position:relative;display:inline-block;line-height:0}
+.sombra{background:radial-gradient(ellipse at center,rgba(20,15,5,.32),rgba(20,15,5,0) 72%);border-radius:50%;animation:sombra-rebota 2.3s cubic-bezier(.45,0,.55,1) infinite}
+.char-stage .sombra{position:absolute;left:50%;bottom:-2%;width:58%;height:13%;translate:-50% 0}
+.pj.vivo,.scene-resumen .pj{transform-origin:50% 100%;animation:vivo 2.3s cubic-bezier(.45,0,.55,1) infinite}
 @keyframes vivo{
-  0%,58%,100%{transform:translateY(0) scale(1,1) rotate(0)}
-  14%{transform:translateY(-3px) scale(.99,1.025) rotate(-2deg)}
-  32%{transform:translateY(-1px) scale(1.01,.99) rotate(2deg)}
-  62%{transform:translateY(0) scale(1.07,.9) rotate(0)}
-  70%{transform:translateY(-18px) scale(.94,1.08) rotate(-3deg)}
-  78%{transform:translateY(0) scale(1.06,.93) rotate(0)}
-  84%{transform:translateY(-4px) scale(.99,1.02)}
-  90%{transform:translateY(0) scale(1,1)}
+  0%,100%{transform:translateY(0) scale(1,1) rotate(0)}
+  22%{transform:translateY(-20px) scale(.93,1.1) rotate(-2deg)}
+  48%{transform:translateY(0) scale(1.12,.86) rotate(0)}
+  70%{transform:translateY(-7px) scale(.98,1.04) rotate(2deg)}
+  88%{transform:translateY(0) scale(1.03,.98) rotate(0)}
+}
+@keyframes sombra-rebota{
+  0%,100%{opacity:.55;scale:1 1}
+  22%{opacity:.2;scale:.68 1}
+  48%{opacity:.6;scale:1.22 1}
+  70%{opacity:.4;scale:.9 1}
+  88%{opacity:.55;scale:1.05 1}
 }
 .scene-resumen{width:236px;height:112px}
-.scene-resumen .pj{right:30px;animation-duration:4.6s}
+.scene-resumen .pj{right:30px}
+.scene-resumen .sombra{right:14px;left:auto;translate:0 0}
 .burbuja{position:absolute;left:0;top:2px;width:118px;height:46px;display:grid;place-items:center;text-align:center;padding:4px 10px;font-size:12px;font-weight:700;line-height:1.25;background:var(--papel);border:1px solid var(--linea);border-radius:16px 16px 16px 4px;box-shadow:var(--sombra)}
 .burbuja span{grid-area:1/1;opacity:0;animation:frase 8s ease-in-out infinite}
 .burbuja span+span{animation-delay:4s}
@@ -349,7 +359,7 @@ td{padding:13px 16px;border-top:1px solid var(--linea);vertical-align:top;overfl
 
 <!-- ARRANQUE -->
 <div class="boot" id="boot" role="status">
-  <img class="pj flota" src="../assets/img/crm/culto.png" alt="" aria-hidden="true" width="182" height="280">
+  <span class="char-stage"><img class="pj vivo" src="../assets/img/crm/culto.png" alt="" aria-hidden="true" width="182" height="280"><span class="sombra"></span></span>
   <span>Un momento…</span>
 </div>
 
@@ -364,7 +374,7 @@ td{padding:13px 16px;border-top:1px solid var(--linea);vertical-align:top;overfl
   </section>
   <section class="login-der">
     <div class="stage">
-      <div class="peek" id="peek"><img class="pj" id="peekImg" src="../assets/img/crm/culto.png" alt="" aria-hidden="true" width="182" height="280"></div>
+      <div class="peek" id="peek"><img class="pj" id="peekImg" src="../assets/img/crm/culto.png" alt="" aria-hidden="true" width="182" height="280"><span class="sombra"></span></div>
       <form class="login-card" id="loginForm" novalidate>
         <h2>Entra al panel</h2>
         <p class="sub">Solo para el equipo de Culto.</p>
@@ -432,6 +442,7 @@ td{padding:13px 16px;border-top:1px solid var(--linea);vertical-align:top;overfl
           <span class="burbuja"><span>¿Qué buscará hoy la gente?</span><span>Mira esas cifras…</span></span>
           <i class="chispa c1"></i><i class="chispa c2"></i><i class="chispa c3"></i>
           <img class="pj" src="../assets/img/crm/culto.png" alt="" aria-hidden="true" width="182" height="280">
+          <span class="sombra"></span>
           <svg class="lupa" viewBox="0 0 48 48" aria-hidden="true"><circle cx="20" cy="20" r="14" style="fill:rgba(255,255,255,.4);stroke:var(--azul);stroke-width:4"/><path d="M13 16a8 8 0 0 1 6-5" style="stroke:#fff;stroke-width:2.5;fill:none;stroke-linecap:round"/><path d="M30.5 30.5 43 43" style="stroke:var(--tostado);stroke-width:6;stroke-linecap:round"/></svg>
         </div>
       </div>
@@ -439,7 +450,7 @@ td{padding:13px 16px;border-top:1px solid var(--linea);vertical-align:top;overfl
     <p class="demo-nota" id="demoNota" hidden>Aún no hay datos reales, o tu cuenta no está autorizada para ver el CRM.</p>
 
     <div class="cargando" id="cargando" role="status" hidden>
-      <img class="pj flota" src="../assets/img/crm/culto.png" alt="" aria-hidden="true" width="182" height="280">
+      <span class="char-stage"><img class="pj vivo" src="../assets/img/crm/culto.png" alt="" aria-hidden="true" width="182" height="280"><span class="sombra"></span></span>
       <span>Trayendo los datos…</span>
     </div>
 
@@ -753,7 +764,7 @@ td{padding:13px 16px;border-top:1px solid var(--linea);vertical-align:top;overfl
   var SVG_BANDEJA='<svg viewBox="0 0 80 34" aria-hidden="true"><path d="M4 8H76L68 30H12Z" style="fill:var(--crema-2);stroke:var(--tostado);stroke-width:2.4;stroke-linejoin:round"/><path d="M14 14H66L62 24H18Z" style="fill:none;stroke:var(--linea-fuerte);stroke-width:1.6;stroke-linejoin:round"/></svg>';
   var SVG_PANTALLA='<svg viewBox="0 0 80 62" aria-hidden="true"><rect x="4" y="3" width="72" height="46" rx="7" style="fill:var(--papel);stroke:var(--lila);stroke-width:3"/><path d="M34 49h12l4 9H30Z" style="fill:var(--lila)"/><rect x="18" y="17" width="2.5" height="16" rx="1" style="fill:var(--lila)"><animate attributeName="opacity" values="1;0;1" dur="1.2s" repeatCount="indefinite"/></rect></svg>';
   function vacio(pj,svg,titulo,texto){
-    return '<div class="vacio"><div class="fig"><img class="pj vivo" src="'+IMG+pj+'.png" alt="" aria-hidden="true" width="'+(pj==="culto"?182:pj==="neo"?140:145)+'" height="280">'+svg+'</div><h3>'+esc(titulo)+'</h3><p>'+esc(texto)+'</p></div>';
+    return '<div class="vacio"><div class="fig"><img class="pj vivo" src="'+IMG+pj+'.png" alt="" aria-hidden="true" width="'+(pj==="culto"?182:pj==="neo"?140:145)+'" height="280"><span class="sombra"></span>'+svg+'</div><h3>'+esc(titulo)+'</h3><p>'+esc(texto)+'</p></div>';
   }
   function errorBox(que){
     return '<div class="vacio"><h3>No hemos podido cargar '+esc(que)+'.</h3><p>Puede ser un fallo puntual de conexión.</p><button class="btn-s" type="button" data-act="reload">Reintentar</button></div>';

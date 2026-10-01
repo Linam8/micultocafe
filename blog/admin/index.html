@@ -37,15 +37,51 @@ button{cursor:pointer}
 :focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:6px}
 img{display:block;max-width:none}
 
-.boot{min-height:100dvh;display:grid;place-content:center;gap:10px;justify-items:center;color:var(--tinta-suave);font-weight:600}
-.boot img{height:100px}
+.char-stage{position:relative;display:inline-block;line-height:0}
+.sombra{background:radial-gradient(ellipse at center,rgba(20,15,5,.32),rgba(20,15,5,0) 72%);border-radius:50%;animation:sombra-rebota 2.3s cubic-bezier(.45,0,.55,1) infinite}
+.char-stage .sombra{position:absolute;left:50%;bottom:-2%;width:58%;height:13%;translate:-50% 0}
+.pj.vivo{transform-origin:50% 100%;animation:vivo 2.3s cubic-bezier(.45,0,.55,1) infinite}
+@keyframes vivo{
+  0%,100%{transform:translateY(0) scale(1,1) rotate(0)}
+  22%{transform:translateY(-20px) scale(.93,1.1) rotate(-2deg)}
+  48%{transform:translateY(0) scale(1.12,.86) rotate(0)}
+  70%{transform:translateY(-7px) scale(.98,1.04) rotate(2deg)}
+  88%{transform:translateY(0) scale(1.03,.98) rotate(0)}
+}
+@keyframes sombra-rebota{
+  0%,100%{opacity:.55;scale:1 1}
+  22%{opacity:.2;scale:.68 1}
+  48%{opacity:.6;scale:1.22 1}
+  70%{opacity:.4;scale:.9 1}
+  88%{opacity:.55;scale:1.05 1}
+}
 
-.login{min-height:100dvh;display:grid;place-items:center;padding:24px}
-.login-card{width:100%;max-width:380px;background:var(--papel);border:1px solid var(--linea);border-radius:var(--radio-lg);padding:34px 30px;box-shadow:var(--sombra);text-align:center;position:relative}
-.login-card img{height:64px;width:auto;margin:0 auto 14px;animation:vivo 4.6s ease-in-out infinite;transform-origin:50% 100%}
-@keyframes vivo{0%,58%,100%{transform:translateY(0) rotate(0)}62%{transform:translateY(0) scale(1.06,.92)}70%{transform:translateY(-14px) rotate(-3deg) scale(.95,1.06)}78%{transform:translateY(0) rotate(0) scale(1.05,.94)}90%{transform:translateY(0)}}
-.login-card h1{margin:0 0 4px;font-size:1.3rem;font-weight:800}
-.login-card .sub{margin:0 0 20px;color:var(--tinta-suave);font-size:.9rem}
+.boot{min-height:100dvh;display:grid;place-content:center;gap:10px;justify-items:center;color:var(--tinta-suave);font-weight:600}
+.boot .pj{height:100px}
+
+.login{min-height:100dvh;display:grid;grid-template-columns:1fr 1fr}
+.login-izq{background:radial-gradient(420px 260px at 8% 4%,color-mix(in srgb,var(--azul) 14%,transparent),transparent 70%),radial-gradient(380px 300px at 92% 96%,color-mix(in srgb,var(--matcha) 16%,transparent),transparent 70%),var(--crema);padding:clamp(28px,5vw,64px);display:flex;flex-direction:column;justify-content:center;gap:18px}
+.login-izq .logo-c{height:72px;width:auto;align-self:flex-start}
+.login-izq h1{font-size:clamp(2rem,4.4vw,3rem);font-weight:800;letter-spacing:-.03em}
+.login-izq .frase{margin:0;font-size:1.1rem;color:var(--tinta-suave);max-width:34ch;line-height:1.5}
+.login-izq .pilar{margin:6px 0 0;font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--tinta-suave);display:flex;align-items:center;gap:10px}
+.login-izq .pilar::before{content:"";width:26px;height:2px;background:var(--tostado);border-radius:2px;flex:none}
+.login-der{background:var(--crema-2);padding:clamp(20px,4vw,48px);display:grid;place-items:center}
+.stage{position:relative;width:100%;max-width:400px;margin-top:96px}
+.peek{position:absolute;top:-92px;left:36px;z-index:0;animation:asoma .75s cubic-bezier(.2,.9,.3,1.2) both}
+.peek .pj{height:124px;transform-origin:50% 100%;animation:saluda 1.5s ease-in-out .9s 1,curiosea 6s ease-in-out 3.2s infinite}
+.peek .sombra{position:absolute;left:50%;bottom:4px;width:60px;height:12px;translate:-50% 0;animation:sombra-peek 1.5s ease-in-out .9s 1}
+.peek.salto{animation:salto .5s ease-out}
+.peek .pj.ladea{animation:ladea .95s ease-in-out}
+@keyframes asoma{from{translate:0 80px}to{translate:0 0}}
+@keyframes saluda{0%,100%{rotate:0deg}20%{rotate:-9deg}45%{rotate:8deg}70%{rotate:-6deg}}
+@keyframes curiosea{0%,55%,100%{translate:0 0;rotate:0deg}65%{translate:0 -12px;rotate:-6deg}75%{translate:0 -5px;rotate:6deg}85%{translate:0 -10px;rotate:-3deg}}
+@keyframes ladea{0%,100%{rotate:0deg}25%{rotate:-15deg}60%{rotate:15deg}85%{rotate:-6deg}}
+@keyframes salto{0%,100%{translate:0 0}45%{translate:0 -36px}}
+@keyframes sombra-peek{0%,100%{opacity:.4;scale:1 1}20%{opacity:.18;scale:.7 1}45%{opacity:.5;scale:1.15 1}70%{opacity:.28;scale:.85 1}}
+.login-card{position:relative;z-index:1;background:var(--papel);border:1px solid var(--linea);border-radius:var(--radio-lg);padding:clamp(22px,4vw,34px);box-shadow:var(--sombra)}
+.login-card h2{font-size:1.4rem;font-weight:800;margin-bottom:4px}
+.login-card .sub{margin:0 0 18px;color:var(--tinta-suave)}
 .campo{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;text-align:left}
 .campo label{font-weight:700;font-size:.86rem}
 .campo input,.campo textarea{width:100%;border:1.5px solid var(--linea-fuerte);background:var(--crema);border-radius:10px;padding:11px 13px;font-size:1rem}
@@ -53,8 +89,12 @@ img{display:block;max-width:none}
 .err{margin:0 0 12px;color:var(--error);font-weight:600;font-size:.88rem}
 .btn-p{width:100%;border:0;border-radius:999px;background:var(--btn);color:var(--btn-tinta);font-weight:800;font-size:1rem;padding:13px 20px}
 .btn-p:disabled{opacity:.7;cursor:progress}
-.volver{display:block;margin-top:14px;font-size:.85rem;color:var(--tinta-suave);text-decoration:none}
+.volver{display:block;text-align:center;margin-top:16px;font-size:.85rem;color:var(--tinta-suave);text-decoration:none}
 .volver:hover{text-decoration:underline}
+@media (max-width:920px){
+  .login{grid-template-columns:1fr}
+  .login-izq{padding-bottom:8px}
+}
 
 .app{max-width:960px;margin:0 auto;padding:28px 20px 60px}
 .top{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:22px;background:var(--papel);border:1px solid var(--linea);border-radius:20px;padding:14px 20px;box-shadow:var(--sombra)}
@@ -83,7 +123,8 @@ img{display:block;max-width:none}
 .estado.bor{background:color-mix(in srgb,var(--tostado) 26%,var(--papel));border:1px solid var(--linea-fuerte)}
 .fila .acciones{display:flex;gap:8px;flex-wrap:wrap}
 .vacio{text-align:center;padding:56px 16px;color:var(--tinta-suave);background:var(--papel);border:1px solid var(--linea);border-radius:20px;box-shadow:var(--sombra)}
-.vacio img{height:96px;width:auto;margin:0 auto 14px;animation:vivo 4.2s ease-in-out infinite;transform-origin:50% 100%}
+.vacio .char-stage{margin:0 auto 14px}
+.vacio .pj{height:96px;width:auto}
 .vacio h3{font-size:1.1rem;margin-bottom:4px}
 
 .editor{background:var(--papel);border:1px solid var(--linea);border-radius:20px;padding:24px clamp(16px,4vw,30px);box-shadow:var(--sombra)}
@@ -107,27 +148,37 @@ img{display:block;max-width:none}
 <body>
 
 <div class="boot" id="boot" role="status">
-  <img src="../../assets/img/crm/culto.png" alt="" aria-hidden="true" width="182" height="280">
+  <span class="char-stage"><img class="pj vivo" src="../../assets/img/crm/culto.png" alt="" aria-hidden="true" width="182" height="280"><span class="sombra"></span></span>
   <span>Un momento…</span>
 </div>
 
 <div class="login" id="login" hidden>
-  <form class="login-card" id="loginForm" novalidate>
-    <img src="../../assets/img/crm/culto.png" alt="" aria-hidden="true" width="182" height="280">
+  <section class="login-izq">
+    <img class="logo-c" src="../../assets/img/crm/logo.png" alt="Culto Café" width="240" height="181">
     <h1>Artículos del blog</h1>
-    <p class="sub">Solo para el equipo de Culto.</p>
-    <div class="campo">
-      <label for="lEmail">Email</label>
-      <input id="lEmail" type="email" autocomplete="email" required>
+    <p class="frase">Aquí escribimos lo que le contamos al mundo sobre Culto Café.</p>
+    <p class="pilar">Lugares reales. Personas reales. Planes reales.</p>
+  </section>
+  <section class="login-der">
+    <div class="stage">
+      <div class="peek" id="peek"><img class="pj" id="peekImg" src="../../assets/img/crm/culto.png" alt="" aria-hidden="true" width="182" height="280"><span class="sombra"></span></div>
+      <form class="login-card" id="loginForm" novalidate>
+        <h2>Entra al panel</h2>
+        <p class="sub">Solo para el equipo de Culto.</p>
+        <div class="campo">
+          <label for="lEmail">Email</label>
+          <input id="lEmail" type="email" autocomplete="email" required>
+        </div>
+        <div class="campo">
+          <label for="lPass">Contraseña</label>
+          <input id="lPass" type="password" autocomplete="current-password" required>
+        </div>
+        <p class="err" id="lErr" role="alert" hidden></p>
+        <button class="btn-p" id="lBtn" type="submit">Entrar</button>
+        <a class="volver" href="../../crm/">Ir al CRM</a>
+      </form>
     </div>
-    <div class="campo">
-      <label for="lPass">Contraseña</label>
-      <input id="lPass" type="password" autocomplete="current-password" required>
-    </div>
-    <p class="err" id="lErr" role="alert" hidden></p>
-    <button class="btn-p" id="lBtn" type="submit">Entrar</button>
-    <a class="volver" href="../../crm/">Ir al CRM</a>
-  </form>
+  </section>
 </div>
 
 <div class="app" id="app" hidden>
@@ -218,6 +269,11 @@ img{display:block;max-width:none}
   function fecha(iso){var d=new Date(iso);return isNaN(d)?"":fFecha.format(d)}
 
   function esSesion(e){return !!e&&(e.status===401||/jwt|token.*expired|not authenticated/i.test(e.message||""))}
+  function ladea(){
+    var i=$("peekImg");i.classList.remove("ladea");void i.offsetWidth;i.classList.add("ladea");
+    i.addEventListener("animationend",function h(){i.classList.remove("ladea");i.removeEventListener("animationend",h)});
+  }
+  function salto(){var p=$("peek");p.classList.remove("salto");void p.offsetWidth;p.classList.add("salto")}
 
   $("loginForm").addEventListener("submit",function(e){
     e.preventDefault();
@@ -227,10 +283,12 @@ img{display:block;max-width:none}
     S.logging=true;btn.disabled=true;btn.textContent="Entrando…";
     sb.auth.signInWithPassword({email:email,password:pass}).then(function(r){
       if(r.error||!r.data||!r.data.session)throw (r.error||new Error("sin sesión"));
-      entrar(r.data.session);
+      salto();
+      setTimeout(function(){entrar(r.data.session)},450);
     }).catch(function(){
       S.logging=false;btn.disabled=false;btn.textContent="Entrar";
       $("lErr").textContent="Ese email o esa contraseña no cuadran. Prueba otra vez.";$("lErr").hidden=false;
+      ladea();
     });
   });
   $("btnSalir").addEventListener("click",function(){
@@ -254,7 +312,7 @@ img{display:block;max-width:none}
   function render(){
     var el=$("lista");
     if(!S.articulos.length){
-      el.innerHTML='<div class="vacio"><img src="../../assets/img/crm/moka.png" alt="" width="145" height="280"><h3>Todavía no hay artículos.</h3><p>Crea el primero con "Nuevo artículo".</p></div>';
+      el.innerHTML='<div class="vacio"><span class="char-stage"><img class="pj vivo" src="../../assets/img/crm/moka.png" alt="" width="145" height="280"><span class="sombra"></span></span><h3>Todavía no hay artículos.</h3><p>Crea el primero con "Nuevo artículo".</p></div>';
       return;
     }
     el.innerHTML=S.articulos.map(function(a){
