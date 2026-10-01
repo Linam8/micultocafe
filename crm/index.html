@@ -130,6 +130,7 @@ main{padding:26px clamp(16px,3vw,40px) 56px;max-width:1240px;width:100%;min-widt
 .tag-ejemplo{font-size:12px;font-weight:700;background:color-mix(in srgb,var(--tostado) 28%,var(--papel));border:1px solid var(--linea-fuerte);border-radius:999px;padding:4px 12px;white-space:nowrap}
 .demo-nota{margin:0 0 16px;font-size:13px;color:var(--tinta-suave);border:1px dashed var(--linea-fuerte);border-radius:12px;padding:8px 12px}
 .scene-resumen{display:none;position:relative;height:104px;width:150px;flex:none}
+main[data-tab="mensajes"] .demo-ctl,main[data-tab="mensajes"] .demo-nota{display:none}
 main[data-tab="resumen"] .scene-resumen{display:block}
 .scene-resumen .pj{position:absolute;right:26px;bottom:0;height:96px}
 .lupa{position:absolute;right:0;bottom:6px;width:46px;height:46px;transform-origin:20% 20%;animation:escanea 3.4s ease-in-out infinite}
@@ -332,6 +333,15 @@ td{padding:13px 16px;border-top:1px solid var(--linea);vertical-align:top;overfl
   *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
   .burbuja,.chispa,.bit{display:none}
 }
+
+/* mensajes */
+.msg-lista{display:flex;flex-direction:column;gap:12px}
+.msg-card{background:var(--papel);border:1px solid var(--linea);border-left:4px solid var(--linea-fuerte);border-radius:14px;padding:14px 18px;box-shadow:var(--sombra)}
+.msg-card.sin-leer{border-left-color:var(--azul)}
+.msg-top{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:.92rem}
+.msg-top .fecha{font-size:.8rem;color:var(--tinta-suave)}
+.msg-cuerpo{margin:10px 0;white-space:pre-wrap;overflow-wrap:anywhere}
+.msg-leido{display:inline-flex;align-items:center;gap:7px;font-size:.85rem;font-weight:600;color:var(--tinta-suave);cursor:pointer}
 </style>
 </head>
 <body>
@@ -399,6 +409,7 @@ td{padding:13px 16px;border-top:1px solid var(--linea);vertical-align:top;overfl
       <button type="button" data-tab="resumen" aria-current="page">Resumen</button>
       <button type="button" data-tab="cafeterias">Cafeterías <span class="count" id="cntCaf">–</span></button>
       <button type="button" data-tab="usuarios">Usuarios del chat <span class="count" id="cntUsr">–</span></button>
+      <button type="button" data-tab="mensajes">Mensajes <span class="count" id="cntMsg">–</span></button>
     </nav>
     <div class="side-foot">
       <span class="user-mail" id="userEmail"></span>
@@ -474,6 +485,10 @@ td{padding:13px 16px;border-top:1px solid var(--linea);vertical-align:top;overfl
         </table>
       </div>
     </section>
+
+    <section class="tab" id="tab-mensajes" hidden>
+      <div id="mensajes"></div>
+    </section>
   </main>
 </div>
 
@@ -539,7 +554,7 @@ td{padding:13px 16px;border-top:1px solid var(--linea);vertical-align:top;overfl
   var S = {
     sb:null, user:null, inApp:false, logging:false, manualOut:false,
     demo:false, demoChosen:false, demoLeads:DEMO_LEADS.map(function(l){return Object.assign({},l)}),
-    leads:[], chats:[], err:{leads:"",chats:""}, realVacio:false, loading:false,
+    leads:[], chats:[], mensajes:[], err:{leads:"",chats:"",mensajes:""}, realVacio:false, loading:false,
     tab:"resumen", filtro:"Todos", q:""
   };
 
@@ -667,19 +682,38 @@ td{padding:13px 16px;border-top:1px solid var(--linea);vertical-align:top;overfl
     S.loading=true;render();
     var q1=S.sb.from("leads_cafeterias").select("*").order("created_at",{ascending:false});
     var q2=S.sb.from("conversaciones_chat").select("*").order("created_at",{ascending:false}).limit(1000);
-    return Promise.all([q1,q2]).then(null,function(e){
-      var er={error:{message:String(e&&e.message||e)}};return [er,er];
+    var q3=S.sb.from("contactos_web").select("*").order("created_at",{ascending:false});
+    return Promise.all([q1,q2,q3]).then(null,function(e){
+      var er={error:{message:String(e&&e.message||e)}};return [er,er,er];
     }).then(function(r){
-      var a=r[0],b=r[1],bad=[a.error,b.error].filter(Boolean);
+      var a=r[0],b=r[1],c=r[2],bad=[a.error,b.error,c.error].filter(Boolean);
       if(bad.some(esSesion))return aviso("sesion");
       if(bad.some(esPermiso))return aviso("permiso");
-      S.err.leads=a.error?"x":"";S.err.chats=b.error?"x":"";
+      S.err.leads=a.error?"x":"";S.err.chats=b.error?"x":"";S.err.mensajes=c.error?"x":"";
       S.leads=(a.data||[]).map(normLead);
       S.chats=(b.data||[]).map(normChat);
+      S.mensajes=(c.data||[]).map(normMensaje);
       S.realVacio=!S.err.leads&&!S.err.chats&&!S.leads.length&&!S.chats.length;
       if(!S.demoChosen)S.demo=S.realVacio;
       S.loading=false;render();
     });
+  }
+
+  function normMensaje(r){
+    return {id:r.id,ts:r.created_at,fecha:fDia(r.created_at),nombre:r.nombre||"",email:r.email||"",mensaje:r.mensaje||"",origen:r.origen||"web",leido:!!r.leido};
+  }
+  function cntMsg(){$("cntMsg").textContent=S.mensajes.filter(function(m){return !m.leido}).length}
+  function marcarLeido(id,leido){
+    var m=S.mensajes.filter(function(x){return String(x.id)===String(id)})[0];
+    if(!m)return;
+    var prev=m.leido;m.leido=leido;mensajes();cntMsg();
+    S.sb.from("contactos_web").update({leido:leido}).eq("id",id).select("id").then(function(r){
+      if(r.error||!r.data||!r.data.length){
+        if(esSesion(r.error))return aviso("sesion");
+        m.leido=prev;mensajes();cntMsg();
+        toast("No se pudo guardar el cambio.");
+      }
+    },function(){ m.leido=prev;mensajes();cntMsg(); toast("No se pudo guardar el cambio."); });
   }
 
   function cambiarEstado(id,nuevo){
@@ -756,7 +790,8 @@ td{padding:13px 16px;border-top:1px solid var(--linea);vertical-align:top;overfl
   var TITULOS = {
     resumen:[null,"Lo que pasa en Culto Café esta semana."],
     cafeterias:["Cafeterías","Solicitudes de alta, ordenadas por etapa. Cambia el estado con el desplegable."],
-    usuarios:["Usuarios del chat","Lo que preguntan las personas a Culto. Identificadores anónimos."]
+    usuarios:["Usuarios del chat","Lo que preguntan las personas a Culto. Identificadores anónimos."],
+    mensajes:["Mensajes","Lo que nos escriben desde el formulario de contacto de la web."]
   };
 
   function tiles(){
@@ -843,6 +878,19 @@ td{padding:13px 16px;border-top:1px solid var(--linea);vertical-align:top;overfl
         '<td><b>'+esc(x.cafe||"—")+'</b>'+(x.barrio?'<div class="muted">'+esc(x.barrio)+'</div>':"")+'</td></tr>';
     }).join(""):'<tr><td colspan="5">'+vacio("culto",SVG_MAPA,"No encontramos nada con eso.","Prueba con otra palabra o quita algún filtro.")+'</td></tr>';
   }
+  function mensajes(){
+    var el=$("mensajes");
+    if(S.err.mensajes){el.innerHTML=errorBox("los mensajes");return}
+    if(!S.mensajes.length){el.innerHTML=vacio("culto",SVG_MAPA,"Todavía no hay mensajes.","Cuando alguien escriba desde el formulario de contacto, aparecerá aquí.");return}
+    el.innerHTML='<div class="msg-lista">'+S.mensajes.map(function(m){
+      return '<article class="msg-card'+(m.leido?"":" sin-leer")+'">'+
+        '<div class="msg-top"><div><b>'+esc(m.nombre)+'</b> · <a href="mailto:'+esc(m.email)+'">'+esc(m.email)+'</a></div>'+
+        '<span class="fecha">'+esc(m.fecha)+'</span></div>'+
+        '<p class="msg-cuerpo">'+esc(m.mensaje)+'</p>'+
+        '<label class="msg-leido"><input type="checkbox" data-leido="'+esc(m.id)+'"'+(m.leido?" checked":"")+'> Leído</label>'+
+      '</article>';
+    }).join("")+'</div>';
+  }
   function render(){
     $("main").classList.toggle("is-loading",S.loading);
     $("cargando").hidden=!S.loading;
@@ -851,13 +899,14 @@ td{padding:13px 16px;border-top:1px solid var(--linea);vertical-align:top;overfl
     $("demoNota").hidden=!S.realVacio;
     $("cntCaf").textContent=S.loading?"–":L().length;
     $("cntUsr").textContent=S.loading?"–":C().length;
+    $("cntMsg").textContent=S.loading?"–":S.mensajes.filter(function(m){return !m.leido}).length;
     if(S.loading)return;
-    tiles();bars();feed();board();chips();tabla();
+    tiles();bars();feed();board();chips();tabla();mensajes();
   }
 
   function mostrarTab(tab){
     S.tab=tab;
-    ["resumen","cafeterias","usuarios"].forEach(function(t){$("tab-"+t).hidden=(t!==tab)});
+    ["resumen","cafeterias","usuarios","mensajes"].forEach(function(t){$("tab-"+t).hidden=(t!==tab)});
     document.querySelectorAll(".nav button").forEach(function(b){
       if(b.dataset.tab===tab)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current");
     });
@@ -877,6 +926,10 @@ td{padding:13px 16px;border-top:1px solid var(--linea);vertical-align:top;overfl
   });
   $("app").addEventListener("click",function(e){
     if(e.target.closest("[data-act=reload]"))cargar();
+  });
+  $("mensajes").addEventListener("change",function(e){
+    var c=e.target.closest("[data-leido]");if(!c)return;
+    marcarLeido(c.dataset.leido,c.checked);
   });
   $("chips").addEventListener("click",function(e){
     var c=e.target.closest(".chip");if(!c)return;
