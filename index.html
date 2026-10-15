@@ -196,6 +196,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <p><a class="btn btn-ghost" href="#para-cafeterias">¿Tienes una cafetería? Da de alta tu ficha →</a></p>
       </div>
     </div>
+    <div class="wrap" style="margin-top:40px">
+      <video controls loop playsinline preload="metadata"
+             poster="assets/video/poster-personajes.jpg"
+             aria-label="Culto, Neo y Moka muestran cómo funciona Culto Café"
+             style="width:100%;border-radius:var(--radio-lg);display:block">
+        <source src="assets/video/culto-personajes.mp4" type="video/mp4">
+      </video>
+    </div>
   </section>
 
   <section class="section b2b" id="para-cafeterias">
@@ -375,6 +383,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Plan Socia — Culto Café","description":"Todo lo de Destacada, con presencia en contenido y redes de Culto Café y soporte prioritario.","inLanguage":"es","brand":{"@type":"Brand","name":"Culto Café"},"offers":{"@type":"Offer","price":"49","priceCurrency":"EUR","url":"https://micultocafe.netlify.app/suscribir/index.html?plan=Socia","availability":"https://schema.org/InStock","category":"Coffee shop directory listing"}}</script>
 
 
+<section class="section" style="background:var(--fondo-alt);text-align:center">
+  <div class="wrap" style="max-width:760px">
+    <p class="eyebrow">Culto Café</p>
+    <h2 class="balance">Esto es lo que somos</h2>
+    <video controls loop playsinline preload="metadata"
+           poster="assets/video/poster-cancion.jpg"
+           aria-label="La canción de Culto Café"
+           style="width:100%;border-radius:var(--radio-lg);display:block;margin-top:24px">
+      <source src="assets/video/culto-cancion.mp4" type="video/mp4">
+    </video>
+  </div>
+</section>
+
 <footer class="site-footer">
   <div class="wrap footer-grid">
     <div class="footer-brand">
@@ -432,5 +453,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   var s=document.getElementById("ldjson"); if(s) s.textContent=JSON.stringify(ld);
 })();
 </script>
+
+<!-- n8n Chat Widget -->
+<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+<script type="module">
+  import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+  createChat({
+    webhookUrl: 'https://adopterlabenv.app.n8n.cloud/webhook/b889cd17-d04e-45ef-b77f-e71dab22a5b3/chat',
+    initialMessages: ['¡Hola! ☕ Soy el asistente de Culto Café. ¿Te ayudo a encontrar tu cafetería perfecta en Madrid?'],
+    i18n: {
+      en: {
+        title: 'Culto Café',
+        subtitle: 'Tu recomendador de cafeterías en Madrid',
+        inputPlaceholder: 'Escribe tu consulta...',
+        getStarted: 'Iniciar conversación',
+        closeButtonTooltip: 'Cerrar chat',
+      }
+    }
+  });
+</script>
+
 </body>
 </html>
