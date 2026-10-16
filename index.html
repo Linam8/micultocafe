@@ -112,6 +112,64 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </section>
 
+  <section class="section videos-section" id="videos">
+    <div class="wrap" style="text-align:center;margin-bottom:32px">
+      <p class="eyebrow">Culto Café en vídeo</p>
+      <h2 class="balance">Tres formas de conocernos</h2>
+    </div>
+    <div class="vc-carousel" id="vcCarousel">
+      <div class="vc-track" id="vcTrack">
+
+        <div class="vc-slide">
+          <div class="vc-video-wrap">
+            <video controls loop playsinline preload="metadata"
+                   poster="assets/video/poster.jpg"
+                   aria-label="Nuestro manifiesto — Culto, Neo y Moka por Madrid"
+                   style="width:100%;border-radius:var(--radio-lg);display:block">
+              <source src="assets/video/culto-historia.mp4" type="video/mp4">
+            </video>
+            <p class="vc-label">Nuestro manifiesto</p>
+            <p class="vc-desc">Culto, Neo y Moka te presentan el proyecto. Así entendemos el café en Madrid.</p>
+          </div>
+        </div>
+
+        <div class="vc-slide">
+          <div class="vc-video-wrap">
+            <video controls loop playsinline preload="metadata"
+                   poster="assets/video/poster-cancion.jpg"
+                   aria-label="La canción de Culto Café"
+                   style="width:100%;border-radius:var(--radio-lg);display:block">
+              <source src="assets/video/culto-cancion.mp4" type="video/mp4">
+            </video>
+            <p class="vc-label">La canción de Culto Café</p>
+            <p class="vc-desc">Una ciudad. Mil cafés. Tus planes.</p>
+          </div>
+        </div>
+
+        <div class="vc-slide">
+          <div class="vc-video-wrap">
+            <video controls loop playsinline preload="metadata"
+                   poster="assets/video/poster-personajes.jpg"
+                   aria-label="Así funciona Culto Café — los personajes en acción"
+                   style="width:100%;border-radius:var(--radio-lg);display:block">
+              <source src="assets/video/culto-personajes.mp4" type="video/mp4">
+            </video>
+            <p class="vc-label">Así funciona Culto</p>
+            <p class="vc-desc">Culto, Neo y Moka te muestran cómo funciona la plataforma por dentro.</p>
+          </div>
+        </div>
+
+      </div>
+      <button class="vc-btn vc-prev" id="vcPrev" aria-label="Vídeo anterior">&#8249;</button>
+      <button class="vc-btn vc-next" id="vcNext" aria-label="Vídeo siguiente">&#8250;</button>
+      <div class="vc-dots" id="vcDots">
+        <button class="vc-dot active" data-i="0" aria-label="Vídeo 1"></button>
+        <button class="vc-dot" data-i="1" aria-label="Vídeo 2"></button>
+        <button class="vc-dot" data-i="2" aria-label="Vídeo 3"></button>
+      </div>
+    </div>
+  </section>
+
   <section class="section como" id="como">
     <div class=”wrap como-grid”>
       <div class=”como-intro”>
@@ -190,7 +248,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <li>Resuelve dudas sobre café: tuestes, métodos, perfiles de sabor</li>
           <li>Sin app y sin cuenta: escribes y ya está</li>
         </ul>
-        <div id="culto-chat" style="height:520px;margin-top:24px;border-radius:var(--radio-lg);overflow:hidden;border:1px solid #e8e0d6"></div>
+        <a class="btn btn-wa" href="#" id="btnCulto" aria-label="Abrir chat con Culto">Escríbele a Culto</a>
       </div>
     </div>
   </section>
@@ -204,64 +262,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <p>Culto Café es una plataforma de descubrimiento y fidelización de cafeterías de especialidad en Madrid. Conectamos a quien busca un buen café con las cafeterías independientes que de verdad lo hacen bien, a través de información verificada local por local y de un recomendador conversacional.</p>
         <p>Nuestro modelo es sencillo: la persona usuaria entra gratis; las cafeterías cuentan con visibilidad y herramientas de fidelización parecidas a las de las grandes cadenas. Tratamos los datos con el mismo cuidado con el que curamos cada ficha.</p>
         <p><a class="btn btn-ghost" href="#para-cafeterias">¿Tienes una cafetería? Da de alta tu ficha →</a></p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section videos-section" id="videos">
-    <div class="wrap" style="text-align:center;margin-bottom:32px">
-      <p class="eyebrow">Culto Café en vídeo</p>
-      <h2 class="balance">Tres formas de conocernos</h2>
-    </div>
-    <div class="vc-carousel" id="vcCarousel">
-      <div class="vc-track" id="vcTrack">
-
-        <div class="vc-slide">
-          <div class="vc-video-wrap">
-            <video controls loop playsinline preload="metadata"
-                   poster="assets/video/poster.jpg"
-                   aria-label="Nuestro manifiesto — Culto, Neo y Moka por Madrid"
-                   style="width:100%;border-radius:var(--radio-lg);display:block">
-              <source src="assets/video/culto-historia.mp4" type="video/mp4">
-            </video>
-            <p class="vc-label">Nuestro manifiesto</p>
-            <p class="vc-desc">Culto, Neo y Moka te presentan el proyecto. Así entendemos el café en Madrid.</p>
-          </div>
-        </div>
-
-        <div class="vc-slide">
-          <div class="vc-video-wrap">
-            <video controls loop playsinline preload="metadata"
-                   poster="assets/video/poster-personajes.jpg"
-                   aria-label="Así funciona Culto Café — los personajes en acción"
-                   style="width:100%;border-radius:var(--radio-lg);display:block">
-              <source src="assets/video/culto-personajes.mp4" type="video/mp4">
-            </video>
-            <p class="vc-label">Así funciona Culto</p>
-            <p class="vc-desc">Culto, Neo y Moka te muestran cómo funciona la plataforma por dentro.</p>
-          </div>
-        </div>
-
-        <div class="vc-slide">
-          <div class="vc-video-wrap">
-            <video controls loop playsinline preload="metadata"
-                   poster="assets/video/poster-cancion.jpg"
-                   aria-label="La canción de Culto Café"
-                   style="width:100%;border-radius:var(--radio-lg);display:block">
-              <source src="assets/video/culto-cancion.mp4" type="video/mp4">
-            </video>
-            <p class="vc-label">La canción de Culto Café</p>
-            <p class="vc-desc">Una ciudad. Mil cafés. Tus planes.</p>
-          </div>
-        </div>
-
-      </div>
-      <button class="vc-btn vc-prev" id="vcPrev" aria-label="Vídeo anterior">&#8249;</button>
-      <button class="vc-btn vc-next" id="vcNext" aria-label="Vídeo siguiente">&#8250;</button>
-      <div class="vc-dots" id="vcDots">
-        <button class="vc-dot active" data-i="0" aria-label="Vídeo 1"></button>
-        <button class="vc-dot" data-i="1" aria-label="Vídeo 2"></button>
-        <button class="vc-dot" data-i="2" aria-label="Vídeo 3"></button>
       </div>
     </div>
   </section>
@@ -524,14 +524,34 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 })();
 </script>
 
-<!-- n8n Chat Embebido -->
+<!-- n8n Chat — burbuja flotante con estilo de marca -->
 <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+<style>
+  :root {
+    --chat--color-primary: #3B82F6;
+    --chat--color-secondary: #A7C957;
+    --chat--toggle--background: #3B82F6;
+    --chat--toggle--hover--background: #2f6fd6;
+    --chat--toggle--active--background: #2f6fd6;
+    --chat--toggle--color: #ffffff;
+    --chat--toggle--size: 64px;
+    --chat--window--width: 400px;
+    --chat--window--height: 600px;
+    --chat--header--background: #1A1A1A;
+    --chat--header--color: #F7F4ED;
+    --chat--body--background: #F7F4ED;
+    --chat--message--bot--background: #ffffff;
+    --chat--message--user--background: #3B82F6;
+    --chat--message--user--color: #ffffff;
+    --chat--font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  }
+</style>
 <script type="module">
   import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
   createChat({
     webhookUrl: 'https://adopterlabenv.app.n8n.cloud/webhook/b889cd17-d04e-45ef-b77f-e71dab22a5b3/chat',
-    target: '#culto-chat',
-    mode: 'fullscreen',
+    mode: 'window',
     showWelcomeScreen: true,
     initialMessages: [
       '¡Hola! Soy Culto 👋',
@@ -546,6 +566,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         footer: ''
       }
     }
+  });
+
+  // Botón "Escríbele a Culto" abre la burbuja de chat
+  document.getElementById('btnCulto').addEventListener('click', function(e){
+    e.preventDefault();
+    var toggle = document.querySelector('.n8n-chat-window-toggle, [class*="chat-window-toggle"], [class*="toggle"]');
+    if (toggle) toggle.click();
   });
 </script>
 
