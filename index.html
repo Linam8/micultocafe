@@ -136,10 +136,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="vc-slide">
           <div class="vc-video-wrap">
             <video controls loop playsinline preload="metadata"
-                   poster="assets/video/poster-cancion.jpg"
+                   poster="assets/video/poster-personajes.jpg"
                    aria-label="La canción de Culto Café"
                    style="width:100%;border-radius:var(--radio-lg);display:block">
-              <source src="assets/video/culto-cancion.mp4" type="video/mp4">
+              <source src="assets/video/culto-personajes.mp4" type="video/mp4">
             </video>
             <p class="vc-label">La canción de Culto Café</p>
             <p class="vc-desc">Una ciudad. Mil cafés. Tus planes.</p>
@@ -149,10 +149,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="vc-slide">
           <div class="vc-video-wrap">
             <video controls loop playsinline preload="metadata"
-                   poster="assets/video/poster-personajes.jpg"
-                   aria-label="Así funciona Culto Café — los personajes en acción"
+                   poster="assets/video/poster-cancion.jpg"
+                   aria-label="Así funciona Culto Café"
                    style="width:100%;border-radius:var(--radio-lg);display:block">
-              <source src="assets/video/culto-personajes.mp4" type="video/mp4">
+              <source src="assets/video/culto-cancion.mp4" type="video/mp4">
             </video>
             <p class="vc-label">Así funciona Culto</p>
             <p class="vc-desc">Culto, Neo y Moka te muestran cómo funciona la plataforma por dentro.</p>
@@ -248,7 +248,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <li>Resuelve dudas sobre café: tuestes, métodos, perfiles de sabor</li>
           <li>Sin app y sin cuenta: escribes y ya está</li>
         </ul>
-        <a class="btn btn-wa" href="#" id="btnCulto" aria-label="Abrir chat con Culto">Escríbele a Culto</a>
+        <a class="btn" href="#" id="btnCulto" aria-label="Abrir chat con Culto">Escríbele a Culto</a>
       </div>
     </div>
   </section>
@@ -528,23 +528,35 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 <style>
   :root {
-    --chat--color-primary: #3B82F6;
+    --chat--color-primary: #1a1a1a;
     --chat--color-secondary: #A7C957;
-    --chat--toggle--background: #3B82F6;
-    --chat--toggle--hover--background: #2f6fd6;
-    --chat--toggle--active--background: #2f6fd6;
+    --chat--toggle--background: transparent;
+    --chat--toggle--hover--background: transparent;
+    --chat--toggle--active--background: transparent;
     --chat--toggle--color: #ffffff;
-    --chat--toggle--size: 64px;
+    --chat--toggle--size: 68px;
     --chat--window--width: 400px;
     --chat--window--height: 600px;
     --chat--header--background: #1A1A1A;
     --chat--header--color: #F7F4ED;
     --chat--body--background: #F7F4ED;
     --chat--message--bot--background: #ffffff;
-    --chat--message--user--background: #3B82F6;
+    --chat--message--user--background: #1a1a1a;
     --chat--message--user--color: #ffffff;
     --chat--font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
   }
+  /* Icono de Culto en la burbuja */
+  .n8n-chat .chat-window-toggle,
+  #n8n-chat .chat-window-toggle,
+  div[class*="n8n-chat"] button[class*="toggle"] {
+    background-color: transparent !important;
+    background-image: url('assets/img/culto.png') !important;
+    background-size: contain !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    box-shadow: none !important;
+  }
+  div[class*="n8n-chat"] button[class*="toggle"] svg { display: none !important; }
 </style>
 <script type="module">
   import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
@@ -568,11 +580,45 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     }
   });
 
-  // Botón "Escríbele a Culto" abre la burbuja de chat
-  document.getElementById('btnCulto').addEventListener('click', function(e){
-    e.preventDefault();
-    var toggle = document.querySelector('.n8n-chat-window-toggle, [class*="chat-window-toggle"], [class*="toggle"]');
-    if (toggle) toggle.click();
+  // Función global para abrir el chat
+  function abrirCultoChat(e) {
+    if (e) e.preventDefault();
+    // Espera a que el widget esté listo si todavía no está
+    var intento = 0;
+    var abrir = function() {
+      var toggle = document.querySelector('button[class*="toggle"]');
+      if (toggle) { toggle.click(); }
+      else if (intento++ < 10) { setTimeout(abrir, 300); }
+    };
+    abrir();
+  }
+
+  // Aplica el icono de Culto a la burbuja cuando el widget esté en el DOM
+  var observer = new MutationObserver(function() {
+    var toggle = document.querySelector('button[class*="toggle"]');
+    if (toggle) {
+      toggle.style.backgroundImage = "url('assets/img/culto.png')";
+      toggle.style.backgroundSize = 'contain';
+      toggle.style.backgroundPosition = 'center';
+      toggle.style.backgroundRepeat = 'no-repeat';
+      toggle.style.backgroundColor = 'transparent';
+      toggle.style.boxShadow = 'none';
+      var svg = toggle.querySelector('svg');
+      if (svg) svg.style.display = 'none';
+      observer.disconnect();
+    }
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
+
+  // Conecta TODOS los botones "Escríbele a Culto" al chat
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[id="btnCulto"], .btn-wa, .culto-chat-trigger').forEach(function(btn) {
+      btn.addEventListener('click', abrirCultoChat);
+    });
+    // Hero y header: botones que apuntan a #culto
+    document.querySelectorAll('a[href="#culto"]').forEach(function(btn) {
+      btn.addEventListener('click', abrirCultoChat);
+    });
   });
 </script>
 
