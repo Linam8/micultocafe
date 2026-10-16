@@ -81,7 +81,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span aria-hidden="true">·</span>
       <a href="/en/" hreflang="en">EN</a>
     </div>
-    <a class="btn btn-sm" href="#culto">Escríbele a Culto</a>
+    <a class="btn btn-sm" href="#" onclick="window.abrirCultoChat&&window.abrirCultoChat(event)">Escríbele a Culto</a>
     <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </header>
@@ -98,7 +98,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <p class="hero-lead">Información verificada de cada cafetería independiente —origen del grano, tueste, métodos y ambiente—, un mapa que se ordena por tu ubicación y Culto, un recomendador que habla contigo aquí mismo y te dice dónde tomar tu próximo café.</p>
       <div class="hero-actions">
         <a class="btn" href="#cafeterias">Ver cafeterías</a>
-        <a class="btn btn-ghost" href="#culto">Escríbele a Culto</a>
+        <a class="btn btn-ghost" href="#" onclick="window.abrirCultoChat&&window.abrirCultoChat(event)">Escríbele a Culto</a>
       </div>
       <p class="hero-note"><strong>Cafeterías de especialidad</strong>, verificadas una a una</p>
     </div>
@@ -136,19 +136,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="vc-slide">
           <div class="vc-video-wrap">
             <video controls loop playsinline preload="metadata"
-                   poster="assets/video/poster-personajes.jpg"
-                   aria-label="La canción de Culto Café"
-                   style="width:100%;border-radius:var(--radio-lg);display:block">
-              <source src="assets/video/culto-personajes.mp4" type="video/mp4">
-            </video>
-            <p class="vc-label">La canción de Culto Café</p>
-            <p class="vc-desc">Una ciudad. Mil cafés. Tus planes.</p>
-          </div>
-        </div>
-
-        <div class="vc-slide">
-          <div class="vc-video-wrap">
-            <video controls loop playsinline preload="metadata"
                    poster="assets/video/poster-cancion.jpg"
                    aria-label="Así funciona Culto Café"
                    style="width:100%;border-radius:var(--radio-lg);display:block">
@@ -156,6 +143,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </video>
             <p class="vc-label">Así funciona Culto</p>
             <p class="vc-desc">Culto, Neo y Moka te muestran cómo funciona la plataforma por dentro.</p>
+          </div>
+        </div>
+
+        <div class="vc-slide">
+          <div class="vc-video-wrap">
+            <video controls loop playsinline preload="metadata"
+                   poster="assets/video/poster-personajes.jpg"
+                   aria-label="La canción de Culto Café"
+                   style="width:100%;border-radius:var(--radio-lg);display:block">
+              <source src="assets/video/culto-personajes.mp4" type="video/mp4">
+            </video>
+            <p class="vc-label">La canción de Culto Café</p>
+            <p class="vc-desc">Una ciudad. Mil cafés. Tus planes.</p>
           </div>
         </div>
 
@@ -170,18 +170,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </section>
 
-  <section class="section como" id="como">
+  <section class=”section como” id=”como”>
     <div class=”wrap como-grid”>
       <div class=”como-intro”>
         <p class=”eyebrow”>Cómo funciona</p>
         <h2 class=”balance”>De la duda al café, en tres pasos</h2>
-        <p>La web es el escaparate. Culto está aquí mismo: habla con él directamente en la página, sin instalar nada.</p>
-        <a class=”btn” href=”#culto”>Habla con Culto</a>
+        <p>La web es el escaparate. Culto está aquí mismo: cuéntale qué buscas y te recomienda la cafetería perfecta, sin app, sin cuenta.</p>
+        <div class=”como-culto-img”>
+          <img src=”assets/img/culto.png” alt=”Culto, tu recomendador de cafeterías” style=”max-width:220px;width:100%;display:block;margin:24px auto 0”>
+        </div>
+        <a class=”btn” href=”#” onclick=”window.abrirCultoChat&&window.abrirCultoChat(event)” style=”margin-top:24px”>Habla con Culto</a>
       </div>
       <ol class=”pasos”>
         <li><span class=”paso-num”>01</span><h3>Explora la web</h3><p>Filtra por barrio, por lo que vas a hacer —trabajar, estudiar, quedar, catar— y por wifi, terraza, mascotas o precio. Cada ficha trae origen del grano, tueste, métodos y precios.</p></li>
         <li><span class=”paso-num”>02</span><h3>Mira el mapa</h3><p>Activa tu ubicación y las cafeterías se ordenan por cercanía. La más cercana queda resaltada, con un botón para llegar en un toque.</p></li>
-        <li><span class=”paso-num”>03</span><h3>Habla con Culto, aquí mismo</h3><p>Le cuentas qué te apetece —“algo tranquilo para trabajar cerca de la Plaza de San Ildefonso”— y te recomienda según afinidad, no solo cercanía.</p></li>
+        <li><span class=”paso-num”>03</span><h3>Habla con Culto</h3><p>Le cuentas qué te apetece —“algo tranquilo para trabajar cerca de la Plaza de San Ildefonso”— y te recomienda según afinidad, no solo cercanía.</p></li>
       </ol>
     </div>
   </section>
@@ -248,7 +251,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <li>Resuelve dudas sobre café: tuestes, métodos, perfiles de sabor</li>
           <li>Sin app y sin cuenta: escribes y ya está</li>
         </ul>
-        <a class="btn" href="#" id="btnCulto" aria-label="Abrir chat con Culto">Escríbele a Culto</a>
+        <a class="btn" href="#" onclick="window.abrirCultoChat&&window.abrirCultoChat(event)" aria-label="Abrir chat con Culto">Escríbele a Culto</a>
       </div>
     </div>
   </section>
@@ -524,47 +527,62 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 })();
 </script>
 
-<!-- n8n Chat — burbuja flotante con estilo de marca -->
+<!-- n8n Chat — burbuja flotante Culto -->
 <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 <style>
   :root {
     --chat--color-primary: #1a1a1a;
-    --chat--color-secondary: #A7C957;
-    --chat--toggle--background: transparent;
-    --chat--toggle--hover--background: transparent;
-    --chat--toggle--active--background: transparent;
-    --chat--toggle--color: #ffffff;
+    --chat--color-secondary: #c8a97e;
+    --chat--toggle--background: #1a1a1a;
+    --chat--toggle--hover--background: #333;
+    --chat--toggle--active--background: #333;
+    --chat--toggle--color: #fff;
     --chat--toggle--size: 68px;
-    --chat--window--width: 400px;
-    --chat--window--height: 600px;
-    --chat--header--background: #1A1A1A;
-    --chat--header--color: #F7F4ED;
-    --chat--body--background: #F7F4ED;
-    --chat--message--bot--background: #ffffff;
+    --chat--window--width: 380px;
+    --chat--window--height: 580px;
+    --chat--header--background: #1a1a1a;
+    --chat--header--color: #f7f4ed;
+    --chat--body--background: #f7f4ed;
+    --chat--message--bot--background: #fff;
+    --chat--message--bot--color: #1a1a1a;
     --chat--message--user--background: #1a1a1a;
-    --chat--message--user--color: #ffffff;
+    --chat--message--user--color: #fff;
     --chat--font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
   }
-  /* Icono de Culto en la burbuja */
-  .n8n-chat .chat-window-toggle,
-  #n8n-chat .chat-window-toggle,
-  div[class*="n8n-chat"] button[class*="toggle"] {
-    background-color: transparent !important;
-    background-image: url('assets/img/culto.png') !important;
-    background-size: contain !important;
-    background-position: center !important;
-    background-repeat: no-repeat !important;
-    box-shadow: none !important;
+  /* Reemplaza el botón flotante con el personaje Culto */
+  #culto-toggle-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 72px;
+    height: 72px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 9999;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,.25));
+    transition: transform .2s;
   }
-  div[class*="n8n-chat"] button[class*="toggle"] svg { display: none !important; }
+  #culto-toggle-btn:hover { transform: scale(1.08); }
+  #culto-toggle-btn img { width: 100%; height: 100%; object-fit: contain; }
+  /* Oculta el botón flotante por defecto de n8n */
+  .n8n-chat .chat-window-toggle,
+  div[class*="n8n-chat"] button[class*="toggle"] { display: none !important; }
 </style>
+
+<!-- Botón personalizado de Culto -->
+<button id="culto-toggle-btn" aria-label="Abrir chat con Culto" title="Habla con Culto">
+  <img src="assets/img/culto.png" alt="Culto">
+</button>
+
 <script type="module">
   import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
   createChat({
     webhookUrl: 'https://adopterlabenv.app.n8n.cloud/webhook/b889cd17-d04e-45ef-b77f-e71dab22a5b3/chat',
     mode: 'window',
-    showWelcomeScreen: true,
+    showWelcomeScreen: false,
     initialMessages: [
       '¡Hola! Soy Culto 👋',
       '¿Buscas un café en Malasaña? Cuéntame qué necesitas: trabajar, estudiar, quedar con amigos, ir con tu mascota... y te recomiendo el lugar perfecto.'
@@ -580,45 +598,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     }
   });
 
-  // Función global para abrir el chat
-  function abrirCultoChat(e) {
+  // Expone la función globalmente para que funcionen los onclick de todos los botones
+  window.abrirCultoChat = function(e) {
     if (e) e.preventDefault();
-    // Espera a que el widget esté listo si todavía no está
-    var intento = 0;
-    var abrir = function() {
-      var toggle = document.querySelector('button[class*="toggle"]');
-      if (toggle) { toggle.click(); }
-      else if (intento++ < 10) { setTimeout(abrir, 300); }
+    var intentos = 0;
+    var intentar = function() {
+      var btn = document.querySelector('button[class*="toggle"]');
+      if (btn) { btn.click(); }
+      else if (intentos++ < 15) { setTimeout(intentar, 200); }
     };
-    abrir();
-  }
+    intentar();
+  };
 
-  // Aplica el icono de Culto a la burbuja cuando el widget esté en el DOM
-  var observer = new MutationObserver(function() {
-    var toggle = document.querySelector('button[class*="toggle"]');
-    if (toggle) {
-      toggle.style.backgroundImage = "url('assets/img/culto.png')";
-      toggle.style.backgroundSize = 'contain';
-      toggle.style.backgroundPosition = 'center';
-      toggle.style.backgroundRepeat = 'no-repeat';
-      toggle.style.backgroundColor = 'transparent';
-      toggle.style.boxShadow = 'none';
-      var svg = toggle.querySelector('svg');
-      if (svg) svg.style.display = 'none';
-      observer.disconnect();
-    }
-  });
-  observer.observe(document.body, { childList: true, subtree: true });
-
-  // Conecta TODOS los botones "Escríbele a Culto" al chat
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('[id="btnCulto"], .btn-wa, .culto-chat-trigger').forEach(function(btn) {
-      btn.addEventListener('click', abrirCultoChat);
-    });
-    // Hero y header: botones que apuntan a #culto
-    document.querySelectorAll('a[href="#culto"]').forEach(function(btn) {
-      btn.addEventListener('click', abrirCultoChat);
-    });
+  // Botón personalizado de Culto conectado al chat
+  document.getElementById('culto-toggle-btn').addEventListener('click', function() {
+    window.abrirCultoChat();
   });
 </script>
 
