@@ -41,6 +41,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="assets/vendor/leaflet.css">
 <link rel="stylesheet" href="assets/css/style.css">
 <style>
+/* Cómo funciona — layout imagen + texto */
+.como-grid-new{display:grid;grid-template-columns:1fr 1.5fr;gap:60px;align-items:center}
+.como-visual-col{text-align:center}
+.como-culto-big{width:100%;max-width:300px;display:block;margin:0 auto;filter:drop-shadow(0 8px 24px rgba(0,0,0,.12))}
+@media(max-width:768px){
+  .como-grid-new{grid-template-columns:1fr;gap:36px}
+  .como-visual-col{order:-1}
+  .como-culto-big{max-width:200px}
+}
+/* Carrusel de vídeos */
 .vc-carousel{position:relative;overflow:hidden}
 .vc-track{display:flex;transition:transform .45s cubic-bezier(.4,0,.2,1)}
 .vc-slide{min-width:100%;box-sizing:border-box;padding-bottom:56px}
@@ -171,21 +181,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </section>
 
   <section class=”section como” id=”como”>
-    <div class=”wrap como-grid”>
-      <div class=”como-intro”>
-        <p class=”eyebrow”>Cómo funciona</p>
-        <h2 class=”balance”>De la duda al café, en tres pasos</h2>
-        <p>La web es el escaparate. Culto está aquí mismo: cuéntale qué buscas y te recomienda la cafetería perfecta, sin app, sin cuenta.</p>
-        <div class=”como-culto-img”>
-          <img src=”assets/img/culto.png” alt=”Culto, tu recomendador de cafeterías” style=”max-width:220px;width:100%;display:block;margin:24px auto 0”>
+    <div class=”wrap”>
+      <div class=”como-grid-new”>
+        <div class=”como-visual-col”>
+          <img src=”assets/img/culto.png” alt=”Culto, tu recomendador de cafeterías” class=”como-culto-big”>
+          <a class=”btn” href=”#” onclick=”window.abrirCultoChat&&window.abrirCultoChat(event)” style=”margin-top:28px;display:inline-block”>Habla con Culto</a>
         </div>
-        <a class=”btn” href=”#” onclick=”window.abrirCultoChat&&window.abrirCultoChat(event)” style=”margin-top:24px”>Habla con Culto</a>
+        <div class=”como-text-col”>
+          <p class=”eyebrow”>Cómo funciona</p>
+          <h2 class=”balance”>De la duda al café, en tres pasos</h2>
+          <p style=”margin-bottom:32px”>La web es el escaparate. Culto está aquí mismo: cuéntale qué buscas y te recomienda la cafetería perfecta, sin app, sin cuenta.</p>
+          <ol class=”pasos”>
+            <li><span class=”paso-num”>01</span><h3>Explora la web</h3><p>Filtra por barrio, por lo que vas a hacer —trabajar, estudiar, quedar, catar— y por wifi, terraza, mascotas o precio. Cada ficha trae origen del grano, tueste, métodos y precios.</p></li>
+            <li><span class=”paso-num”>02</span><h3>Mira el mapa</h3><p>Activa tu ubicación y las cafeterías se ordenan por cercanía. La más cercana queda resaltada, con un botón para llegar en un toque.</p></li>
+            <li><span class=”paso-num”>03</span><h3>Habla con Culto</h3><p>Le cuentas qué te apetece —“algo tranquilo para trabajar cerca de la Plaza de San Ildefonso”— y te recomienda según afinidad, no solo cercanía.</p></li>
+          </ol>
+        </div>
       </div>
-      <ol class=”pasos”>
-        <li><span class=”paso-num”>01</span><h3>Explora la web</h3><p>Filtra por barrio, por lo que vas a hacer —trabajar, estudiar, quedar, catar— y por wifi, terraza, mascotas o precio. Cada ficha trae origen del grano, tueste, métodos y precios.</p></li>
-        <li><span class=”paso-num”>02</span><h3>Mira el mapa</h3><p>Activa tu ubicación y las cafeterías se ordenan por cercanía. La más cercana queda resaltada, con un botón para llegar en un toque.</p></li>
-        <li><span class=”paso-num”>03</span><h3>Habla con Culto</h3><p>Le cuentas qué te apetece —“algo tranquilo para trabajar cerca de la Plaza de San Ildefonso”— y te recomienda según afinidad, no solo cercanía.</p></li>
-      </ol>
     </div>
   </section>
 
@@ -527,6 +539,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 })();
 </script>
 
+<!-- Placeholder para abrirCultoChat: captura clics antes de que cargue el módulo -->
+<script>
+window._cultoChatPendiente = false;
+window.abrirCultoChat = function(e) {
+  if (e) e.preventDefault();
+  window._cultoChatPendiente = true;
+};
+</script>
+
 <!-- n8n Chat — burbuja flotante Culto -->
 <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 <style>
@@ -566,9 +587,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   }
   #culto-toggle-btn:hover { transform: scale(1.08); }
   #culto-toggle-btn img { width: 100%; height: 100%; object-fit: contain; }
-  /* Oculta el botón flotante por defecto de n8n */
+  /* Oculta visualmente el toggle de n8n pero lo deja clickeable por JS */
   .n8n-chat .chat-window-toggle,
-  div[class*="n8n-chat"] button[class*="toggle"] { display: none !important; }
+  div[class*="n8n-chat"] button[class*="toggle"],
+  button.chat-window-toggle {
+    visibility: hidden !important;
+    pointer-events: none !important;
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+  }
 </style>
 
 <!-- Botón personalizado de Culto -->
@@ -598,17 +626,38 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     }
   });
 
-  // Expone la función globalmente para que funcionen los onclick de todos los botones
+  // Función real para abrir el chat (sustituye al placeholder)
+  function clickN8nToggle() {
+    var btn = document.querySelector('.chat-window-toggle')
+           || document.querySelector('button[class*="toggle"]')
+           || document.querySelector('[class*="chat"] button[class*="toggle"]');
+    if (btn) {
+      // Hacerlo visible momentáneamente para que click() funcione
+      btn.style.setProperty('visibility', 'visible', 'important');
+      btn.style.setProperty('pointer-events', 'auto', 'important');
+      btn.click();
+      setTimeout(function() {
+        btn.style.removeProperty('visibility');
+        btn.style.removeProperty('pointer-events');
+      }, 100);
+      return true;
+    }
+    return false;
+  }
+
   window.abrirCultoChat = function(e) {
     if (e) e.preventDefault();
     var intentos = 0;
     var intentar = function() {
-      var btn = document.querySelector('button[class*="toggle"]');
-      if (btn) { btn.click(); }
-      else if (intentos++ < 15) { setTimeout(intentar, 200); }
+      if (!clickN8nToggle()) {
+        if (intentos++ < 20) { setTimeout(intentar, 300); }
+      }
     };
     intentar();
   };
+
+  // Vacía cualquier click que llegó antes de que el módulo cargara
+  if (window._cultoChatPendiente) { window.abrirCultoChat(); window._cultoChatPendiente = false; }
 
   // Botón personalizado de Culto conectado al chat
   document.getElementById('culto-toggle-btn').addEventListener('click', function() {
