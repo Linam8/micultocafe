@@ -8,6 +8,22 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-NR7XT87C');</script>
 <!-- End Google Tag Manager -->
+<!-- Script global GTM: lee data-track-* y publica en el dataLayer ANTES de que GTM procese el click -->
+<script>
+window.dataLayer = window.dataLayer || [];
+document.addEventListener('click', function(e) {
+  var el = e.target.closest('[data-track-event]');
+  if (!el) return;
+  var payload = { event: el.getAttribute('data-track-event') };
+  Array.prototype.forEach.call(el.attributes, function(a) {
+    if (a.name.indexOf('data-track-') === 0 && a.name !== 'data-track-event') {
+      var key = a.name.replace('data-track-', '').replace(/-/g, '_');
+      payload[key] = isNaN(a.value) ? a.value : Number(a.value);
+    }
+  });
+  window.dataLayer.push(payload);
+}, true);
+</script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18451050791"></script>
 <script>
@@ -539,23 +555,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   document.getElementById('vcNext').addEventListener('click', function(){ go(current + 1); });
   dots.forEach(function(d){ d.addEventListener('click', function(){ go(+d.getAttribute('data-i')); }); });
 })();
-</script>
-
-<!-- Script global GTM: lee data-track-* y publica en el dataLayer -->
-<script>
-window.dataLayer = window.dataLayer || [];
-document.addEventListener('click', function(e) {
-  var el = e.target.closest('[data-track-event]');
-  if (!el) return;
-  var payload = { event: el.getAttribute('data-track-event') };
-  Array.prototype.forEach.call(el.attributes, function(a) {
-    if (a.name.indexOf('data-track-') === 0 && a.name !== 'data-track-event') {
-      var key = a.name.replace('data-track-', '').replace(/-/g, '_');
-      payload[key] = isNaN(a.value) ? a.value : Number(a.value);
-    }
-  });
-  window.dataLayer.push(payload);
-});
 </script>
 
 <!-- Placeholder para abrirCultoChat: captura clics antes de que cargue el módulo -->
