@@ -91,7 +91,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span aria-hidden="true">·</span>
       <a href="/en/" hreflang="en">EN</a>
     </div>
-    <a class="btn btn-sm" href="#" onclick="window.abrirCultoChat&&window.abrirCultoChat(event)">Escríbele a Culto</a>
+    <a class="btn btn-sm" href="#" onclick="window.abrirCultoChat&&window.abrirCultoChat(event)" data-track-event="chat_open" data-track-cta-location="header">Escríbele a Culto</a>
     <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </header>
@@ -107,8 +107,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <h1>Cafeterías de especialidad en Madrid, con criterio</h1>
       <p class="hero-lead">Información verificada de cada cafetería independiente —origen del grano, tueste, métodos y ambiente—, un mapa que se ordena por tu ubicación y Culto, un recomendador que habla contigo aquí mismo y te dice dónde tomar tu próximo café.</p>
       <div class="hero-actions">
-        <a class="btn" href="#cafeterias">Ver cafeterías</a>
-        <a class="btn btn-ghost" href="#" onclick="window.abrirCultoChat&&window.abrirCultoChat(event)">Escríbele a Culto</a>
+        <a class="btn" href="#cafeterias" data-track-event="cafe_list_click" data-track-cta-location="home">Ver cafeterías</a>
+        <a class="btn btn-ghost" href="#" onclick="window.abrirCultoChat&&window.abrirCultoChat(event)" data-track-event="chat_open" data-track-cta-location="home_hero">Escríbele a Culto</a>
       </div>
       <p class="hero-note"><strong>Cafeterías de especialidad</strong>, verificadas una a una</p>
     </div>
@@ -180,21 +180,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </section>
 
-  <section class=”section como” id=”como”>
-    <div class=”wrap”>
-      <div class=”como-grid-new” style=”display:grid;grid-template-columns:1fr 1.5fr;gap:60px;align-items:center”>
-        <div class=”como-visual-col” style=”text-align:center”>
-          <img src=”assets/img/culto.png” alt=”Culto, tu recomendador de cafeterías” style=”width:280px;max-width:100%;display:block;margin:0 auto;filter:drop-shadow(0 8px 24px rgba(0,0,0,.15))”>
-          <a class=”btn” href=”#” onclick=”window.abrirCultoChat&&window.abrirCultoChat(event)” style=”margin-top:28px;display:inline-block”>Habla con Culto</a>
+  <section class="section como" id="como">
+    <div class="wrap">
+      <div class="como-grid-new" style="display:grid;grid-template-columns:1fr 1.5fr;gap:60px;align-items:center">
+        <div class="como-visual-col" style="text-align:center">
+          <img src="assets/img/culto.png" alt="Culto, tu recomendador de cafeterías" style="width:280px;max-width:100%;display:block;margin:0 auto;filter:drop-shadow(0 8px 24px rgba(0,0,0,.15))">
+          <a class="btn" href="#" onclick="window.abrirCultoChat&&window.abrirCultoChat(event)" style="margin-top:28px;display:inline-block" data-track-event="chat_open" data-track-cta-location="how_it_works">Habla con Culto</a>
         </div>
-        <div class=”como-text-col”>
-          <p class=”eyebrow”>Cómo funciona</p>
-          <h2 class=”balance”>De la duda al café, en tres pasos</h2>
-          <p style=”margin-bottom:32px”>La web es el escaparate. Culto está aquí mismo: cuéntale qué buscas y te recomienda la cafetería perfecta, sin app, sin cuenta.</p>
-          <ol class=”pasos”>
-            <li><span class=”paso-num”>01</span><h3>Explora la web</h3><p>Filtra por barrio, por lo que vas a hacer —trabajar, estudiar, quedar, catar— y por wifi, terraza, mascotas o precio. Cada ficha trae origen del grano, tueste, métodos y precios.</p></li>
-            <li><span class=”paso-num”>02</span><h3>Mira el mapa</h3><p>Activa tu ubicación y las cafeterías se ordenan por cercanía. La más cercana queda resaltada, con un botón para llegar en un toque.</p></li>
-            <li><span class=”paso-num”>03</span><h3>Habla con Culto</h3><p>Le cuentas qué te apetece —“algo tranquilo para trabajar cerca de la Plaza de San Ildefonso”— y te recomienda según afinidad, no solo cercanía.</p></li>
+        <div class="como-text-col">
+          <p class="eyebrow">Cómo funciona</p>
+          <h2 class="balance">De la duda al café, en tres pasos</h2>
+          <p style="margin-bottom:32px">La web es el escaparate. Culto está aquí mismo: cuéntale qué buscas y te recomienda la cafetería perfecta, sin app, sin cuenta.</p>
+          <ol class="pasos">
+            <li><span class="paso-num">01</span><h3>Explora la web</h3><p>Filtra por barrio, por lo que vas a hacer —trabajar, estudiar, quedar, catar— y por wifi, terraza, mascotas o precio. Cada ficha trae origen del grano, tueste, métodos y precios.</p></li>
+            <li><span class="paso-num">02</span><h3>Mira el mapa</h3><p>Activa tu ubicación y las cafeterías se ordenan por cercanía. La más cercana queda resaltada, con un botón para llegar en un toque.</p></li>
+            <li><span class="paso-num">03</span><h3>Habla con Culto</h3><p>Le cuentas qué te apetece —"algo tranquilo para trabajar cerca de la Plaza de San Ildefonso"— y te recomienda según afinidad, no solo cercanía.</p></li>
           </ol>
         </div>
       </div>
@@ -263,7 +263,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <li>Resuelve dudas sobre café: tuestes, métodos, perfiles de sabor</li>
           <li>Sin app y sin cuenta: escribes y ya está</li>
         </ul>
-        <a class="btn" href="#" onclick="window.abrirCultoChat&&window.abrirCultoChat(event)" aria-label="Abrir chat con Culto">Escríbele a Culto</a>
+        <a class="btn" href="#" onclick="window.abrirCultoChat&&window.abrirCultoChat(event)" aria-label="Abrir chat con Culto" data-track-event="chat_open" data-track-cta-location="home_free_service">Escríbele a Culto</a>
       </div>
     </div>
   </section>
@@ -276,7 +276,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <h2 class="balance">Una guía con criterio, no un buscador más</h2>
         <p>Culto Café es una plataforma de descubrimiento y fidelización de cafeterías de especialidad en Madrid. Conectamos a quien busca un buen café con las cafeterías independientes que de verdad lo hacen bien, a través de información verificada local por local y de un recomendador conversacional.</p>
         <p>Nuestro modelo es sencillo: la persona usuaria entra gratis; las cafeterías cuentan con visibilidad y herramientas de fidelización parecidas a las de las grandes cadenas. Tratamos los datos con el mismo cuidado con el que curamos cada ficha.</p>
-        <p><a class="btn btn-ghost" href="#para-cafeterias">¿Tienes una cafetería? Da de alta tu ficha →</a></p>
+        <p><a class="btn btn-ghost" href="#para-cafeterias" data-track-event="cafe_signup_click" data-track-cta-location="about_us">¿Tienes una cafetería? Da de alta tu ficha →</a></p>
       </div>
     </div>
   </section>
@@ -297,7 +297,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <li>Visible en la web y el mapa</li>
             <li>Prueba antes de decidir</li>
           </ul>
-          <a class="btn btn-ghost plan-cta" href="suscribir/index.html?plan=Prueba%20gratuita" data-plan="Prueba gratuita">Empezar prueba</a>
+          <a class="btn btn-ghost plan-cta" href="suscribir/index.html?plan=Prueba%20gratuita" data-plan="Prueba gratuita" data-track-event="plan_select" data-track-plan-name="Prueba gratuita" data-track-plan-price="0" data-track-cta-location="pricing">Empezar prueba</a>
         </article>
         <article class="plan">
           <h3>Presencia</h3>
@@ -310,7 +310,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <li>Edita tu información cuando quieras</li>
           </ul>
           <!-- Sustituir por tu Payment Link de Stripe (dashboard.stripe.com/payment-links), con redirección a /gracias/ -->
-          <a class="btn btn-ghost plan-cta" href="suscribir/index.html?plan=Presencia" data-plan="Presencia">Suscribirme</a>
+          <a class="btn btn-ghost plan-cta" href="suscribir/index.html?plan=Presencia" data-plan="Presencia" data-track-event="plan_select" data-track-plan-name="Presencia" data-track-plan-price="15" data-track-cta-location="pricing">Suscribirme</a>
         </article>
         <article class="plan plan-destacada">
           <span class="plan-tag">Más elegido</span>
@@ -324,7 +324,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <li>Estadísticas mensuales de visitas</li>
           </ul>
           <!-- Sustituir por tu Payment Link de Stripe (dashboard.stripe.com/payment-links), con redirección a /gracias/ -->
-          <a class="btn plan-cta" href="suscribir/index.html?plan=Destacada" data-plan="Destacada">Suscribirme</a>
+          <a class="btn plan-cta" href="suscribir/index.html?plan=Destacada" data-plan="Destacada" data-track-event="plan_select" data-track-plan-name="Destacada" data-track-plan-price="29" data-track-cta-location="pricing">Suscribirme</a>
         </article>
         <article class="plan">
           <h3>Socia</h3>
@@ -336,7 +336,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <li>Soporte prioritario</li>
           </ul>
           <!-- Sustituir por tu Payment Link de Stripe (dashboard.stripe.com/payment-links), con redirección a /gracias/ -->
-          <a class="btn btn-ghost plan-cta" href="suscribir/index.html?plan=Socia" data-plan="Socia">Suscribirme</a>
+          <a class="btn btn-ghost plan-cta" href="suscribir/index.html?plan=Socia" data-plan="Socia" data-track-event="plan_select" data-track-plan-name="Socia" data-track-plan-price="49" data-track-cta-location="pricing">Suscribirme</a>
         </article>
       </div>
       <p class="plan-nota">Pago seguro con tarjeta. Sin permanencia: cancela cuando quieras. Precios sin IVA.</p>
@@ -440,6 +440,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         ok.textContent = "Gracias, hemos recibido tu mensaje. Te responderemos por email.";
         ok.style.display = "block";
         btn.disabled = false; btn.textContent = btnText;
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({event:'contact_form_submit', form_id:'contact'});
         return;
       }
       throw new Error("http " + r.status);
@@ -537,6 +539,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   document.getElementById('vcNext').addEventListener('click', function(){ go(current + 1); });
   dots.forEach(function(d){ d.addEventListener('click', function(){ go(+d.getAttribute('data-i')); }); });
 })();
+</script>
+
+<!-- Script global GTM: lee data-track-* y publica en el dataLayer -->
+<script>
+window.dataLayer = window.dataLayer || [];
+document.addEventListener('click', function(e) {
+  var el = e.target.closest('[data-track-event]');
+  if (!el) return;
+  var payload = { event: el.getAttribute('data-track-event') };
+  Array.prototype.forEach.call(el.attributes, function(a) {
+    if (a.name.indexOf('data-track-') === 0 && a.name !== 'data-track-event') {
+      var key = a.name.replace('data-track-', '').replace(/-/g, '_');
+      payload[key] = isNaN(a.value) ? a.value : Number(a.value);
+    }
+  });
+  window.dataLayer.push(payload);
+});
 </script>
 
 <!-- Placeholder para abrirCultoChat: captura clics antes de que cargue el módulo -->

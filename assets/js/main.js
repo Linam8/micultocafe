@@ -269,6 +269,8 @@
       '<div class="dlg-attrs">' + attrs + '</div>' +
       '<div class="dlg-actions">' + links + '</div>';
     dlg.showModal();
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({event: 'cafe_view', cafe_id: c.id || c.n.toLowerCase().replace(/\s+/g,'-'), cafe_name: c.n});
   }
 
   /* ---------- Wiring de filtros ---------- */

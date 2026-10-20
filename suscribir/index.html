@@ -116,7 +116,12 @@
         plan: f.plan.value
       })
     }).then(function(r){
-      if (r.ok) { location.href = dest; return; }
+      if (r.ok) {
+        var prices = {'Prueba gratuita':0,'Presencia':15,'Destacada':29,'Socia':49};
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({event:'generate_lead', form_id:'plan_request', plan_name: f.plan.value, plan_price: prices[f.plan.value] || 0, currency:'EUR'});
+        location.href = dest; return;
+      }
       throw new Error("http " + r.status);
     }).catch(function(){
       errBox.textContent = "No hemos podido enviar tu solicitud. Inténtalo de nuevo o escríbenos por WhatsApp.";
