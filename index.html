@@ -98,6 +98,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <a href="#cafeterias">Cafeterías</a>
       <a href="#como">Cómo funciona</a>
       <a href="#culto">Culto</a>
+      <a href="#testimonios">Testimonios</a>
       <a href="#nosotras">Quiénes somos</a>
       <a href="/blog/">Blog</a>
       <a href="#contacto">Contacto</a>
@@ -324,20 +325,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <h2 class="balance">¿Tienes una cafetería en Madrid?</h2>
       <p>Cada mes, cientos de personas buscan en Culto Café dónde tomar algo. Llegan con intención: quieren terraza, quieren wifi, quieren un sitio tranquilo o un café realmente bueno. Estar aquí significa estar delante de ellas justo cuando te están buscando a ti.</p>
       <div class="b2b-why" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin:32px 0 40px">
-        <div style="background:var(--surface,#faf8f5);border-radius:12px;padding:24px">
+        <div style="background:#F4EFE3;border-radius:12px;padding:24px;color:#1A1A1A">
           <p style="font-size:1.5rem;margin:0 0 8px">📍</p>
-          <strong>Visibilidad local real</strong>
-          <p style="margin:8px 0 0;font-size:.93rem;opacity:.8">Apareces en el mapa y en el buscador de personas que están en tu barrio o se dirigen a él.</p>
+          <strong style="color:#1A1A1A">Visibilidad local real</strong>
+          <p style="margin:8px 0 0;font-size:.93rem;color:#6B6459">Apareces en el mapa y en el buscador de personas que están en tu barrio o se dirigen a él.</p>
         </div>
-        <div style="background:var(--surface,#faf8f5);border-radius:12px;padding:24px">
+        <div style="background:#F4EFE3;border-radius:12px;padding:24px;color:#1A1A1A">
           <p style="font-size:1.5rem;margin:0 0 8px">🤖</p>
-          <strong>En las recomendaciones de Culto</strong>
-          <p style="margin:8px 0 0;font-size:.93rem;opacity:.8">Cuando alguien le pregunta a Culto por un sitio con terraza o pet-friendly, tu cafetería aparece si encaja.</p>
+          <strong style="color:#1A1A1A">En las recomendaciones de Culto</strong>
+          <p style="margin:8px 0 0;font-size:.93rem;color:#6B6459">Cuando alguien le pregunta a Culto por un sitio con terraza o pet-friendly, tu cafetería aparece si encaja.</p>
         </div>
-        <div style="background:var(--surface,#faf8f5);border-radius:12px;padding:24px">
+        <div style="background:#F4EFE3;border-radius:12px;padding:24px;color:#1A1A1A">
           <p style="font-size:1.5rem;margin:0 0 8px">✏️</p>
-          <strong>Ficha que tú controlas</strong>
-          <p style="margin:8px 0 0;font-size:.93rem;opacity:.8">Horarios, fotos, wifi, terraza, mascotas: tú actualizas, nosotras verificamos. Sin intermediarios.</p>
+          <strong style="color:#1A1A1A">Ficha que tú controlas</strong>
+          <p style="margin:8px 0 0;font-size:.93rem;color:#6B6459">Horarios, fotos, wifi, terraza, mascotas: tú actualizas, nosotras verificamos. Sin intermediarios.</p>
         </div>
       </div>
 
@@ -719,6 +720,22 @@ window.abrirCultoChat = function(e) {
   document.getElementById('culto-toggle-btn').addEventListener('click', function() {
     window.abrirCultoChat();
   });
+
+  // Botón de cerrar el chat
+  function addCloseBtn() {
+    var chatWin = document.querySelector('.chat-window') || document.querySelector('[class*="chat-window"]:not(button)');
+    if (!chatWin || chatWin.querySelector('#culto-close-btn')) return;
+    var closeBtn = document.createElement('button');
+    closeBtn.id = 'culto-close-btn';
+    closeBtn.innerHTML = '✕';
+    closeBtn.setAttribute('aria-label', 'Cerrar chat');
+    closeBtn.style.cssText = 'position:absolute;top:14px;right:14px;z-index:10001;background:rgba(0,0,0,.12);border:none;border-radius:50%;width:30px;height:30px;font-size:14px;cursor:pointer;color:inherit;display:flex;align-items:center;justify-content:center;';
+    closeBtn.addEventListener('click', function() { window.abrirCultoChat(); });
+    chatWin.style.position = 'relative';
+    chatWin.appendChild(closeBtn);
+  }
+  var obs = new MutationObserver(function() { addCloseBtn(); });
+  obs.observe(document.body, { childList: true, subtree: true });
 </script>
 
 </body>

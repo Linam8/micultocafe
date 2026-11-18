@@ -301,9 +301,18 @@ a,button{-webkit-tap-highlight-color:transparent}
 @media (max-width:560px){
   body{font-size:16px}
   .hero-media img{max-height:none;aspect-ratio:4/3}
+  .hero-copy{padding:28px 16px}
+  .hero-actions{flex-direction:column;gap:10px}
+  .hero-actions .btn{width:100%;justify-content:center}
   .dlg-attrs{grid-template-columns:1fr}
   .b2b-inner .btn{width:100%;justify-content:center}
+  .b2b-why{grid-template-columns:1fr !important}
   .fg-label{min-width:100%}
+  .planes{grid-template-columns:1fr !important}
+  .culto-grid,.nosotras-grid,.como-grid-new{grid-template-columns:1fr !important;gap:28px}
+  .section{padding:48px 0}
+  .wrap{padding-left:16px;padding-right:16px}
+  #testimonios > .wrap > div{grid-template-columns:1fr !important}
 }
 
 /* FAQ */
